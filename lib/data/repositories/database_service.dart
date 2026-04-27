@@ -27,6 +27,11 @@ class DatabaseService {
   static const String _kCounters = 'counters';
   static const String _kIntroSeen = 'intro_seen';
 
+  // مفاتيح قسم المحاسبة المالية (المسار التعليمي)
+  static const String _kFaCompletedExercises = 'fa_completed_exercises';
+  static const String _kFaCompletedLessons = 'fa_completed_lessons';
+  static const String _kFaSimJournal = 'fa_simulator_journal_v1';
+
   static late Box accountsBoxRef;
   static late Box journalsBoxRef;
   static late Box partnersBoxRef;
@@ -201,6 +206,39 @@ class DatabaseService {
   static bool isIntroSeen() => prefs.getBool(_kIntroSeen) ?? false;
   static Future<void> markIntroSeen() async =>
       prefs.setBool(_kIntroSeen, true);
+
+  // ============ Financial Accounting Section ============
+  /// قائمة معرّفات التمارين المنجَزة في قسم المحاسبة المالية.
+  static List<String> getFaCompletedExercises() {
+    return prefs.getStringList(_kFaCompletedExercises) ?? const [];
+  }
+
+  static Future<void> setFaCompletedExercises(List<String> ids) async {
+    await prefs.setStringList(_kFaCompletedExercises, ids);
+  }
+
+  /// قائمة معرّفات المستويات المنجَزة في قسم المحاسبة المالية.
+  static List<String> getFaCompletedLessons() {
+    return prefs.getStringList(_kFaCompletedLessons) ?? const [];
+  }
+
+  static Future<void> setFaCompletedLessons(List<String> ids) async {
+    await prefs.setStringList(_kFaCompletedLessons, ids);
+  }
+
+  /// قيود يومية المحاكاة الخاصة بقسم المحاسبة المالية (JSON String).
+  static String? getFaSimJournalRaw() => prefs.getString(_kSimJournalKey);
+
+  static Future<void> setFaSimJournalRaw(String json) async {
+    await prefs.setString(_kSimJournalKey, json);
+  }
+
+  static Future<void> clearFaSimJournal() async {
+    await prefs.remove(_kSimJournalKey);
+  }
+
+  // اسم مستعار داخلي لتوحيد الاستخدام أعلاه.
+  static const String _kSimJournalKey = _kFaSimJournal;
 
   // ============ Reset all data ============
   static Future<void> resetAll() async {

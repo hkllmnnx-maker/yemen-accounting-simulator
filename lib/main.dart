@@ -8,6 +8,7 @@ import 'core/constants/app_strings.dart';
 import 'data/repositories/database_service.dart';
 import 'providers/accounting_provider.dart';
 import 'providers/progress_provider.dart';
+import 'providers/financial_accounting_provider.dart';
 import 'screens/splash/splash_screen.dart';
 
 void main() async {
@@ -26,6 +27,8 @@ class YemenAccountingApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AccountingProvider()..loadCompany()),
         ChangeNotifierProvider(create: (_) => ProgressProvider()..load()),
+        ChangeNotifierProvider(
+            create: (_) => FinancialAccountingProvider()..load()),
       ],
       child: MaterialApp(
         title: AppStrings.appName,
