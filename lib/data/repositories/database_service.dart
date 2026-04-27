@@ -35,8 +35,12 @@ class DatabaseService {
   static late Box vouchersBoxRef;
   static late SharedPreferences prefs;
 
-  static Future<void> init() async {
-    await Hive.initFlutter();
+  static Future<void> init({String? testPath}) async {
+    if (testPath != null) {
+      Hive.init(testPath);
+    } else {
+      await Hive.initFlutter();
+    }
 
     // تسجيل المحوّلات
     if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(AccountAdapter());
