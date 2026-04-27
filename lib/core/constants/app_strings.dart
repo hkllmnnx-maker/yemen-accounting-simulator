@@ -41,6 +41,18 @@ class AppStrings {
   static const String glossary = 'قاموس المصطلحات';
   static const String settings = 'الإعدادات';
 
+  // قسم المحاسبة المالية - من القيد إلى التحليل المالي
+  static const String faSection =
+      'المحاسبة المالية من القيد إلى التحليل المالي';
+  static const String faShortName = 'المحاسبة المالية';
+  static const String faTagline =
+      'تدرّب من الصفر: قيود، ترحيل، ميزان مراجعة، قوائم مالية، تحليل.';
+  static const String faJournalPractice = 'تمارين القيود';
+  static const String faLedger = 'دفتر الأستاذ';
+  static const String faSimTitle = 'محاكاة عملية';
+  static const String faAnalysis = 'التحليل المالي';
+  static const String faStatements = 'القوائم المالية';
+
   // النظام المحاسبي
   static const String accountsTree = 'شجرة الحسابات';
   static const String journalEntries = 'القيود اليومية';
