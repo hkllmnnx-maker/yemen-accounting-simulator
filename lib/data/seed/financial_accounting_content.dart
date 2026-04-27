@@ -190,8 +190,13 @@ const List<FinancialLesson> financialLessons = [
     exerciseIds: [
       'fa_ex_capital_cash',
       'fa_ex_purchase_cash',
+      'fa_ex_sale_cash',
       'fa_ex_rent_payment',
+      'fa_ex_salaries',
+      'fa_ex_electricity',
+      'fa_ex_buy_equipment',
       'fa_ex_collect_customer',
+      'fa_ex_pay_supplier',
     ],
     badgeId: 'fa_badge_simple_journal',
     xpReward: 15,
@@ -233,6 +238,8 @@ const List<FinancialLesson> financialLessons = [
       'fa_ex_sale_with_discount',
       'fa_ex_purchase_credit',
       'fa_ex_sale_partial',
+      'fa_ex_sales_returns',
+      'fa_ex_discount_earned',
     ],
     badgeId: 'fa_badge_compound_journal',
     xpReward: 15,
@@ -340,7 +347,10 @@ const List<FinancialLesson> financialLessons = [
     ],
     wrapUp:
         'بعد إجراء التسويات، الأرصدة جاهزة لإنتاج قائمة الدخل الحقيقية والمركز المالي العادل.',
-    exerciseIds: [],
+    exerciseIds: [
+      'fa_ex_depreciation',
+      'fa_ex_accrued_salary',
+    ],
     xpReward: 12,
   ),
 
