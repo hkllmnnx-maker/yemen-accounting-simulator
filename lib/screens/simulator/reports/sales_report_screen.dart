@@ -19,8 +19,10 @@ class SalesReportScreen extends StatelessWidget {
         .toList();
     final totalSales = sales.fold<double>(0, (s, i) => s + i.total);
     final totalReturns = returns.fold<double>(0, (s, i) => s + i.total);
+    // مجمل الربح = (المبيعات - المرتجعات) - صافي تكلفة البضاعة المباعة.
     final cogs = acc.totalCogs;
-    final grossProfit = totalSales - totalReturns - cogs;
+    final netSales = totalSales - totalReturns;
+    final grossProfit = netSales - cogs;
 
     return Scaffold(
       appBar: AppBar(title: const Text('تقرير المبيعات')),

@@ -16,9 +16,10 @@ class BalanceSheetScreen extends StatelessWidget {
     final equities = <_Item>[];
     double totalAssets = 0, totalLiabs = 0, totalEquity = 0;
     double totalRev = 0, totalExp = 0;
+    final balances = acc.allBalances();
 
     for (final a in acc.postableAccounts) {
-      final bal = acc.accountBalance(a.id);
+      final bal = balances[a.id] ?? 0;
       if (bal == 0) continue;
       switch (a.type) {
         case AccountType.asset:

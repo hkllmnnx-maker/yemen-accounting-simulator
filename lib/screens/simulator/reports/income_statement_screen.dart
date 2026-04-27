@@ -15,9 +15,10 @@ class IncomeStatementScreen extends StatelessWidget {
     double totalExpense = 0;
     final revs = <_Item>[];
     final exps = <_Item>[];
+    final balances = acc.allBalances();
 
     for (final a in acc.postableAccounts) {
-      final bal = acc.accountBalance(a.id);
+      final bal = balances[a.id] ?? 0;
       if (bal == 0) continue;
       if (a.type == AccountType.revenue) {
         totalRevenue += bal;

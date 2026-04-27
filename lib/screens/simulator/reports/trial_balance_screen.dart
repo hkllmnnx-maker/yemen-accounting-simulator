@@ -14,8 +14,9 @@ class TrialBalanceScreen extends StatelessWidget {
     final rows = <_Row>[];
     double totalDebit = 0;
     double totalCredit = 0;
+    final balances = acc.allBalances();
     for (final a in acc.postableAccounts) {
-      final bal = acc.accountBalance(a.id);
+      final bal = balances[a.id] ?? 0;
       if (bal == 0) continue;
       double debit = 0, credit = 0;
       if (a.type.isDebitNature) {

@@ -59,10 +59,14 @@ class AccountingProvider extends ChangeNotifier {
     final acc = accountById(accountId);
     if (acc == null) return 0;
     double total = acc.openingBalance;
-    for (final j in journals.where((j) => j.posted)) {
+    final isDebitNature = acc.type.isDebitNature;
+    final allJournals = DatabaseService.journalsBoxRef.values
+        .cast<JournalEntry>();
+    for (final j in allJournals) {
+      if (!j.posted) continue;
       for (final l in j.lines) {
         if (l.accountId == accountId) {
-          if (acc.type.isDebitNature) {
+          if (isDebitNature) {
             total += l.debit - l.credit;
           } else {
             total += l.credit - l.debit;
@@ -71,6 +75,31 @@ class AccountingProvider extends ChangeNotifier {
       }
     }
     return total;
+  }
+
+  /// حساب أرصدة كل الحسابات القابلة للترحيل في تمريرة واحدة.
+  /// أكفأ بكثير من استدعاء [accountBalance] لكل حساب على حدة.
+  Map<String, double> _computeAllBalances() {
+    final result = <String, double>{};
+    // تهيئة الأرصدة الافتتاحية لكل الحسابات.
+    for (final a in accounts) {
+      result[a.id] = a.openingBalance;
+    }
+    // المرور على القيود المرحّلة مرّة واحدة.
+    final allJournals = DatabaseService.journalsBoxRef.values
+        .cast<JournalEntry>();
+    for (final j in allJournals) {
+      if (!j.posted) continue;
+      for (final l in j.lines) {
+        final acc = accountById(l.accountId);
+        if (acc == null) continue;
+        final delta = acc.type.isDebitNature
+            ? l.debit - l.credit
+            : l.credit - l.debit;
+        result[l.accountId] = (result[l.accountId] ?? 0) + delta;
+      }
+    }
+    return result;
   }
 
   // ============ Journals ============
@@ -305,22 +334,35 @@ class AccountingProvider extends ChangeNotifier {
       .where((i) => i.kind == InvoiceKind.purchase)
       .fold(0.0, (s, i) => s + i.total);
 
-  /// إجمالي تكلفة البضاعة المباعة (مبسط: مجموع cost*qty للمبيعات)
-  double get totalCogs => salesInvoices
-      .where((i) => i.kind == InvoiceKind.sale)
-      .fold(0.0, (s, inv) {
-        return s +
-            inv.lines.fold<double>(0, (ss, l) {
-              final it = itemById(l.itemId);
-              return ss + (it?.cost ?? 0) * l.quantity;
-            });
-      });
+  /// إجمالي تكلفة البضاعة المباعة (مبسط: تكلفة المبيعات - تكلفة المرتجعات)
+  /// ملاحظة: يستخدم التكلفة الحالية للصنف من المخزون.
+  double get totalCogs {
+    double soldCost = 0;
+    double returnedCost = 0;
+    for (final inv in invoices) {
+      if (inv.kind == InvoiceKind.sale) {
+        for (final l in inv.lines) {
+          final it = itemById(l.itemId);
+          soldCost += (it?.cost ?? 0) * l.quantity;
+        }
+      } else if (inv.kind == InvoiceKind.saleReturn) {
+        for (final l in inv.lines) {
+          final it = itemById(l.itemId);
+          returnedCost += (it?.cost ?? 0) * l.quantity;
+        }
+      }
+    }
+    return soldCost - returnedCost;
+  }
 
-  /// أرصدة الحسابات (للتقارير)
+  /// أرصدة الحسابات (للتقارير) - تستخدم تمريرة واحدة لكل القيود.
   Map<String, double> allBalances() {
+    final all = _computeAllBalances();
     final result = <String, double>{};
-    for (final a in accounts.where((a) => a.isPostable)) {
-      result[a.id] = accountBalance(a.id);
+    for (final a in accounts) {
+      if (a.isPostable) {
+        result[a.id] = all[a.id] ?? 0;
+      }
     }
     return result;
   }
