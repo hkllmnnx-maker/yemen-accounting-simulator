@@ -17,6 +17,7 @@ class JournalEditScreen extends StatefulWidget {
 class _JournalEditScreenState extends State<JournalEditScreen> {
   late JournalEntry _entry;
   bool _isNew = false;
+  late final TextEditingController _descCtrl;
 
   @override
   void initState() {
@@ -28,6 +29,13 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       _isNew = true;
       _entry = _newEntry();
     }
+    _descCtrl = TextEditingController(text: _entry.description);
+  }
+
+  @override
+  void dispose() {
+    _descCtrl.dispose();
+    super.dispose();
   }
 
   JournalEntry _newEntry() {
@@ -45,6 +53,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
 
   Future<void> _save({bool post = false}) async {
     final acc = context.read<AccountingProvider>();
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
     if (_entry.description.trim().isEmpty) {
       _err('أدخل البيان أولًا');
       return;
@@ -66,10 +76,10 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
     if (post) _entry.posted = true;
     await acc.addJournal(_entry);
     if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(post ? 'تم الترحيل' : 'تم الحفظ')));
-    Navigator.pop(context);
+    messenger.showSnackBar(
+      SnackBar(content: Text(post ? 'تم الترحيل' : 'تم الحفظ')),
+    );
+    navigator.pop();
   }
 
   void _err(String s) {
@@ -163,9 +173,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                     ),
                     const SizedBox(height: 8),
                     TextField(
-                      controller: TextEditingController(
-                        text: _entry.description,
-                      ),
+                      controller: _descCtrl,
                       enabled: _isNew || !_entry.posted,
                       decoration: const InputDecoration(
                         labelText: 'بيان القيد',
@@ -309,7 +317,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
   }
 }
 
-class _LineCard extends StatelessWidget {
+class _LineCard extends StatefulWidget {
   final int index;
   final JournalLine line;
   final List<Account> postable;
@@ -327,7 +335,51 @@ class _LineCard extends StatelessWidget {
   });
 
   @override
+  State<_LineCard> createState() => _LineCardState();
+}
+
+class _LineCardState extends State<_LineCard> {
+  late final TextEditingController _debitCtrl;
+  late final TextEditingController _creditCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _debitCtrl = TextEditingController(
+      text: widget.line.debit == 0 ? '' : _fmt(widget.line.debit),
+    );
+    _creditCtrl = TextEditingController(
+      text: widget.line.credit == 0 ? '' : _fmt(widget.line.credit),
+    );
+  }
+
+  @override
+  void dispose() {
+    _debitCtrl.dispose();
+    _creditCtrl.dispose();
+    super.dispose();
+  }
+
+  // عرض الأرقام بدون .0 الزائد للأرقام الصحيحة.
+  String _fmt(double v) {
+    if (v == v.truncateToDouble()) return v.toInt().toString();
+    return v.toString();
+  }
+
+  void _setOpposite(TextEditingController other) {
+    if (other.text.isNotEmpty) {
+      other.text = '';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final line = widget.line;
+    final index = widget.index;
+    final postable = widget.postable;
+    final enabled = widget.enabled;
+    final onChanged = widget.onChanged;
+    final onRemove = widget.onRemove;
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: Padding(
@@ -404,16 +456,16 @@ class _LineCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: TextEditingController(
-                      text: line.debit == 0 ? '' : line.debit.toString(),
+                    controller: _debitCtrl,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
-                    keyboardType: TextInputType.number,
                     enabled: enabled,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'مدين',
-                      labelStyle: const TextStyle(color: AppColors.debit),
+                      labelStyle: TextStyle(color: AppColors.debit),
                       isDense: true,
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.add_circle_outline,
                         color: AppColors.debit,
                         size: 18,
@@ -421,7 +473,10 @@ class _LineCard extends StatelessWidget {
                     ),
                     onChanged: (v) {
                       line.debit = double.tryParse(v) ?? 0;
-                      if (line.debit > 0) line.credit = 0;
+                      if (line.debit > 0) {
+                        line.credit = 0;
+                        _setOpposite(_creditCtrl);
+                      }
                       onChanged();
                     },
                   ),
@@ -429,16 +484,16 @@ class _LineCard extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
-                    controller: TextEditingController(
-                      text: line.credit == 0 ? '' : line.credit.toString(),
+                    controller: _creditCtrl,
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
                     ),
-                    keyboardType: TextInputType.number,
                     enabled: enabled,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'دائن',
-                      labelStyle: const TextStyle(color: AppColors.credit),
+                      labelStyle: TextStyle(color: AppColors.credit),
                       isDense: true,
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.remove_circle_outline,
                         color: AppColors.credit,
                         size: 18,
@@ -446,7 +501,10 @@ class _LineCard extends StatelessWidget {
                     ),
                     onChanged: (v) {
                       line.credit = double.tryParse(v) ?? 0;
-                      if (line.credit > 0) line.debit = 0;
+                      if (line.credit > 0) {
+                        line.debit = 0;
+                        _setOpposite(_debitCtrl);
+                      }
                       onChanged();
                     },
                   ),

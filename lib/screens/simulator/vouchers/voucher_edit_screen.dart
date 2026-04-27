@@ -47,6 +47,8 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
 
   Future<void> _save() async {
     final acc = context.read<AccountingProvider>();
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
     if (_v.partnerId.isEmpty) {
       _err(widget.kind == VoucherKind.receipt ? 'اختر العميل' : 'اختر المورد');
       return;
@@ -67,10 +69,10 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
     await acc.addVoucher(_v);
 
     if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('تم حفظ السند وترحيل القيد')));
-    Navigator.pop(context);
+    messenger.showSnackBar(
+      const SnackBar(content: Text('تم حفظ السند وترحيل القيد')),
+    );
+    navigator.pop();
   }
 
   void _err(String s) {

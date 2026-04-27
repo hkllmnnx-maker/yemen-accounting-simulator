@@ -225,20 +225,24 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
       }
     }
     _inv.notes = _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim();
-    // Save invoice
-    await acc.addInvoice(_inv);
-    // Auto-generate journal entry
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
+
+    // 1) إنشاء القيد المحاسبي أولًا (قبل addInvoice حتى لا تُحرَّك أصناف
+    //    المخزون مرّتين عند الحفظ ثم إعادة الحفظ).
     final je = AccountingEngine.journalFromInvoice(_inv, acc);
     await acc.addJournal(je);
+
+    // 2) ربط القيد بالفاتورة وحفظ الفاتورة مرّة واحدة فقط.
     _inv.journalEntryId = je.id;
     _inv.posted = true;
     await acc.addInvoice(_inv);
 
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       const SnackBar(content: Text('تم حفظ الفاتورة وترحيل القيد')),
     );
-    Navigator.pop(context);
+    navigator.pop();
   }
 
   void _err(String s) => ScaffoldMessenger.of(

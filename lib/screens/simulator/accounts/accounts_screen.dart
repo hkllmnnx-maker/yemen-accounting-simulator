@@ -127,8 +127,9 @@ class AccountsScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (name.text.trim().isEmpty || code.text.trim().isEmpty)
+                if (name.text.trim().isEmpty || code.text.trim().isEmpty) {
                   return;
+                }
                 final id = 'acc_${DateTime.now().millisecondsSinceEpoch}';
                 await acc.addAccount(
                   Account(
