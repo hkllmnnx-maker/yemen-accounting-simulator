@@ -61,8 +61,7 @@ final List<FinancialExercise> financialExercises = [
         'دفع المبلغ كاملًا نقدًا من صندوق المؤسسة.',
     operationDate: _d(2024, 1, 5),
     operationText: 'شراء بضاعة نقدًا بمبلغ 1,200,000 ر.ي من السوق المركزي.',
-    requirement:
-        'سجّل قيد اليومية لعملية الشراء النقدي مع البيان المناسب.',
+    requirement: 'سجّل قيد اليومية لعملية الشراء النقدي مع البيان المناسب.',
     hints: [
       'المشتريات أصل (يصبح مخزون لاحقًا)، يزيد بالمدين.',
       'الصندوق ينقص، فهو دائن.',
@@ -78,8 +77,7 @@ final List<FinancialExercise> financialExercises = [
       date: _d(2024, 1, 5),
       description: 'شراء بضاعة نقدًا.',
       lines: [
-        FinJournalLine(
-            accountId: 'purchases', side: 'debit', amount: 1200000),
+        FinJournalLine(accountId: 'purchases', side: 'debit', amount: 1200000),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 1200000),
       ],
     ),
@@ -95,14 +93,9 @@ final List<FinancialExercise> financialExercises = [
         'يقع في شارع الستين بصنعاء. الإيجار الشهري المتفق عليه مع المالك هو '
         '150,000 ر.ي، يُدفع نقدًا.',
     operationDate: _d(2024, 1, 7),
-    operationText:
-        'دفع إيجار شهر يناير للمحل بمبلغ 150,000 ر.ي نقدًا للمالك.',
-    requirement:
-        'اكتب قيد اليومية المناسب لتسجيل دفع الإيجار.',
-    hints: [
-      'مصروف الإيجار يزيد، فهو مدين.',
-      'الصندوق ينقص، فهو دائن.',
-    ],
+    operationText: 'دفع إيجار شهر يناير للمحل بمبلغ 150,000 ر.ي نقدًا للمالك.',
+    requirement: 'اكتب قيد اليومية المناسب لتسجيل دفع الإيجار.',
+    hints: ['مصروف الإيجار يزيد، فهو مدين.', 'الصندوق ينقص، فهو دائن.'],
     commonMistakes: [
       'تسجيل الإيجار كأصل (إيجار مدفوع مقدمًا) رغم أنه عن الشهر الحالي.',
       'تسجيل المصروف في الجانب الدائن.',
@@ -115,7 +108,10 @@ final List<FinancialExercise> financialExercises = [
       description: 'دفع إيجار المحل لشهر يناير 2024.',
       lines: [
         FinJournalLine(
-            accountId: 'rent_expense', side: 'debit', amount: 150000),
+          accountId: 'rent_expense',
+          side: 'debit',
+          amount: 150000,
+        ),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 150000),
       ],
     ),
@@ -131,8 +127,7 @@ final List<FinancialExercise> financialExercises = [
     operationDate: _d(2024, 1, 12),
     operationText:
         'تحصيل 300,000 ر.ي نقدًا من العميل محلات البركة سداد جزء من مديونيته.',
-    requirement:
-        'اكتب قيد اليومية اللازم لتسجيل عملية التحصيل من العميل.',
+    requirement: 'اكتب قيد اليومية اللازم لتسجيل عملية التحصيل من العميل.',
     hints: [
       'الصندوق يزيد (مدين).',
       'العملاء (أصل) ينقصون لأن المديونية قلّت (دائن).',
@@ -150,7 +145,10 @@ final List<FinancialExercise> financialExercises = [
       lines: [
         FinJournalLine(accountId: 'cash', side: 'debit', amount: 300000),
         FinJournalLine(
-            accountId: 'accounts_receivable', side: 'credit', amount: 300000),
+          accountId: 'accounts_receivable',
+          side: 'credit',
+          amount: 300000,
+        ),
       ],
     ),
   ),
@@ -169,8 +167,7 @@ final List<FinancialExercise> financialExercises = [
     operationDate: _d(2024, 1, 9),
     operationText:
         'شراء بضاعة بمبلغ 1,000,000 ر.ي، دفع 400,000 نقدًا والباقي بالأجل.',
-    requirement:
-        'اكتب قيد اليومية المركّب الذي يعكس هذه العملية.',
+    requirement: 'اكتب قيد اليومية المركّب الذي يعكس هذه العملية.',
     hints: [
       'المشتريات تزيد بقيمة العملية كاملة (مدين).',
       'الصندوق ينقص بـ 400,000 (دائن).',
@@ -188,11 +185,13 @@ final List<FinancialExercise> financialExercises = [
       date: _d(2024, 1, 9),
       description: 'شراء بضاعة من مؤسسة سبأ، نصفها نقدًا والباقي آجل.',
       lines: [
-        FinJournalLine(
-            accountId: 'purchases', side: 'debit', amount: 1000000),
+        FinJournalLine(accountId: 'purchases', side: 'debit', amount: 1000000),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 400000),
         FinJournalLine(
-            accountId: 'accounts_payable', side: 'credit', amount: 600000),
+          accountId: 'accounts_payable',
+          side: 'credit',
+          amount: 600000,
+        ),
       ],
     ),
     xpReward: 12,
@@ -209,8 +208,7 @@ final List<FinancialExercise> financialExercises = [
     operationDate: _d(2024, 1, 14),
     operationText:
         'بيع نقدي بقيمة 500,000 ر.ي مع منح خصم 25,000، تحصيل 475,000 ر.ي نقدًا.',
-    requirement:
-        'اكتب قيد اليومية المركب الذي يعكس البيع مع الخصم المسموح به.',
+    requirement: 'اكتب قيد اليومية المركب الذي يعكس البيع مع الخصم المسموح به.',
     hints: [
       'الصندوق يزيد بـ 475,000 (مدين).',
       'الخصم المسموح به (مصروف) يزيد بـ 25,000 (مدين).',
@@ -229,7 +227,10 @@ final List<FinancialExercise> financialExercises = [
       lines: [
         FinJournalLine(accountId: 'cash', side: 'debit', amount: 475000),
         FinJournalLine(
-            accountId: 'discount_allowed', side: 'debit', amount: 25000),
+          accountId: 'discount_allowed',
+          side: 'debit',
+          amount: 25000,
+        ),
         FinJournalLine(accountId: 'sales', side: 'credit', amount: 500000),
       ],
     ),
@@ -244,10 +245,8 @@ final List<FinancialExercise> financialExercises = [
         'تعاقد المحاسب مع "شركة الأمين" في الحديدة على شراء كمية إضافية من '
         'البضائع بقيمة 750,000 ر.ي، مع تأجيل السداد إلى نهاية الشهر دون أي دفعة مقدّمة.',
     operationDate: _d(2024, 1, 11),
-    operationText:
-        'شراء بضاعة بالأجل من شركة الأمين بمبلغ 750,000 ر.ي.',
-    requirement:
-        'اكتب قيد اليومية اللازم لتسجيل الشراء الآجل.',
+    operationText: 'شراء بضاعة بالأجل من شركة الأمين بمبلغ 750,000 ر.ي.',
+    requirement: 'اكتب قيد اليومية اللازم لتسجيل الشراء الآجل.',
     hints: [
       'لا يوجد تدفق نقدي في هذا القيد.',
       'المشتريات تزيد (مدين)، الموردون يزيدون (دائن).',
@@ -264,7 +263,10 @@ final List<FinancialExercise> financialExercises = [
       lines: [
         FinJournalLine(accountId: 'purchases', side: 'debit', amount: 750000),
         FinJournalLine(
-            accountId: 'accounts_payable', side: 'credit', amount: 750000),
+          accountId: 'accounts_payable',
+          side: 'credit',
+          amount: 750000,
+        ),
       ],
     ),
   ),
@@ -279,8 +281,7 @@ final List<FinancialExercise> financialExercises = [
     operationDate: _d(2024, 1, 16),
     operationText:
         'بيع بضاعة بقيمة 900,000 ر.ي، تحصيل 350,000 نقدًا والباقي على العميل.',
-    requirement:
-        'اكتب قيد اليومية المركب الذي يعكس هذه العملية.',
+    requirement: 'اكتب قيد اليومية المركب الذي يعكس هذه العملية.',
     hints: [
       'الصندوق يزيد بـ 350,000 (مدين).',
       'العملاء يزيدون بـ 550,000 (مدين).',
@@ -299,7 +300,10 @@ final List<FinancialExercise> financialExercises = [
       lines: [
         FinJournalLine(accountId: 'cash', side: 'debit', amount: 350000),
         FinJournalLine(
-            accountId: 'accounts_receivable', side: 'debit', amount: 550000),
+          accountId: 'accounts_receivable',
+          side: 'debit',
+          amount: 550000,
+        ),
         FinJournalLine(accountId: 'sales', side: 'credit', amount: 900000),
       ],
     ),
@@ -317,8 +321,7 @@ final List<FinancialExercise> financialExercises = [
         'استدعى صاحب "مؤسسة سبأ للتوريدات" المحاسب لسداد جزء من المديونية '
         'القائمة. تمّ سداد 400,000 ر.ي نقدًا.',
     operationDate: _d(2024, 1, 18),
-    operationText:
-        'سداد 400,000 ر.ي نقدًا لمؤسسة سبأ على الحساب.',
+    operationText: 'سداد 400,000 ر.ي نقدًا لمؤسسة سبأ على الحساب.',
     requirement: 'اكتب قيد اليومية لتسجيل السداد.',
     hints: [
       'الموردون (التزام) ينقص، فيكون مدينًا.',
@@ -335,7 +338,10 @@ final List<FinancialExercise> financialExercises = [
       description: 'سداد جزء من مديونية مؤسسة سبأ.',
       lines: [
         FinJournalLine(
-            accountId: 'accounts_payable', side: 'debit', amount: 400000),
+          accountId: 'accounts_payable',
+          side: 'debit',
+          amount: 400000,
+        ),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 400000),
       ],
     ),
@@ -349,13 +355,9 @@ final List<FinancialExercise> financialExercises = [
         'في نهاية شهر يناير وزّع المحاسب رواتب موظفي المحل (3 موظفين) بإجمالي '
         '450,000 ر.ي نقدًا.',
     operationDate: _d(2024, 1, 30),
-    operationText:
-        'صرف رواتب الموظفين لشهر يناير بإجمالي 450,000 ر.ي نقدًا.',
+    operationText: 'صرف رواتب الموظفين لشهر يناير بإجمالي 450,000 ر.ي نقدًا.',
     requirement: 'اكتب قيد اليومية للرواتب المدفوعة.',
-    hints: [
-      'مصروف الرواتب مدين.',
-      'الصندوق دائن.',
-    ],
+    hints: ['مصروف الرواتب مدين.', 'الصندوق دائن.'],
     commonMistakes: [
       'تسجيل الرواتب كالتزام رغم أنها دُفعت فعلًا.',
       'الخلط بين رواتب مستحقّة (لم تُدفع) ورواتب مدفوعة (هذا التمرين).',
@@ -367,7 +369,10 @@ final List<FinancialExercise> financialExercises = [
       description: 'صرف رواتب يناير 2024.',
       lines: [
         FinJournalLine(
-            accountId: 'salaries_expense', side: 'debit', amount: 450000),
+          accountId: 'salaries_expense',
+          side: 'debit',
+          amount: 450000,
+        ),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 450000),
       ],
     ),
@@ -383,13 +388,8 @@ final List<FinancialExercise> financialExercises = [
     operationDate: _d(2024, 1, 28),
     operationText: 'سداد فاتورة الكهرباء لشهر يناير 35,000 ر.ي نقدًا.',
     requirement: 'اكتب قيد اليومية لسداد الكهرباء.',
-    hints: [
-      'مصروف الكهرباء مدين.',
-      'الصندوق دائن.',
-    ],
-    commonMistakes: [
-      'استخدام حساب "مصروفات متنوعة" رغم وجود حساب مخصص.',
-    ],
+    hints: ['مصروف الكهرباء مدين.', 'الصندوق دائن.'],
+    commonMistakes: ['استخدام حساب "مصروفات متنوعة" رغم وجود حساب مخصص.'],
     solutionExplanation:
         'الكهرباء مصروف تشغيلي يخصّ الفترة. مدين 35,000 / دائن 35,000.',
     expected: FinExpectedEntry(
@@ -397,7 +397,10 @@ final List<FinancialExercise> financialExercises = [
       description: 'فاتورة كهرباء يناير 2024.',
       lines: [
         FinJournalLine(
-            accountId: 'electricity_expense', side: 'debit', amount: 35000),
+          accountId: 'electricity_expense',
+          side: 'debit',
+          amount: 35000,
+        ),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 35000),
       ],
     ),
@@ -411,10 +414,8 @@ final List<FinancialExercise> financialExercises = [
         'اشترى المحاسب أثاثًا للمكتب الإداري بمبلغ 800,000 ر.ي نقدًا من معرض '
         'الأثاث في صنعاء.',
     operationDate: _d(2024, 1, 6),
-    operationText:
-        'شراء أثاث ومعدات للمكتب بمبلغ 800,000 ر.ي نقدًا.',
-    requirement:
-        'اكتب قيد اليومية لتسجيل شراء الأصل الثابت.',
+    operationText: 'شراء أثاث ومعدات للمكتب بمبلغ 800,000 ر.ي نقدًا.',
+    requirement: 'اكتب قيد اليومية لتسجيل شراء الأصل الثابت.',
     hints: [
       'الأثاث أصل ثابت يزيد، فهو مدين.',
       'الصندوق ينقص (دائن).',
@@ -452,12 +453,8 @@ final List<FinancialExercise> financialExercises = [
     operationDate: _d(2024, 12, 31),
     operationText:
         'تسجيل قسط الإهلاك السنوي للأثاث 80,000 ر.ي (10% من تكلفة 800,000).',
-    requirement:
-        'اكتب قيد التسوية لإثبات إهلاك الأثاث.',
-    hints: [
-      'مصروف الإهلاك مدين.',
-      'مجمع الإهلاك (حساب مقابل للأصل) دائن.',
-    ],
+    requirement: 'اكتب قيد التسوية لإثبات إهلاك الأثاث.',
+    hints: ['مصروف الإهلاك مدين.', 'مجمع الإهلاك (حساب مقابل للأصل) دائن.'],
     commonMistakes: [
       'إنقاص حساب الأثاث مباشرة بدل استخدام مجمع الإهلاك.',
       'تسجيل القيمة الكاملة للأثاث كمصروف (وهذا خطأ كبير).',
@@ -470,13 +467,15 @@ final List<FinancialExercise> financialExercises = [
       description: 'قسط إهلاك سنوي للأثاث.',
       lines: [
         FinJournalLine(
-            accountId: 'depreciation_expense',
-            side: 'debit',
-            amount: 80000),
+          accountId: 'depreciation_expense',
+          side: 'debit',
+          amount: 80000,
+        ),
         FinJournalLine(
-            accountId: 'accumulated_depreciation',
-            side: 'credit',
-            amount: 80000),
+          accountId: 'accumulated_depreciation',
+          side: 'credit',
+          amount: 80000,
+        ),
       ],
     ),
     xpReward: 12,
@@ -510,9 +509,15 @@ final List<FinancialExercise> financialExercises = [
       description: 'تسوية رواتب مستحقة لشهر ديسمبر.',
       lines: [
         FinJournalLine(
-            accountId: 'salaries_expense', side: 'debit', amount: 200000),
+          accountId: 'salaries_expense',
+          side: 'debit',
+          amount: 200000,
+        ),
         FinJournalLine(
-            accountId: 'salaries_payable', side: 'credit', amount: 200000),
+          accountId: 'salaries_payable',
+          side: 'credit',
+          amount: 200000,
+        ),
       ],
     ),
     xpReward: 10,
@@ -532,10 +537,7 @@ final List<FinancialExercise> financialExercises = [
     operationText:
         'استرجاع بضاعة بقيمة 50,000 ر.ي من العميل وإعادة المبلغ نقدًا.',
     requirement: 'اكتب قيد اليومية لتسجيل المردودات.',
-    hints: [
-      'مردودات المبيعات (تخفّض الإيراد) مدين.',
-      'الصندوق ينقص، دائن.',
-    ],
+    hints: ['مردودات المبيعات (تخفّض الإيراد) مدين.', 'الصندوق ينقص، دائن.'],
     commonMistakes: [
       'إنقاص حساب المبيعات مباشرة بدل استخدام حساب مردودات المبيعات.',
     ],
@@ -547,7 +549,10 @@ final List<FinancialExercise> financialExercises = [
       description: 'مردودات مبيعات من محلات الإيمان.',
       lines: [
         FinJournalLine(
-            accountId: 'sales_returns', side: 'debit', amount: 50000),
+          accountId: 'sales_returns',
+          side: 'debit',
+          amount: 50000,
+        ),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 50000),
       ],
     ),
@@ -581,10 +586,16 @@ final List<FinancialExercise> financialExercises = [
       description: 'سداد مديونية مؤسسة سبأ مع الحصول على خصم.',
       lines: [
         FinJournalLine(
-            accountId: 'accounts_payable', side: 'debit', amount: 600000),
+          accountId: 'accounts_payable',
+          side: 'debit',
+          amount: 600000,
+        ),
         FinJournalLine(accountId: 'cash', side: 'credit', amount: 570000),
         FinJournalLine(
-            accountId: 'discount_earned', side: 'credit', amount: 30000),
+          accountId: 'discount_earned',
+          side: 'credit',
+          amount: 30000,
+        ),
       ],
     ),
     xpReward: 12,
@@ -598,13 +609,9 @@ final List<FinancialExercise> financialExercises = [
         'باع المحاسب بضاعة في المحل لزبون عابر بمبلغ 250,000 ر.ي، تمّ التحصيل '
         'فورًا في الصندوق.',
     operationDate: _d(2024, 1, 15),
-    operationText:
-        'بيع نقدي لزبون بمبلغ 250,000 ر.ي.',
+    operationText: 'بيع نقدي لزبون بمبلغ 250,000 ر.ي.',
     requirement: 'اكتب قيد اليومية لتسجيل البيع النقدي.',
-    hints: [
-      'الصندوق يزيد، مدين.',
-      'إيرادات المبيعات تزيد، دائن.',
-    ],
+    hints: ['الصندوق يزيد، مدين.', 'إيرادات المبيعات تزيد، دائن.'],
     commonMistakes: [
       'وضع المبيعات في الجانب المدين.',
       'إدراج العملاء رغم أن العملية نقدية.',

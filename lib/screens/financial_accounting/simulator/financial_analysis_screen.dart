@@ -155,8 +155,11 @@ class _RatioCard extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.calculate,
-                    size: 14, color: AppColors.textLight),
+                const Icon(
+                  Icons.calculate,
+                  size: 14,
+                  color: AppColors.textLight,
+                ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
@@ -179,16 +182,12 @@ class _RatioCard extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Icon(Icons.lightbulb_outline,
-                      color: color, size: 16),
+                  Icon(Icons.lightbulb_outline, color: color, size: 16),
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
                       ratio.interpretation,
-                      style: TextStyle(
-                          fontSize: 12,
-                          height: 1.5,
-                          color: color),
+                      style: TextStyle(fontSize: 12, height: 1.5, color: color),
                     ),
                   ),
                 ],

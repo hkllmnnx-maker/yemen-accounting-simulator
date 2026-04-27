@@ -21,11 +21,7 @@ class JournalLineDraft {
 
   FinJournalLine? toFinLine() {
     if (accountId == null || amount <= 0) return null;
-    return FinJournalLine(
-      accountId: accountId!,
-      side: side,
-      amount: amount,
-    );
+    return FinJournalLine(accountId: accountId!, side: side, amount: amount);
   }
 
   void dispose() => amountCtrl.dispose();
@@ -75,8 +71,7 @@ class _JournalEntryEditorState extends State<JournalEntryEditor> {
     final totalCredit = widget.lines
         .where((l) => l.side == 'credit')
         .fold<double>(0, (s, l) => s + l.amount);
-    final balanced =
-        (totalDebit - totalCredit).abs() < 0.01 && totalDebit > 0;
+    final balanced = (totalDebit - totalCredit).abs() < 0.01 && totalDebit > 0;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -91,22 +86,28 @@ class _JournalEntryEditorState extends State<JournalEntryEditor> {
           child: const Row(
             children: [
               Expanded(
-                  flex: 3,
-                  child: Text('الحساب',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 12))),
+                flex: 3,
+                child: Text(
+                  'الحساب',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                ),
+              ),
               Expanded(
-                  flex: 2,
-                  child: Text('الطرف',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 12))),
+                flex: 2,
+                child: Text(
+                  'الطرف',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                ),
+              ),
               Expanded(
-                  flex: 3,
-                  child: Text('المبلغ',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 12))),
+                flex: 3,
+                child: Text(
+                  'المبلغ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+                ),
+              ),
               SizedBox(width: 32),
             ],
           ),
@@ -140,9 +141,7 @@ class _JournalEntryEditorState extends State<JournalEntryEditor> {
         Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: balanced
-                ? AppColors.successLight
-                : AppColors.errorLight,
+            color: balanced ? AppColors.successLight : AppColors.errorLight,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: balanced ? AppColors.success : AppColors.error,
@@ -153,20 +152,26 @@ class _JournalEntryEditorState extends State<JournalEntryEditor> {
               Row(
                 children: [
                   Expanded(
-                      child: Text(
-                          'مجموع المدين: ${Formatters.currency(totalDebit)}',
-                          style: const TextStyle(
-                              fontSize: 12,
-                              color: AppColors.debit,
-                              fontWeight: FontWeight.bold))),
+                    child: Text(
+                      'مجموع المدين: ${Formatters.currency(totalDebit)}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.debit,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   Expanded(
-                      child: Text(
-                          'مجموع الدائن: ${Formatters.currency(totalCredit)}',
-                          textAlign: TextAlign.end,
-                          style: const TextStyle(
-                              fontSize: 12,
-                              color: AppColors.credit,
-                              fontWeight: FontWeight.bold))),
+                    child: Text(
+                      'مجموع الدائن: ${Formatters.currency(totalCredit)}',
+                      textAlign: TextAlign.end,
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: AppColors.credit,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ],
               ),
               const SizedBox(height: 4),
@@ -175,19 +180,13 @@ class _JournalEntryEditorState extends State<JournalEntryEditor> {
                   Icon(
                     balanced ? Icons.check_circle : Icons.error,
                     size: 16,
-                    color: balanced
-                        ? AppColors.success
-                        : AppColors.error,
+                    color: balanced ? AppColors.success : AppColors.error,
                   ),
                   const SizedBox(width: 6),
                   Text(
-                    balanced
-                        ? 'القيد متوازن'
-                        : 'القيد غير متوازن',
+                    balanced ? 'القيد متوازن' : 'القيد غير متوازن',
                     style: TextStyle(
-                      color: balanced
-                          ? AppColors.success
-                          : AppColors.error,
+                      color: balanced ? AppColors.success : AppColors.error,
                       fontWeight: FontWeight.bold,
                       fontSize: 12,
                     ),
@@ -227,8 +226,7 @@ class _LineRow extends StatelessWidget {
             decoration: const InputDecoration(
               isDense: true,
               hintText: 'اختر الحساب',
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+              contentPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               border: OutlineInputBorder(),
             ),
             items: [
@@ -256,13 +254,11 @@ class _LineRow extends StatelessWidget {
             segments: const [
               ButtonSegment(
                 value: 'debit',
-                label: Text('مدين',
-                    style: TextStyle(fontSize: 10.5)),
+                label: Text('مدين', style: TextStyle(fontSize: 10.5)),
               ),
               ButtonSegment(
                 value: 'credit',
-                label: Text('دائن',
-                    style: TextStyle(fontSize: 10.5)),
+                label: Text('دائن', style: TextStyle(fontSize: 10.5)),
               ),
             ],
             selected: {draft.side},
@@ -273,8 +269,8 @@ class _LineRow extends StatelessWidget {
             showSelectedIcon: false,
             style: ButtonStyle(
               padding: WidgetStateProperty.all(
-                  const EdgeInsets.symmetric(
-                      horizontal: 4, vertical: 6)),
+                const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+              ),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               visualDensity: VisualDensity.compact,
             ),
@@ -286,15 +282,13 @@ class _LineRow extends StatelessWidget {
           flex: 3,
           child: TextField(
             controller: draft.amountCtrl,
-            keyboardType: const TextInputType.numberWithOptions(
-                decimal: true),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 12),
             decoration: const InputDecoration(
               hintText: '0',
               isDense: true,
-              contentPadding:
-                  EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+              contentPadding: EdgeInsets.symmetric(horizontal: 6, vertical: 8),
               border: OutlineInputBorder(),
             ),
             onChanged: (_) => onChanged(),
@@ -306,8 +300,7 @@ class _LineRow extends StatelessWidget {
           color: AppColors.error,
           tooltip: 'حذف السطر',
           padding: EdgeInsets.zero,
-          constraints:
-              const BoxConstraints(minWidth: 28, minHeight: 28),
+          constraints: const BoxConstraints(minWidth: 28, minHeight: 28),
         ),
       ],
     );

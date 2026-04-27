@@ -29,10 +29,8 @@ class LedgerAccountStatement {
     required this.entries,
   });
 
-  double get totalDebit =>
-      entries.fold<double>(0, (s, e) => s + e.debit);
-  double get totalCredit =>
-      entries.fold<double>(0, (s, e) => s + e.credit);
+  double get totalDebit => entries.fold<double>(0, (s, e) => s + e.debit);
+  double get totalCredit => entries.fold<double>(0, (s, e) => s + e.credit);
 
   /// الرصيد قياسًا على طبيعة الحساب.
   /// موجب = الجانب الطبيعي (مدين للأصول/المصروفات، دائن للبقية).

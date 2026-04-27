@@ -60,8 +60,7 @@ class FaJournalListScreen extends StatelessWidget {
                     IconButton(
                       tooltip: 'مسح كل القيود',
                       onPressed: () => _confirmClear(context, fa),
-                      icon: const Icon(Icons.delete_sweep,
-                          color: Colors.white),
+                      icon: const Icon(Icons.delete_sweep, color: Colors.white),
                     ),
                 ],
               ),
@@ -87,8 +86,9 @@ class FaJournalListScreen extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => const JournalEntryFormScreen())),
+        onPressed: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const JournalEntryFormScreen()),
+        ),
         backgroundColor: AppColors.success,
         icon: const Icon(Icons.add),
         label: const Text('قيد جديد'),
@@ -103,8 +103,11 @@ class FaJournalListScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.book_outlined,
-                size: 80, color: AppColors.textLight),
+            const Icon(
+              Icons.book_outlined,
+              size: 80,
+              color: AppColors.textLight,
+            ),
             const SizedBox(height: 12),
             const Text(
               'لا توجد قيود مدخلة بعد',
@@ -118,20 +121,20 @@ class FaJournalListScreen extends StatelessWidget {
             const Text(
               'ابدأ بإدخال قيد يومية جديد عبر زر "قيد جديد"',
               textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12.5,
-                color: AppColors.textLight,
-              ),
+              style: TextStyle(fontSize: 12.5, color: AppColors.textLight),
             ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
-              onPressed: () =>
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const JournalEntryFormScreen())),
+              onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => const JournalEntryFormScreen(),
+                ),
+              ),
               icon: const Icon(Icons.add),
               label: const Text('إضافة قيد جديد'),
               style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.success),
+                backgroundColor: AppColors.success,
+              ),
             ),
           ],
         ),
@@ -140,21 +143,24 @@ class FaJournalListScreen extends StatelessWidget {
   }
 
   Future<void> _confirmClear(
-      BuildContext context, FinancialAccountingProvider fa) async {
+    BuildContext context,
+    FinancialAccountingProvider fa,
+  ) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
         title: const Text('مسح كل القيود؟'),
         content: const Text(
-            'سيتم حذف جميع قيود اليومية في المحاكاة وإعادة المحاسبة من الصفر. هل أنت متأكد؟'),
+          'سيتم حذف جميع قيود اليومية في المحاكاة وإعادة المحاسبة من الصفر. هل أنت متأكد؟',
+        ),
         actions: [
           TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('إلغاء')),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('إلغاء'),
+          ),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(true),
-            style:
-                ElevatedButton.styleFrom(backgroundColor: AppColors.error),
+            style: ElevatedButton.styleFrom(backgroundColor: AppColors.error),
             child: const Text('نعم، احذف الكل'),
           ),
         ],
@@ -190,7 +196,9 @@ class _JournalCard extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 3),
+                    horizontal: 8,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.12),
                     borderRadius: BorderRadius.circular(6),
@@ -208,16 +216,23 @@ class _JournalCard extends StatelessWidget {
                 Text(
                   Formatters.date(entry.date),
                   style: const TextStyle(
-                      fontSize: 12, color: AppColors.textSecondary),
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
                 ),
                 const Spacer(),
                 IconButton(
                   onPressed: onDelete,
-                  icon: const Icon(Icons.delete_outline,
-                      size: 18, color: AppColors.error),
+                  icon: const Icon(
+                    Icons.delete_outline,
+                    size: 18,
+                    color: AppColors.error,
+                  ),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(
-                      minWidth: 28, minHeight: 28),
+                    minWidth: 28,
+                    minHeight: 28,
+                  ),
                 ),
               ],
             ),
@@ -228,9 +243,10 @@ class _JournalCard extends StatelessWidget {
                 child: Text(
                   entry.description as String,
                   style: const TextStyle(
-                      fontSize: 12.5,
-                      fontStyle: FontStyle.italic,
-                      color: AppColors.textPrimary),
+                    fontSize: 12.5,
+                    fontStyle: FontStyle.italic,
+                    color: AppColors.textPrimary,
+                  ),
                 ),
               ),
             const Divider(height: 16),
@@ -241,13 +257,9 @@ class _JournalCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(
-                      l.isDebit
-                          ? Icons.arrow_back
-                          : Icons.arrow_forward,
+                      l.isDebit ? Icons.arrow_back : Icons.arrow_forward,
                       size: 14,
-                      color: l.isDebit
-                          ? AppColors.debit
-                          : AppColors.credit,
+                      color: l.isDebit ? AppColors.debit : AppColors.credit,
                     ),
                     const SizedBox(width: 4),
                     Expanded(
@@ -256,9 +268,7 @@ class _JournalCard extends StatelessWidget {
                         '${FinAccountsCatalog.byId(l.accountId)?.name ?? l.accountId}',
                         style: TextStyle(
                           fontSize: 12.5,
-                          color: l.isDebit
-                              ? AppColors.debit
-                              : AppColors.credit,
+                          color: l.isDebit ? AppColors.debit : AppColors.credit,
                         ),
                       ),
                     ),
@@ -267,9 +277,7 @@ class _JournalCard extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 12.5,
                         fontWeight: FontWeight.bold,
-                        color: l.isDebit
-                            ? AppColors.debit
-                            : AppColors.credit,
+                        color: l.isDebit ? AppColors.debit : AppColors.credit,
                       ),
                     ),
                   ],

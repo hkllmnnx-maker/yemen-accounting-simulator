@@ -66,8 +66,7 @@ class _IncomeStatementCard extends StatelessWidget {
             ),
             const Divider(height: 16),
             // Revenues
-            const _SubHeader(
-                label: 'الإيرادات', color: AppColors.revenue),
+            const _SubHeader(label: 'الإيرادات', color: AppColors.revenue),
             for (final l in income.revenues)
               _Line(label: l.label, amount: l.amount),
             const SizedBox(height: 4),
@@ -78,8 +77,7 @@ class _IncomeStatementCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             // Expenses
-            const _SubHeader(
-                label: 'المصروفات', color: AppColors.expenses),
+            const _SubHeader(label: 'المصروفات', color: AppColors.expenses),
             for (final l in income.expenses)
               _Line(label: l.label, amount: l.amount),
             const SizedBox(height: 4),
@@ -92,33 +90,23 @@ class _IncomeStatementCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: isProfit
-                    ? AppColors.successLight
-                    : AppColors.errorLight,
+                color: isProfit ? AppColors.successLight : AppColors.errorLight,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Row(
                 children: [
                   Icon(
-                    isProfit
-                        ? Icons.trending_up
-                        : Icons.trending_down,
-                    color: isProfit
-                        ? AppColors.success
-                        : AppColors.error,
+                    isProfit ? Icons.trending_up : Icons.trending_down,
+                    color: isProfit ? AppColors.success : AppColors.error,
                   ),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
-                      isProfit
-                          ? 'صافي الربح'
-                          : 'صافي الخسارة',
+                      isProfit ? 'صافي الربح' : 'صافي الخسارة',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 13.5,
-                        color: isProfit
-                            ? AppColors.success
-                            : AppColors.error,
+                        color: isProfit ? AppColors.success : AppColors.error,
                       ),
                     ),
                   ),
@@ -127,9 +115,7 @@ class _IncomeStatementCard extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
-                      color: isProfit
-                          ? AppColors.success
-                          : AppColors.error,
+                      color: isProfit ? AppColors.success : AppColors.error,
                     ),
                   ),
                 ],
@@ -162,10 +148,8 @@ class _BalanceSheetCard extends StatelessWidget {
             ),
             const Divider(height: 16),
             // Assets
-            const _SubHeader(
-                label: 'الأصول', color: AppColors.assets),
-            for (final l in bs.assets)
-              _Line(label: l.label, amount: l.amount),
+            const _SubHeader(label: 'الأصول', color: AppColors.assets),
+            for (final l in bs.assets) _Line(label: l.label, amount: l.amount),
             _TotalLine(
               label: 'إجمالي الأصول',
               amount: bs.totalAssets,
@@ -173,8 +157,7 @@ class _BalanceSheetCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             // Liabilities
-            const _SubHeader(
-                label: 'الالتزامات', color: AppColors.liabilities),
+            const _SubHeader(label: 'الالتزامات', color: AppColors.liabilities),
             for (final l in bs.liabilities)
               _Line(label: l.label, amount: l.amount),
             _TotalLine(
@@ -184,10 +167,8 @@ class _BalanceSheetCard extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             // Equity
-            const _SubHeader(
-                label: 'حقوق الملكية', color: AppColors.equity),
-            for (final l in bs.equity)
-              _Line(label: l.label, amount: l.amount),
+            const _SubHeader(label: 'حقوق الملكية', color: AppColors.equity),
+            for (final l in bs.equity) _Line(label: l.label, amount: l.amount),
             _Line(
               label: bs.netIncome >= 0
                   ? 'صافي ربح الفترة'
@@ -206,9 +187,7 @@ class _BalanceSheetCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: balanced
-                    ? AppColors.successLight
-                    : AppColors.errorLight,
+                color: balanced ? AppColors.successLight : AppColors.errorLight,
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Column(
@@ -216,19 +195,13 @@ class _BalanceSheetCard extends StatelessWidget {
                   Row(
                     children: [
                       Icon(
-                        balanced
-                            ? Icons.check_circle
-                            : Icons.error,
-                        color: balanced
-                            ? AppColors.success
-                            : AppColors.error,
+                        balanced ? Icons.check_circle : Icons.error,
+                        color: balanced ? AppColors.success : AppColors.error,
                       ),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
-                          balanced
-                              ? 'القائمة متوازنة'
-                              : 'القائمة غير متوازنة',
+                          balanced ? 'القائمة متوازنة' : 'القائمة غير متوازنة',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: balanced
@@ -245,9 +218,10 @@ class _BalanceSheetCard extends StatelessWidget {
                     'الأصول: ${Formatters.currency(bs.totalAssets)}\n'
                     'الالتزامات + حقوق الملكية: ${Formatters.currency(bs.totalLiabilitiesAndEquity)}',
                     style: const TextStyle(
-                        fontSize: 11.5,
-                        color: AppColors.textSecondary,
-                        height: 1.5),
+                      fontSize: 11.5,
+                      color: AppColors.textSecondary,
+                      height: 1.5,
+                    ),
                   ),
                 ],
               ),
@@ -278,22 +252,24 @@ class _CashFlowCard extends StatelessWidget {
             ),
             const Divider(height: 16),
             const _SubHeader(
-                label: 'تدفقات نقدية داخلة',
-                color: AppColors.success),
+              label: 'تدفقات نقدية داخلة',
+              color: AppColors.success,
+            ),
             if (cf.inflows.isEmpty)
               const Padding(
                 padding: EdgeInsets.all(6),
-                child: Text('-',
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textLight)),
+                child: Text(
+                  '-',
+                  style: TextStyle(fontSize: 12, color: AppColors.textLight),
+                ),
               )
             else
               for (final l in cf.inflows)
                 _Line(
-                    label: l.label,
-                    amount: l.amount,
-                    valueColor: AppColors.success),
+                  label: l.label,
+                  amount: l.amount,
+                  valueColor: AppColors.success,
+                ),
             _TotalLine(
               label: 'إجمالي التدفقات الداخلة',
               amount: cf.totalInflows,
@@ -301,22 +277,24 @@ class _CashFlowCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const _SubHeader(
-                label: 'تدفقات نقدية خارجة',
-                color: AppColors.error),
+              label: 'تدفقات نقدية خارجة',
+              color: AppColors.error,
+            ),
             if (cf.outflows.isEmpty)
               const Padding(
                 padding: EdgeInsets.all(6),
-                child: Text('-',
-                    style: TextStyle(
-                        fontSize: 12,
-                        color: AppColors.textLight)),
+                child: Text(
+                  '-',
+                  style: TextStyle(fontSize: 12, color: AppColors.textLight),
+                ),
               )
             else
               for (final l in cf.outflows)
                 _Line(
-                    label: l.label,
-                    amount: l.amount,
-                    valueColor: AppColors.error),
+                  label: l.label,
+                  amount: l.amount,
+                  valueColor: AppColors.error,
+                ),
             _TotalLine(
               label: 'إجمالي التدفقات الخارجة',
               amount: cf.totalOutflows,
@@ -346,7 +324,9 @@ class _CashFlowCard extends StatelessWidget {
                     child: Text(
                       'صافي التدفق النقدي',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 13),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 13,
+                      ),
                     ),
                   ),
                   Text(
@@ -373,8 +353,7 @@ class _Header extends StatelessWidget {
   final IconData icon;
   final String title;
   final Color color;
-  const _Header(
-      {required this.icon, required this.title, required this.color});
+  const _Header({required this.icon, required this.title, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -389,11 +368,14 @@ class _Header extends StatelessWidget {
           child: Icon(icon, color: color, size: 20),
         ),
         const SizedBox(width: 10),
-        Text(title,
-            style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: AppColors.textPrimary)),
+        Text(
+          title,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 15,
+            color: AppColors.textPrimary,
+          ),
+        ),
       ],
     );
   }
@@ -431,8 +413,7 @@ class _Line extends StatelessWidget {
   final String label;
   final double amount;
   final Color? valueColor;
-  const _Line(
-      {required this.label, required this.amount, this.valueColor});
+  const _Line({required this.label, required this.amount, this.valueColor});
 
   @override
   Widget build(BuildContext context) {
@@ -444,15 +425,18 @@ class _Line extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                  fontSize: 12, color: AppColors.textPrimary),
+                fontSize: 12,
+                color: AppColors.textPrimary,
+              ),
             ),
           ),
           Text(
             Formatters.currency(amount),
             style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: valueColor ?? AppColors.textPrimary),
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: valueColor ?? AppColors.textPrimary,
+            ),
           ),
         ],
       ),
@@ -464,10 +448,11 @@ class _TotalLine extends StatelessWidget {
   final String label;
   final double amount;
   final Color color;
-  const _TotalLine(
-      {required this.label,
-      required this.amount,
-      required this.color});
+  const _TotalLine({
+    required this.label,
+    required this.amount,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -477,24 +462,28 @@ class _TotalLine extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.06),
         borderRadius: BorderRadius.circular(4),
-        border: Border(
-          top: BorderSide(color: color.withValues(alpha: 0.4)),
-        ),
+        border: Border(top: BorderSide(color: color.withValues(alpha: 0.4))),
       ),
       child: Row(
         children: [
           Expanded(
-            child: Text(label,
-                style: TextStyle(
-                    color: color,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 12.5)),
-          ),
-          Text(Formatters.currency(amount),
+            child: Text(
+              label,
               style: TextStyle(
-                  color: color,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13)),
+                color: color,
+                fontWeight: FontWeight.bold,
+                fontSize: 12.5,
+              ),
+            ),
+          ),
+          Text(
+            Formatters.currency(amount),
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+            ),
+          ),
         ],
       ),
     );

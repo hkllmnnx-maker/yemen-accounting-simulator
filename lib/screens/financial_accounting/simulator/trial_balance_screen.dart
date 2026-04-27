@@ -37,12 +37,11 @@ class FaTrialBalanceScreen extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: balanced
-                ? AppColors.successLight
-                : AppColors.errorLight,
+            color: balanced ? AppColors.successLight : AppColors.errorLight,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-                color: balanced ? AppColors.success : AppColors.error),
+              color: balanced ? AppColors.success : AppColors.error,
+            ),
           ),
           child: Row(
             children: [
@@ -57,8 +56,7 @@ class FaTrialBalanceScreen extends StatelessWidget {
                       ? 'ميزان المراجعة متوازن: مجموع المدين = مجموع الدائن.'
                       : 'الميزان غير متوازن. راجع قيودك للعثور على الخطأ.',
                   style: TextStyle(
-                    color:
-                        balanced ? AppColors.success : AppColors.error,
+                    color: balanced ? AppColors.success : AppColors.error,
                     fontWeight: FontWeight.bold,
                     fontSize: 12.5,
                   ),
@@ -77,7 +75,9 @@ class FaTrialBalanceScreen extends StatelessWidget {
                 // Header
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 8, horizontal: 6),
+                    vertical: 8,
+                    horizontal: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.primary.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(6),
@@ -85,27 +85,39 @@ class FaTrialBalanceScreen extends StatelessWidget {
                   child: const Row(
                     children: [
                       Expanded(
-                          flex: 4,
-                          child: Text('الحساب',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12))),
+                        flex: 4,
+                        child: Text(
+                          'الحساب',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
                       Expanded(
-                          flex: 3,
-                          child: Text('مدين',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  color: AppColors.debit))),
+                        flex: 3,
+                        child: Text(
+                          'مدين',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: AppColors.debit,
+                          ),
+                        ),
+                      ),
                       Expanded(
-                          flex: 3,
-                          child: Text('دائن',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12,
-                                  color: AppColors.credit))),
+                        flex: 3,
+                        child: Text(
+                          'دائن',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: AppColors.credit,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -113,7 +125,9 @@ class FaTrialBalanceScreen extends StatelessWidget {
                 for (final r in rows)
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        vertical: 4, horizontal: 6),
+                      vertical: 4,
+                      horizontal: 6,
+                    ),
                     child: Row(
                       children: [
                         Expanded(
@@ -131,9 +145,10 @@ class FaTrialBalanceScreen extends StatelessWidget {
                                 : '-',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 11.5,
-                                color: AppColors.debit,
-                                fontWeight: FontWeight.bold),
+                              fontSize: 11.5,
+                              color: AppColors.debit,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         Expanded(
@@ -144,9 +159,10 @@ class FaTrialBalanceScreen extends StatelessWidget {
                                 : '-',
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 11.5,
-                                color: AppColors.credit,
-                                fontWeight: FontWeight.bold),
+                              fontSize: 11.5,
+                              color: AppColors.credit,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ],
@@ -156,7 +172,9 @@ class FaTrialBalanceScreen extends StatelessWidget {
                 // Totals
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 8, horizontal: 6),
+                    vertical: 8,
+                    horizontal: 6,
+                  ),
                   decoration: BoxDecoration(
                     color: balanced
                         ? AppColors.success.withValues(alpha: 0.08)
@@ -166,20 +184,25 @@ class FaTrialBalanceScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       const Expanded(
-                          flex: 4,
-                          child: Text('الإجمالي',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13))),
+                        flex: 4,
+                        child: Text(
+                          'الإجمالي',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
                       Expanded(
                         flex: 3,
                         child: Text(
                           Formatters.currency(totalDebit),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: AppColors.debit),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: AppColors.debit,
+                          ),
                         ),
                       ),
                       Expanded(
@@ -188,9 +211,10 @@ class FaTrialBalanceScreen extends StatelessWidget {
                           Formatters.currency(totalCredit),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 12,
-                              color: AppColors.credit),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: AppColors.credit,
+                          ),
                         ),
                       ),
                     ],
@@ -223,5 +247,3 @@ class FaTrialBalanceScreen extends StatelessWidget {
     );
   }
 }
-
-

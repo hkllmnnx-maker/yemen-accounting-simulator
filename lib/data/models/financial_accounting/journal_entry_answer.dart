@@ -17,9 +17,8 @@ class JournalEntryAnswer {
     required this.lines,
   });
 
-  double get totalDebit => lines
-      .where((l) => l.isDebit)
-      .fold<double>(0, (sum, l) => sum + l.amount);
+  double get totalDebit =>
+      lines.where((l) => l.isDebit).fold<double>(0, (sum, l) => sum + l.amount);
 
   double get totalCredit => lines
       .where((l) => l.isCredit)

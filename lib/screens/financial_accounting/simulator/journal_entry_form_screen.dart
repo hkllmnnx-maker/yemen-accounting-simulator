@@ -13,8 +13,7 @@ class JournalEntryFormScreen extends StatefulWidget {
   const JournalEntryFormScreen({super.key});
 
   @override
-  State<JournalEntryFormScreen> createState() =>
-      _JournalEntryFormScreenState();
+  State<JournalEntryFormScreen> createState() => _JournalEntryFormScreenState();
 }
 
 class _JournalEntryFormScreenState extends State<JournalEntryFormScreen> {
@@ -66,10 +65,7 @@ class _JournalEntryFormScreenState extends State<JournalEntryFormScreen> {
     if (err != null) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          backgroundColor: AppColors.error,
-          content: Text(err),
-        ),
+        SnackBar(backgroundColor: AppColors.error, content: Text(err)),
       );
       return;
     }
@@ -86,9 +82,7 @@ class _JournalEntryFormScreenState extends State<JournalEntryFormScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('قيد يومية جديد'),
-      ),
+      appBar: AppBar(title: const Text('قيد يومية جديد')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(12),
@@ -98,19 +92,18 @@ class _JournalEntryFormScreenState extends State<JournalEntryFormScreen> {
               decoration: BoxDecoration(
                 color: AppColors.info.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(8),
-                border:
-                    Border.all(color: AppColors.info.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.info.withValues(alpha: 0.3),
+                ),
               ),
               child: const Row(
                 children: [
-                  Icon(Icons.info_outline,
-                      color: AppColors.info, size: 18),
+                  Icon(Icons.info_outline, color: AppColors.info, size: 18),
                   SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       'لا يُسمح بحفظ القيد إلا إذا كان متوازنًا (مجموع المدين = مجموع الدائن).',
-                      style: TextStyle(
-                          fontSize: 12, color: AppColors.info),
+                      style: TextStyle(fontSize: 12, color: AppColors.info),
                     ),
                   ),
                 ],
@@ -132,8 +125,10 @@ class _JournalEntryFormScreenState extends State<JournalEntryFormScreen> {
                           isDense: true,
                           prefixIcon: Icon(Icons.calendar_today),
                         ),
-                        child: Text(Formatters.date(_date),
-                            style: const TextStyle(fontSize: 13)),
+                        child: Text(
+                          Formatters.date(_date),
+                          style: const TextStyle(fontSize: 13),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),

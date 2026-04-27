@@ -347,10 +347,7 @@ const List<FinancialLesson> financialLessons = [
     ],
     wrapUp:
         'بعد إجراء التسويات، الأرصدة جاهزة لإنتاج قائمة الدخل الحقيقية والمركز المالي العادل.',
-    exerciseIds: [
-      'fa_ex_depreciation',
-      'fa_ex_accrued_salary',
-    ],
+    exerciseIds: ['fa_ex_depreciation', 'fa_ex_accrued_salary'],
     xpReward: 12,
   ),
 

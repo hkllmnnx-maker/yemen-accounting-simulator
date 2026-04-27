@@ -12,6 +12,7 @@ import '../screens/progress/progress_screen.dart';
 import '../screens/glossary/glossary_screen.dart';
 import '../screens/settings/settings_screen.dart';
 import '../screens/simulator/simulator_home_screen.dart';
+import '../screens/financial_accounting/financial_accounting_home_screen.dart';
 
 /// قائمة جانبية شبيهة بالأنظمة المحاسبية اليمنية
 class AppDrawer extends StatelessWidget {
@@ -109,6 +110,12 @@ class AppDrawer extends StatelessWidget {
               replaceRoot: true,
             ),
             _drawerItem(context, Icons.school, AppStrings.lessons, const LessonsScreen()),
+            _drawerItem(
+              context,
+              Icons.account_balance_wallet,
+              AppStrings.faShortName,
+              const FinancialAccountingHomeScreen(),
+            ),
             _drawerItem(context, Icons.fitness_center, AppStrings.training,
                 const TrainingListScreen()),
             _drawerItem(context, Icons.computer, AppStrings.simulator,

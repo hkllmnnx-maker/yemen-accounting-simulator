@@ -35,9 +35,7 @@ class FinancialSimulatorScreen extends StatelessWidget {
               Tab(icon: Icon(Icons.book), text: 'اليومية'),
               Tab(icon: Icon(Icons.receipt_long), text: 'الأستاذ'),
               Tab(icon: Icon(Icons.balance), text: 'ميزان المراجعة'),
-              Tab(
-                  icon: Icon(Icons.account_balance),
-                  text: 'القوائم المالية'),
+              Tab(icon: Icon(Icons.account_balance), text: 'القوائم المالية'),
               Tab(icon: Icon(Icons.analytics), text: 'التحليل'),
             ],
           ),

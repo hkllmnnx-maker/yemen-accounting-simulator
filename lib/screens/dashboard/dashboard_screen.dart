@@ -14,6 +14,7 @@ import '../progress/progress_screen.dart';
 import '../glossary/glossary_screen.dart';
 import '../settings/settings_screen.dart';
 import '../simulator/simulator_home_screen.dart';
+import '../financial_accounting/financial_accounting_home_screen.dart';
 
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
@@ -170,6 +171,15 @@ class DashboardScreen extends StatelessWidget {
                   color: AppColors.primary,
                   onTap: () => Navigator.of(context).push(MaterialPageRoute(
                       builder: (_) => const LessonsScreen())),
+                ),
+                SectionCard(
+                  icon: Icons.account_balance_wallet,
+                  title: AppStrings.faShortName,
+                  subtitle: 'من القيد إلى التحليل',
+                  color: AppColors.equity,
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) =>
+                          const FinancialAccountingHomeScreen())),
                 ),
                 SectionCard(
                   icon: Icons.fitness_center,

@@ -24,9 +24,7 @@ class FinancialLevelScreen extends StatelessWidget {
     final progress = fa.lessonProgress(lesson.id);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('المستوى ${lesson.order}: ${lesson.title}'),
-      ),
+      appBar: AppBar(title: Text('المستوى ${lesson.order}: ${lesson.title}')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(12),
@@ -81,22 +79,22 @@ class FinancialLevelScreen extends StatelessWidget {
                   Text(
                     lesson.subtitle,
                     style: const TextStyle(
-                        color: Colors.white70, fontSize: 12.5),
+                      color: Colors.white70,
+                      fontSize: 12.5,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   LinearProgressIndicator(
                     value: progress,
                     minHeight: 6,
                     backgroundColor: Colors.white24,
-                    valueColor:
-                        const AlwaysStoppedAnimation(AppColors.gold),
+                    valueColor: const AlwaysStoppedAnimation(AppColors.gold),
                   ),
                   const SizedBox(height: 6),
                   Text(
                     'الإنجاز: ${Formatters.percent(progress)} • '
                     '${lesson.xpReward} XP',
-                    style: const TextStyle(
-                        color: Colors.white, fontSize: 12),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ],
               ),
@@ -111,9 +109,10 @@ class FinancialLevelScreen extends StatelessWidget {
               child: Text(
                 lesson.summary,
                 style: const TextStyle(
-                    fontSize: 13.5,
-                    height: 1.6,
-                    color: AppColors.textPrimary),
+                  fontSize: 13.5,
+                  height: 1.6,
+                  color: AppColors.textPrimary,
+                ),
               ),
             ),
 
@@ -126,10 +125,7 @@ class FinancialLevelScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   for (var i = 0; i < lesson.sections.length; i++) ...[
-                    _NumberedParagraph(
-                      number: i + 1,
-                      text: lesson.sections[i],
-                    ),
+                    _NumberedParagraph(number: i + 1, text: lesson.sections[i]),
                     if (i < lesson.sections.length - 1)
                       const SizedBox(height: 8),
                   ],
@@ -154,8 +150,8 @@ class FinancialLevelScreen extends StatelessWidget {
                           color: AppColors.gold.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(8),
                           border: Border.all(
-                              color:
-                                  AppColors.gold.withValues(alpha: 0.4)),
+                            color: AppColors.gold.withValues(alpha: 0.4),
+                          ),
                         ),
                         child: Text(
                           ex,
@@ -184,19 +180,23 @@ class FinancialLevelScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Row(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.close_rounded,
-                                color: AppColors.error, size: 16),
+                            const Icon(
+                              Icons.close_rounded,
+                              color: AppColors.error,
+                              size: 16,
+                            ),
                             const SizedBox(width: 6),
                             Expanded(
-                              child: Text(m,
-                                  style: const TextStyle(
-                                    fontSize: 12.5,
-                                    height: 1.5,
-                                    color: AppColors.textPrimary,
-                                  )),
+                              child: Text(
+                                m,
+                                style: const TextStyle(
+                                  fontSize: 12.5,
+                                  height: 1.5,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -218,19 +218,23 @@ class FinancialLevelScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Row(
-                          crossAxisAlignment:
-                              CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.bolt,
-                                color: AppColors.accent, size: 16),
+                            const Icon(
+                              Icons.bolt,
+                              color: AppColors.accent,
+                              size: 16,
+                            ),
                             const SizedBox(width: 6),
                             Expanded(
-                              child: Text(t,
-                                  style: const TextStyle(
-                                    fontSize: 12.5,
-                                    height: 1.5,
-                                    color: AppColors.textPrimary,
-                                  )),
+                              child: Text(
+                                t,
+                                style: const TextStyle(
+                                  fontSize: 12.5,
+                                  height: 1.5,
+                                  color: AppColors.textPrimary,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -267,8 +271,9 @@ class FinancialLevelScreen extends StatelessWidget {
                           title: Text(
                             ex.title,
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 13.5),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13.5,
+                            ),
                           ),
                           subtitle: Text(
                             ex.scenario,
@@ -280,13 +285,18 @@ class FinancialLevelScreen extends StatelessWidget {
                               height: 1.4,
                             ),
                           ),
-                          trailing: Icon(Icons.chevron_left,
-                              color: AppColors.textLight),
-                          onTap: () =>
-                              Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => JournalPracticeScreen(
-                                exercise: ex, lesson: lesson),
-                          )),
+                          trailing: Icon(
+                            Icons.chevron_left,
+                            color: AppColors.textLight,
+                          ),
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => JournalPracticeScreen(
+                                exercise: ex,
+                                lesson: lesson,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -312,12 +322,10 @@ class FinancialLevelScreen extends StatelessWidget {
             // ============== Mark as completed ==============
             if (!completed)
               ElevatedButton.icon(
-                onPressed: () =>
-                    _markCompleted(context, fa, lesson),
+                onPressed: () => _markCompleted(context, fa, lesson),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.success,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 14),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
                 icon: const Icon(Icons.check_circle),
                 label: Text(
@@ -331,13 +339,12 @@ class FinancialLevelScreen extends StatelessWidget {
                   color: AppColors.successLight,
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                      color:
-                          AppColors.success.withValues(alpha: 0.4)),
+                    color: AppColors.success.withValues(alpha: 0.4),
+                  ),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.check_circle,
-                        color: AppColors.success),
+                    const Icon(Icons.check_circle, color: AppColors.success),
                     const SizedBox(width: 8),
                     const Expanded(
                       child: Text(
@@ -359,8 +366,11 @@ class FinancialLevelScreen extends StatelessWidget {
     );
   }
 
-  Future<void> _markCompleted(BuildContext context,
-      FinancialAccountingProvider fa, FinancialLesson lesson) async {
+  Future<void> _markCompleted(
+    BuildContext context,
+    FinancialAccountingProvider fa,
+    FinancialLesson lesson,
+  ) async {
     final progress = context.read<ProgressProvider>();
     await fa.markLessonCompleted(lesson.id);
     // أضِف XP وشارة عبر ProgressProvider الذي يحفظ تلقائيًا.

@@ -54,11 +54,7 @@ class FinAccount {
   final String name;
   final FinAccountType type;
 
-  const FinAccount({
-    required this.id,
-    required this.name,
-    required this.type,
-  });
+  const FinAccount({required this.id, required this.name, required this.type});
 }
 
 /// طرف واحد ضمن قيد محاسبي (مدين أو دائن).
@@ -99,9 +95,8 @@ class FinExpectedEntry {
     required this.lines,
   });
 
-  double get totalDebit => lines
-      .where((l) => l.isDebit)
-      .fold<double>(0, (sum, l) => sum + l.amount);
+  double get totalDebit =>
+      lines.where((l) => l.isDebit).fold<double>(0, (sum, l) => sum + l.amount);
 
   double get totalCredit => lines
       .where((l) => l.isCredit)

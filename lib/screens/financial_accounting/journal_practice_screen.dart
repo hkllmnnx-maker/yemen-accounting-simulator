@@ -26,8 +26,7 @@ class JournalPracticeScreen extends StatefulWidget {
   });
 
   @override
-  State<JournalPracticeScreen> createState() =>
-      _JournalPracticeScreenState();
+  State<JournalPracticeScreen> createState() => _JournalPracticeScreenState();
 }
 
 class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
@@ -137,8 +136,9 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                 decoration: BoxDecoration(
                   color: AppColors.successLight,
                   borderRadius: BorderRadius.circular(10),
-                  border:
-                      Border.all(color: AppColors.success.withValues(alpha: 0.5)),
+                  border: Border.all(
+                    color: AppColors.success.withValues(alpha: 0.5),
+                  ),
                 ),
                 child: const Row(
                   children: [
@@ -148,7 +148,9 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                       child: Text(
                         'لقد سبق وأنجزت هذا التمرين بنجاح. يمكنك إعادة المحاولة للتمرّن.',
                         style: TextStyle(
-                            color: AppColors.success, fontSize: 12.5),
+                          color: AppColors.success,
+                          fontSize: 12.5,
+                        ),
                       ),
                     ),
                   ],
@@ -163,9 +165,10 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(ex.scenario,
-                      style: const TextStyle(
-                          fontSize: 13, height: 1.7)),
+                  Text(
+                    ex.scenario,
+                    style: const TextStyle(fontSize: 13, height: 1.7),
+                  ),
                   const SizedBox(height: 8),
                   Container(
                     padding: const EdgeInsets.all(8),
@@ -175,15 +178,19 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.calendar_today,
-                            size: 16, color: AppColors.primary),
+                        const Icon(
+                          Icons.calendar_today,
+                          size: 16,
+                          color: AppColors.primary,
+                        ),
                         const SizedBox(width: 6),
                         Text(
                           'تاريخ العملية: ${Formatters.date(ex.operationDate)}',
                           style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.primary),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.primary,
+                          ),
                         ),
                       ],
                     ),
@@ -197,8 +204,10 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
               icon: Icons.description,
               color: AppColors.info,
               title: 'وصف العملية',
-              child: Text(ex.operationText,
-                  style: const TextStyle(fontSize: 13, height: 1.7)),
+              child: Text(
+                ex.operationText,
+                style: const TextStyle(fontSize: 13, height: 1.7),
+              ),
             ),
 
             // ============== Requirement ==============
@@ -206,11 +215,14 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
               icon: Icons.assignment,
               color: AppColors.accent,
               title: 'المطلوب',
-              child: Text(ex.requirement,
-                  style: const TextStyle(
-                      fontSize: 13.5,
-                      height: 1.7,
-                      fontWeight: FontWeight.w600)),
+              child: Text(
+                ex.requirement,
+                style: const TextStyle(
+                  fontSize: 13.5,
+                  height: 1.7,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
 
             // ============== Hints ==============
@@ -222,24 +234,25 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     InkWell(
-                      onTap: () =>
-                          setState(() => _showHints = !_showHints),
+                      onTap: () => setState(() => _showHints = !_showHints),
                       child: Row(
                         children: [
-                          const Icon(Icons.tips_and_updates,
-                              color: AppColors.gold, size: 20),
+                          const Icon(
+                            Icons.tips_and_updates,
+                            color: AppColors.gold,
+                            size: 20,
+                          ),
                           const SizedBox(width: 8),
                           const Text(
                             'تلميحات قبل الحل',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
                           ),
                           const Spacer(),
                           Icon(
-                            _showHints
-                                ? Icons.expand_less
-                                : Icons.expand_more,
+                            _showHints ? Icons.expand_less : Icons.expand_more,
                             color: AppColors.textLight,
                           ),
                         ],
@@ -249,18 +262,24 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                       const Divider(),
                       for (final h in ex.hints)
                         Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4),
+                          padding: const EdgeInsets.symmetric(vertical: 4),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Icon(Icons.bolt,
-                                  size: 14, color: AppColors.gold),
+                              const Icon(
+                                Icons.bolt,
+                                size: 14,
+                                color: AppColors.gold,
+                              ),
                               const SizedBox(width: 6),
                               Expanded(
-                                child: Text(h,
-                                    style: const TextStyle(
-                                        fontSize: 12.5, height: 1.5)),
+                                child: Text(
+                                  h,
+                                  style: const TextStyle(
+                                    fontSize: 12.5,
+                                    height: 1.5,
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -290,9 +309,10 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                               border: OutlineInputBorder(),
                               isDense: true,
                             ),
-                            child: Text(Formatters.date(_date),
-                                style:
-                                    const TextStyle(fontSize: 13)),
+                            child: Text(
+                              Formatters.date(_date),
+                              style: const TextStyle(fontSize: 13),
+                            ),
                           ),
                         ),
                       ),
@@ -324,16 +344,14 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                           label: const Text('تحقّق من الحل'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.success,
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12),
+                            padding: const EdgeInsets.symmetric(vertical: 12),
                           ),
                         ),
                       ),
                       const SizedBox(width: 8),
                       OutlinedButton.icon(
                         onPressed: _revealSolution,
-                        icon: const Icon(Icons.lightbulb_outline,
-                            size: 18),
+                        icon: const Icon(Icons.lightbulb_outline, size: 18),
                         label: const Text('إظهار الحل'),
                       ),
                     ],
@@ -359,18 +377,24 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                   children: [
                     for (final m in ex.commonMistakes)
                       Padding(
-                        padding:
-                            const EdgeInsets.symmetric(vertical: 4),
+                        padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Icon(Icons.close,
-                                size: 14, color: AppColors.error),
+                            const Icon(
+                              Icons.close,
+                              size: 14,
+                              color: AppColors.error,
+                            ),
                             const SizedBox(width: 6),
                             Expanded(
-                              child: Text(m,
-                                  style: const TextStyle(
-                                      fontSize: 12.5, height: 1.5)),
+                              child: Text(
+                                m,
+                                style: const TextStyle(
+                                  fontSize: 12.5,
+                                  height: 1.5,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -409,9 +433,7 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
               Icon(
                 r.correct
                     ? Icons.check_circle
-                    : (r.balanced
-                        ? Icons.warning_amber_rounded
-                        : Icons.error),
+                    : (r.balanced ? Icons.warning_amber_rounded : Icons.error),
                 color: color,
               ),
               const SizedBox(width: 8),
@@ -420,8 +442,8 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                   r.correct
                       ? 'إجابة صحيحة - أحسنت!'
                       : (r.balanced
-                          ? 'القيد متوازن لكن لا يطابق الحل الصحيح'
-                          : 'القيد غير متوازن'),
+                            ? 'القيد متوازن لكن لا يطابق الحل الصحيح'
+                            : 'القيد غير متوازن'),
                   style: TextStyle(
                     color: color,
                     fontWeight: FontWeight.bold,
@@ -430,18 +452,24 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                 ),
               ),
               if (_attempts > 0)
-                Text('محاولات: $_attempts',
-                    style: const TextStyle(
-                        fontSize: 11,
-                        color: AppColors.textSecondary)),
+                Text(
+                  'محاولات: $_attempts',
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
             ],
           ),
           const SizedBox(height: 6),
-          Text(r.message,
-              style: const TextStyle(
-                  fontSize: 12.5,
-                  height: 1.6,
-                  color: AppColors.textPrimary)),
+          Text(
+            r.message,
+            style: const TextStyle(
+              fontSize: 12.5,
+              height: 1.6,
+              color: AppColors.textPrimary,
+            ),
+          ),
           if (r.issues.isNotEmpty) ...[
             const SizedBox(height: 8),
             for (final issue in r.issues)
@@ -450,15 +478,17 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(Icons.error_outline,
-                        size: 14, color: color),
+                    Icon(Icons.error_outline, size: 14, color: color),
                     const SizedBox(width: 6),
                     Expanded(
-                      child: Text(issue,
-                          style: TextStyle(
-                              fontSize: 11.5,
-                              height: 1.5,
-                              color: color)),
+                      child: Text(
+                        issue,
+                        style: TextStyle(
+                          fontSize: 11.5,
+                          height: 1.5,
+                          color: color,
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -487,17 +517,22 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
             children: const [
               Icon(Icons.lightbulb, color: AppColors.gold),
               SizedBox(width: 6),
-              Text('الحل الصحيح',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 14)),
+              Text(
+                'الحل الصحيح',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+              ),
             ],
           ),
           const SizedBox(height: 8),
-          Text('التاريخ: ${Formatters.date(exp.date)}',
-              style: const TextStyle(fontSize: 12)),
+          Text(
+            'التاريخ: ${Formatters.date(exp.date)}',
+            style: const TextStyle(fontSize: 12),
+          ),
           const SizedBox(height: 4),
-          Text('البيان: ${exp.description}',
-              style: const TextStyle(fontSize: 12)),
+          Text(
+            'البيان: ${exp.description}',
+            style: const TextStyle(fontSize: 12),
+          ),
           const Divider(),
           // أطراف القيد
           for (final l in exp.lines)
@@ -517,9 +552,7 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                       '${FinAccountsCatalog.byId(l.accountId)?.name ?? l.accountId}',
                       style: TextStyle(
                         fontSize: 12.5,
-                        color: l.isDebit
-                            ? AppColors.debit
-                            : AppColors.credit,
+                        color: l.isDebit ? AppColors.debit : AppColors.credit,
                       ),
                     ),
                   ),
@@ -528,9 +561,7 @@ class _JournalPracticeScreenState extends State<JournalPracticeScreen> {
                     style: TextStyle(
                       fontSize: 12.5,
                       fontWeight: FontWeight.bold,
-                      color: l.isDebit
-                          ? AppColors.debit
-                          : AppColors.credit,
+                      color: l.isDebit ? AppColors.debit : AppColors.credit,
                     ),
                   ),
                 ],
@@ -587,11 +618,14 @@ class _Section extends StatelessWidget {
                   child: Icon(icon, color: color, size: 16),
                 ),
                 const SizedBox(width: 8),
-                Text(title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: AppColors.textPrimary)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: AppColors.textPrimary,
+                  ),
+                ),
               ],
             ),
             const Divider(height: 16),

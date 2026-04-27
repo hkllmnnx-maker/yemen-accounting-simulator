@@ -24,15 +24,10 @@ class IncomeStatement {
   final List<FinancialStatementLine> revenues;
   final List<FinancialStatementLine> expenses;
 
-  const IncomeStatement({
-    required this.revenues,
-    required this.expenses,
-  });
+  const IncomeStatement({required this.revenues, required this.expenses});
 
-  double get totalRevenues =>
-      revenues.fold<double>(0, (s, l) => s + l.amount);
-  double get totalExpenses =>
-      expenses.fold<double>(0, (s, l) => s + l.amount);
+  double get totalRevenues => revenues.fold<double>(0, (s, l) => s + l.amount);
+  double get totalExpenses => expenses.fold<double>(0, (s, l) => s + l.amount);
   double get netIncome => totalRevenues - totalExpenses;
 }
 
@@ -62,8 +57,7 @@ class BalanceSheetReport {
 
   double get totalLiabilitiesAndEquity => totalLiabilities + totalEquity;
 
-  bool get isBalanced =>
-      (totalAssets - totalLiabilitiesAndEquity).abs() < 0.5;
+  bool get isBalanced => (totalAssets - totalLiabilitiesAndEquity).abs() < 0.5;
 }
 
 /// قائمة تدفقات نقدية مبسّطة (افتراضية - تعتمد على حركات النقدية فقط).
@@ -78,10 +72,8 @@ class SimpleCashFlowStatement {
     this.openingCash = 0,
   });
 
-  double get totalInflows =>
-      inflows.fold<double>(0, (s, l) => s + l.amount);
-  double get totalOutflows =>
-      outflows.fold<double>(0, (s, l) => s + l.amount);
+  double get totalInflows => inflows.fold<double>(0, (s, l) => s + l.amount);
+  double get totalOutflows => outflows.fold<double>(0, (s, l) => s + l.amount);
   double get netCashFlow => totalInflows - totalOutflows;
   double get endingCash => openingCash + netCashFlow;
 }

@@ -30,8 +30,7 @@ class FinancialAccountingProvider extends ChangeNotifier {
   // ====== قيود يومية المحاكاة ======
   /// كل قيد عبارة عن JournalEntryAnswer (له تاريخ وبيان وأسطر).
   final List<JournalEntryAnswer> _simJournal = [];
-  List<JournalEntryAnswer> get simJournal =>
-      List.unmodifiable(_simJournal);
+  List<JournalEntryAnswer> get simJournal => List.unmodifiable(_simJournal);
 
   // ====== المستويات والتمارين ======
   List<FinancialLesson> get lessons => financialLessons;
@@ -73,8 +72,7 @@ class FinancialAccountingProvider extends ChangeNotifier {
   }
 
   Future<void> _saveExercises() async {
-    await DatabaseService.setFaCompletedExercises(
-        _completedExercises.toList());
+    await DatabaseService.setFaCompletedExercises(_completedExercises.toList());
   }
 
   Future<void> _saveLessons() async {
@@ -177,7 +175,8 @@ class FinancialAccountingProvider extends ChangeNotifier {
     final expected = exercise.expected;
     if (answer.totalDebit - expected.totalDebit != 0) {
       issues.add(
-          'إجمالي المبالغ في قيدك ${answer.totalDebit.toStringAsFixed(2)} ر.ي بينما المتوقّع ${expected.totalDebit.toStringAsFixed(2)} ر.ي.');
+        'إجمالي المبالغ في قيدك ${answer.totalDebit.toStringAsFixed(2)} ر.ي بينما المتوقّع ${expected.totalDebit.toStringAsFixed(2)} ر.ي.',
+      );
     }
 
     final expSet = _toMatchSet(expected.lines);
@@ -213,8 +212,7 @@ class FinancialAccountingProvider extends ChangeNotifier {
   /// تحويل أطراف القيد إلى مجموعة قابلة للمقارنة دون اعتبار للترتيب.
   Set<String> _toMatchSet(List<FinJournalLine> lines) {
     return lines
-        .map((l) =>
-            '${l.accountId}|${l.side}|${l.amount.toStringAsFixed(2)}')
+        .map((l) => '${l.accountId}|${l.side}|${l.amount.toStringAsFixed(2)}')
         .toSet();
   }
 
@@ -257,7 +255,9 @@ class FinancialAccountingProvider extends ChangeNotifier {
     final byAccount = <String, List<LedgerEntry>>{};
     for (final j in _simJournal) {
       for (final l in j.lines) {
-        byAccount.putIfAbsent(l.accountId, () => []).add(
+        byAccount
+            .putIfAbsent(l.accountId, () => [])
+            .add(
               LedgerEntry(
                 date: j.date,
                 description: j.description,
@@ -273,12 +273,14 @@ class FinancialAccountingProvider extends ChangeNotifier {
       if (acc == null) return;
       // ترتيب حسب التاريخ.
       entries.sort((a, b) => a.date.compareTo(b.date));
-      result.add(LedgerAccountStatement(
-        accountId: acc.id,
-        accountName: acc.name,
-        accountType: acc.type,
-        entries: entries,
-      ));
+      result.add(
+        LedgerAccountStatement(
+          accountId: acc.id,
+          accountName: acc.name,
+          accountType: acc.type,
+          entries: entries,
+        ),
+      );
     });
     // ترتيب الحسابات: أصول، التزامات، حقوق ملكية، إيرادات، مصروفات.
     result.sort((a, b) => a.accountType.index - b.accountType.index);
@@ -288,24 +290,27 @@ class FinancialAccountingProvider extends ChangeNotifier {
   // ====== ميزان المراجعة ======
   List<TrialBalanceRow> buildTrialBalance() {
     final ledger = buildLedger();
-    return ledger.map((l) {
-      final diff = l.totalDebit - l.totalCredit;
-      double debit = 0;
-      double credit = 0;
-      // الجانب الطبيعي يحدّد عمود الرصيد.
-      if (diff > 0) {
-        debit = diff;
-      } else if (diff < 0) {
-        credit = -diff;
-      }
-      return TrialBalanceRow(
-        accountId: l.accountId,
-        accountName: l.accountName,
-        accountType: l.accountType,
-        debitBalance: debit,
-        creditBalance: credit,
-      );
-    }).where((r) => r.debitBalance > 0 || r.creditBalance > 0).toList();
+    return ledger
+        .map((l) {
+          final diff = l.totalDebit - l.totalCredit;
+          double debit = 0;
+          double credit = 0;
+          // الجانب الطبيعي يحدّد عمود الرصيد.
+          if (diff > 0) {
+            debit = diff;
+          } else if (diff < 0) {
+            credit = -diff;
+          }
+          return TrialBalanceRow(
+            accountId: l.accountId,
+            accountName: l.accountName,
+            accountType: l.accountType,
+            debitBalance: debit,
+            creditBalance: credit,
+          );
+        })
+        .where((r) => r.debitBalance > 0 || r.creditBalance > 0)
+        .toList();
   }
 
   double get trialBalanceTotalDebit =>
@@ -329,15 +334,17 @@ class FinancialAccountingProvider extends ChangeNotifier {
           // الإيراد = الجانب الطبيعي دائن => الرصيد الموجب على الدائن.
           final amount = l.totalCredit - l.totalDebit;
           if (amount > 0) {
-            revenues.add(FinancialStatementLine(
-                label: l.accountName, amount: amount));
+            revenues.add(
+              FinancialStatementLine(label: l.accountName, amount: amount),
+            );
           }
           break;
         case FinAccountType.expense:
           final amount = l.totalDebit - l.totalCredit;
           if (amount > 0) {
-            expenses.add(FinancialStatementLine(
-                label: l.accountName, amount: amount));
+            expenses.add(
+              FinancialStatementLine(label: l.accountName, amount: amount),
+            );
           }
           break;
         default:
@@ -359,9 +366,12 @@ class FinancialAccountingProvider extends ChangeNotifier {
     final purchasesAmount =
         purchasesEntry.totalDebit - purchasesEntry.totalCredit;
     if (purchasesAmount > 0) {
-      expenses.add(FinancialStatementLine(
+      expenses.add(
+        FinancialStatementLine(
           label: 'تكلفة البضاعة المباعة (المشتريات)',
-          amount: purchasesAmount));
+          amount: purchasesAmount,
+        ),
+      );
     }
 
     return IncomeStatement(revenues: revenues, expenses: expenses);
@@ -383,22 +393,25 @@ class FinancialAccountingProvider extends ChangeNotifier {
         case FinAccountType.asset:
           final balance = l.totalDebit - l.totalCredit;
           if (balance != 0) {
-            assets.add(FinancialStatementLine(
-                label: l.accountName, amount: balance));
+            assets.add(
+              FinancialStatementLine(label: l.accountName, amount: balance),
+            );
           }
           break;
         case FinAccountType.liability:
           final balance = l.totalCredit - l.totalDebit;
           if (balance != 0) {
-            liabilities.add(FinancialStatementLine(
-                label: l.accountName, amount: balance));
+            liabilities.add(
+              FinancialStatementLine(label: l.accountName, amount: balance),
+            );
           }
           break;
         case FinAccountType.equity:
           final balance = l.totalCredit - l.totalDebit;
           if (balance != 0) {
-            equity.add(FinancialStatementLine(
-                label: l.accountName, amount: balance));
+            equity.add(
+              FinancialStatementLine(label: l.accountName, amount: balance),
+            );
           }
           break;
         default:
@@ -427,12 +440,14 @@ class FinancialAccountingProvider extends ChangeNotifier {
         if (l.accountId == 'cash' || l.accountId == 'bank') {
           if (l.isDebit) {
             totalIn += l.amount;
-            inflows.add(FinancialStatementLine(
-                label: j.description, amount: l.amount));
+            inflows.add(
+              FinancialStatementLine(label: j.description, amount: l.amount),
+            );
           } else {
             totalOut += l.amount;
-            outflows.add(FinancialStatementLine(
-                label: j.description, amount: l.amount));
+            outflows.add(
+              FinancialStatementLine(label: j.description, amount: l.amount),
+            );
           }
         }
       }
@@ -441,8 +456,7 @@ class FinancialAccountingProvider extends ChangeNotifier {
     // تجميع غير ضروري - نعرض التفاصيل كما هي.
     // المتغيرات `totalIn` و`totalOut` للتوافق مع منطق سابق.
     debugPrint('CashFlow inflows=$totalIn outflows=$totalOut');
-    return SimpleCashFlowStatement(
-        inflows: inflows, outflows: outflows);
+    return SimpleCashFlowStatement(inflows: inflows, outflows: outflows);
   }
 
   // ====== التحليل المالي ======
@@ -495,76 +509,86 @@ class FinancialAccountingProvider extends ChangeNotifier {
     // 1) نسبة التداول
     if (currentLiabilities > 0) {
       final v = currentAssets / currentLiabilities;
-      ratios.add(FinancialRatio(
-        name: 'نسبة التداول',
-        value: double.parse(v.toStringAsFixed(2)),
-        unit: 'مرة',
-        formula: 'الأصول المتداولة ÷ الالتزامات المتداولة',
-        interpretation: v >= 2
-            ? 'سيولة جيدة جدًا، المنشأة قادرة على سداد ديونها قصيرة الأجل.'
-            : v >= 1
-                ? 'سيولة مقبولة، يفضّل تحسينها لتقترب من 2.'
-                : 'سيولة ضعيفة، قد تواجه المنشأة صعوبة في سداد التزاماتها.',
-      ));
+      ratios.add(
+        FinancialRatio(
+          name: 'نسبة التداول',
+          value: double.parse(v.toStringAsFixed(2)),
+          unit: 'مرة',
+          formula: 'الأصول المتداولة ÷ الالتزامات المتداولة',
+          interpretation: v >= 2
+              ? 'سيولة جيدة جدًا، المنشأة قادرة على سداد ديونها قصيرة الأجل.'
+              : v >= 1
+              ? 'سيولة مقبولة، يفضّل تحسينها لتقترب من 2.'
+              : 'سيولة ضعيفة، قد تواجه المنشأة صعوبة في سداد التزاماتها.',
+        ),
+      );
     } else {
-      ratios.add(const FinancialRatio(
-        name: 'نسبة التداول',
-        value: 0,
-        unit: 'مرة',
-        formula: 'الأصول المتداولة ÷ الالتزامات المتداولة',
-        interpretation:
-            'لا توجد التزامات متداولة، لذا لا يمكن حساب النسبة بشكل ذي معنى.',
-      ));
+      ratios.add(
+        const FinancialRatio(
+          name: 'نسبة التداول',
+          value: 0,
+          unit: 'مرة',
+          formula: 'الأصول المتداولة ÷ الالتزامات المتداولة',
+          interpretation:
+              'لا توجد التزامات متداولة، لذا لا يمكن حساب النسبة بشكل ذي معنى.',
+        ),
+      );
     }
 
     // 2) هامش الربح الصافي
     if (netSales > 0) {
       final v = netIncome / netSales * 100;
-      ratios.add(FinancialRatio(
-        name: 'هامش الربح الصافي',
-        value: double.parse(v.toStringAsFixed(2)),
-        unit: '%',
-        formula: '(صافي الربح ÷ صافي المبيعات) × 100%',
-        interpretation: v >= 15
-            ? 'هامش ربح ممتاز.'
-            : v >= 5
-                ? 'هامش ربح مقبول.'
-                : v >= 0
-                    ? 'هامش ربح ضعيف، راجع المصروفات والتسعير.'
-                    : 'المنشأة تحقّق خسارة، يلزم اتخاذ إجراءات عاجلة.',
-      ));
+      ratios.add(
+        FinancialRatio(
+          name: 'هامش الربح الصافي',
+          value: double.parse(v.toStringAsFixed(2)),
+          unit: '%',
+          formula: '(صافي الربح ÷ صافي المبيعات) × 100%',
+          interpretation: v >= 15
+              ? 'هامش ربح ممتاز.'
+              : v >= 5
+              ? 'هامش ربح مقبول.'
+              : v >= 0
+              ? 'هامش ربح ضعيف، راجع المصروفات والتسعير.'
+              : 'المنشأة تحقّق خسارة، يلزم اتخاذ إجراءات عاجلة.',
+        ),
+      );
     }
 
     // 3) العائد على الأصول (ROA)
     if (totalAssets > 0) {
       final v = netIncome / totalAssets * 100;
-      ratios.add(FinancialRatio(
-        name: 'العائد على الأصول (ROA)',
-        value: double.parse(v.toStringAsFixed(2)),
-        unit: '%',
-        formula: '(صافي الربح ÷ إجمالي الأصول) × 100%',
-        interpretation: v >= 10
-            ? 'كفاءة عالية في استخدام الأصول.'
-            : v >= 3
-                ? 'كفاءة مقبولة في استخدام الأصول.'
-                : 'الأصول لا تحقّق عائدًا كافيًا، حسّن الإنتاجية.',
-      ));
+      ratios.add(
+        FinancialRatio(
+          name: 'العائد على الأصول (ROA)',
+          value: double.parse(v.toStringAsFixed(2)),
+          unit: '%',
+          formula: '(صافي الربح ÷ إجمالي الأصول) × 100%',
+          interpretation: v >= 10
+              ? 'كفاءة عالية في استخدام الأصول.'
+              : v >= 3
+              ? 'كفاءة مقبولة في استخدام الأصول.'
+              : 'الأصول لا تحقّق عائدًا كافيًا، حسّن الإنتاجية.',
+        ),
+      );
     }
 
     // 4) نسبة المديونية
     if (totalAssets > 0) {
       final v = totalLiab / totalAssets * 100;
-      ratios.add(FinancialRatio(
-        name: 'نسبة المديونية',
-        value: double.parse(v.toStringAsFixed(2)),
-        unit: '%',
-        formula: '(إجمالي الالتزامات ÷ إجمالي الأصول) × 100%',
-        interpretation: v <= 40
-            ? 'هيكل تمويل صحي، الاعتماد على الديون منخفض.'
-            : v <= 60
-                ? 'مستوى مديونية متوسط، تابع باستمرار.'
-                : 'مستوى مديونية مرتفع، ارتفاع المخاطرة المالية.',
-      ));
+      ratios.add(
+        FinancialRatio(
+          name: 'نسبة المديونية',
+          value: double.parse(v.toStringAsFixed(2)),
+          unit: '%',
+          formula: '(إجمالي الالتزامات ÷ إجمالي الأصول) × 100%',
+          interpretation: v <= 40
+              ? 'هيكل تمويل صحي، الاعتماد على الديون منخفض.'
+              : v <= 60
+              ? 'مستوى مديونية متوسط، تابع باستمرار.'
+              : 'مستوى مديونية مرتفع، ارتفاع المخاطرة المالية.',
+        ),
+      );
     }
 
     return ratios;
@@ -572,28 +596,24 @@ class FinancialAccountingProvider extends ChangeNotifier {
 
   // ====== تحويلات JSON لقيود المحاكاة ======
   Map<String, dynamic> _journalToMap(JournalEntryAnswer a) => {
-        'date': a.date.toIso8601String(),
-        'description': a.description,
-        'lines': a.lines
-            .map((l) => {
-                  'accountId': l.accountId,
-                  'side': l.side,
-                  'amount': l.amount,
-                })
-            .toList(),
-      };
+    'date': a.date.toIso8601String(),
+    'description': a.description,
+    'lines': a.lines
+        .map(
+          (l) => {'accountId': l.accountId, 'side': l.side, 'amount': l.amount},
+        )
+        .toList(),
+  };
 
   JournalEntryAnswer _journalFromMap(Map<String, dynamic> m) {
-    final lines = ((m['lines'] as List?) ?? const [])
-        .map((e) {
-          final lm = Map<String, dynamic>.from(e as Map);
-          return FinJournalLine(
-            accountId: lm['accountId'] as String,
-            side: lm['side'] as String,
-            amount: (lm['amount'] as num).toDouble(),
-          );
-        })
-        .toList();
+    final lines = ((m['lines'] as List?) ?? const []).map((e) {
+      final lm = Map<String, dynamic>.from(e as Map);
+      return FinJournalLine(
+        accountId: lm['accountId'] as String,
+        side: lm['side'] as String,
+        amount: (lm['amount'] as num).toDouble(),
+      );
+    }).toList();
     return JournalEntryAnswer(
       date: DateTime.parse(m['date'] as String),
       description: (m['description'] as String?) ?? '',

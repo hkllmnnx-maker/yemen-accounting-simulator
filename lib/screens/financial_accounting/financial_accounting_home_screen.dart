@@ -25,9 +25,7 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
     final fa = context.watch<FinancialAccountingProvider>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppStrings.faSection),
-      ),
+      appBar: AppBar(title: const Text(AppStrings.faSection)),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(12),
@@ -36,8 +34,7 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
             const SizedBox(height: 12),
             _buildSimulatorButton(context),
             const SizedBox(height: 16),
-            const _SectionTitle(
-                title: 'المسار التعليمي - 14 مستوى متدرّج'),
+            const _SectionTitle(title: 'المسار التعليمي - 14 مستوى متدرّج'),
             const SizedBox(height: 8),
             ...List.generate(financialLessons.length, (i) {
               final l = financialLessons[i];
@@ -50,8 +47,7 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(
-      BuildContext context, FinancialAccountingProvider fa) {
+  Widget _buildHeader(BuildContext context, FinancialAccountingProvider fa) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -65,8 +61,11 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
         children: [
           const Row(
             children: [
-              Icon(Icons.account_balance_wallet,
-                  color: AppColors.gold, size: 22),
+              Icon(
+                Icons.account_balance_wallet,
+                color: AppColors.gold,
+                size: 22,
+              ),
               SizedBox(width: 8),
               Expanded(
                 child: Text(
@@ -92,8 +91,7 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
                 child: LinearProgressIndicator(
                   value: fa.sectionProgress,
                   backgroundColor: Colors.white24,
-                  valueColor:
-                      const AlwaysStoppedAnimation(AppColors.gold),
+                  valueColor: const AlwaysStoppedAnimation(AppColors.gold),
                   minHeight: 8,
                 ),
               ),
@@ -151,10 +149,10 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
           'القوائم المالية، والتحليل المالي تلقائيًا.',
           style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
         ),
-        trailing:
-            const Icon(Icons.chevron_left, color: AppColors.textLight),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => const FinancialSimulatorScreen())),
+        trailing: const Icon(Icons.chevron_left, color: AppColors.textLight),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(builder: (_) => const FinancialSimulatorScreen()),
+        ),
       ),
     );
   }
@@ -174,8 +172,11 @@ class _LessonTile extends StatelessWidget {
     return Card(
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
-            builder: (_) => FinancialLevelScreen(lesson: lesson))),
+        onTap: () => Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => FinancialLevelScreen(lesson: lesson),
+          ),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
@@ -193,9 +194,7 @@ class _LessonTile extends StatelessWidget {
                 child: Text(
                   '${lesson.order}',
                   style: TextStyle(
-                    color: completed
-                        ? AppColors.success
-                        : AppColors.primary,
+                    color: completed ? AppColors.success : AppColors.primary,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                   ),
@@ -209,7 +208,9 @@ class _LessonTile extends StatelessWidget {
                     Text(
                       lesson.title,
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 15),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                      ),
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -227,10 +228,11 @@ class _LessonTile extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
-                            color: AppColors.primary
-                                .withValues(alpha: 0.1),
+                            color: AppColors.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Text(
@@ -245,7 +247,9 @@ class _LessonTile extends StatelessWidget {
                         const SizedBox(width: 6),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 2),
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.gold.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(6),
@@ -276,15 +280,19 @@ class _LessonTile extends StatelessWidget {
                       minHeight: 4,
                       backgroundColor: AppColors.divider,
                       valueColor: AlwaysStoppedAnimation(
-                          completed ? AppColors.success : AppColors.primary),
+                        completed ? AppColors.success : AppColors.primary,
+                      ),
                     ),
                   ],
                 ),
               ),
               const SizedBox(width: 6),
               if (completed)
-                const Icon(Icons.check_circle,
-                    color: AppColors.success, size: 22)
+                const Icon(
+                  Icons.check_circle,
+                  color: AppColors.success,
+                  size: 22,
+                )
               else
                 const Icon(Icons.chevron_left, color: AppColors.textLight),
             ],
