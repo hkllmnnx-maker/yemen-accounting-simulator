@@ -30,7 +30,7 @@ class DashboardScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () => acc.notifyListeners(),
+            onPressed: () {},
           ),
         ],
       ),

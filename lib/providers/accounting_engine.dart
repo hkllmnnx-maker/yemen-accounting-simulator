@@ -2,7 +2,6 @@ import '../data/models/account.dart';
 import '../data/models/invoice.dart';
 import '../data/models/journal_entry.dart';
 import '../data/models/voucher.dart';
-import '../data/models/partner.dart';
 import 'accounting_provider.dart';
 
 /// محرّك القيود التلقائية - يُنشئ قيود من الفواتير والسندات
@@ -35,13 +34,13 @@ class AccountingEngine {
     double cogs = 0;
     for (final line in inv.lines) {
       final it = acc.itemById(line.itemId);
-      cogs += (it?.cost ?? 0) * line.quantity;
+      cogs += (it?.cost ?? 0.0) * line.quantity;
     }
 
     final total = inv.total;
-    final cashPaid = inv.paymentType == InvoicePaymentType.cash
+    final double cashPaid = inv.paymentType == InvoicePaymentType.cash
         ? total
-        : (inv.paymentType == InvoicePaymentType.mixed ? inv.paidAmount : 0);
+        : (inv.paymentType == InvoicePaymentType.mixed ? inv.paidAmount : 0.0);
     final credit = total - cashPaid;
 
     switch (inv.kind) {
