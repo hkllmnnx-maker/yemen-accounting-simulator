@@ -48,30 +48,48 @@ class TrialBalanceScreen extends StatelessWidget {
               child: const Row(
                 children: [
                   SizedBox(
-                      width: 50,
-                      child: Text('الكود',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    width: 50,
+                    child: Text(
+                      'الكود',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                   Expanded(
-                      child: Text('اسم الحساب',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    child: Text(
+                      'اسم الحساب',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 80,
-                      child: Text('مدين',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                              color: AppColors.debit))),
+                    width: 80,
+                    child: Text(
+                      'مدين',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                        color: AppColors.debit,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 80,
-                      child: Text('دائن',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                              color: AppColors.credit))),
+                    width: 80,
+                    child: Text(
+                      'دائن',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                        color: AppColors.credit,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -85,18 +103,26 @@ class TrialBalanceScreen extends StatelessWidget {
                         final r = rows[i];
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 6),
+                            horizontal: 8,
+                            vertical: 6,
+                          ),
                           child: Row(
                             children: [
                               SizedBox(
-                                  width: 50,
-                                  child: Text(r.account.code,
-                                      style: const TextStyle(fontSize: 11))),
+                                width: 50,
+                                child: Text(
+                                  r.account.code,
+                                  style: const TextStyle(fontSize: 11),
+                                ),
+                              ),
                               Expanded(
-                                  child: Text(r.account.name,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(fontSize: 12))),
+                                child: Text(
+                                  r.account.name,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                              ),
                               SizedBox(
                                 width: 80,
                                 child: Text(
@@ -105,7 +131,9 @@ class TrialBalanceScreen extends StatelessWidget {
                                       : Formatters.number(r.debit, decimals: 0),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                      fontSize: 11.5, color: AppColors.debit),
+                                    fontSize: 11.5,
+                                    color: AppColors.debit,
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -113,10 +141,15 @@ class TrialBalanceScreen extends StatelessWidget {
                                 child: Text(
                                   r.credit == 0
                                       ? '-'
-                                      : Formatters.number(r.credit, decimals: 0),
+                                      : Formatters.number(
+                                          r.credit,
+                                          decimals: 0,
+                                        ),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                      fontSize: 11.5, color: AppColors.credit),
+                                    fontSize: 11.5,
+                                    color: AppColors.credit,
+                                  ),
                                 ),
                               ),
                             ],
@@ -137,9 +170,13 @@ class TrialBalanceScreen extends StatelessWidget {
                     children: [
                       const SizedBox(width: 50),
                       const Expanded(
-                        child: Text('الإجمالي',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 13)),
+                        child: Text(
+                          'الإجمالي',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                        ),
                       ),
                       SizedBox(
                         width: 80,
@@ -147,9 +184,10 @@ class TrialBalanceScreen extends StatelessWidget {
                           Formatters.number(totalDebit, decimals: 0),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.debit,
-                              fontSize: 13),
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.debit,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -158,9 +196,10 @@ class TrialBalanceScreen extends StatelessWidget {
                           Formatters.number(totalCredit, decimals: 0),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.credit,
-                              fontSize: 13),
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.credit,
+                            fontSize: 13,
+                          ),
                         ),
                       ),
                     ],

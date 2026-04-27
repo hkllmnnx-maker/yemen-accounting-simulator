@@ -35,19 +35,28 @@ class CustomersScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.account_balance_wallet,
-                      color: AppColors.primary),
+                  const Icon(
+                    Icons.account_balance_wallet,
+                    color: AppColors.primary,
+                  ),
                   const SizedBox(width: 8),
                   const Expanded(
-                    child: Text('إجمالي مديونية العملاء',
-                        style: TextStyle(
-                            fontSize: 13, color: AppColors.textPrimary)),
+                    child: Text(
+                      'إجمالي مديونية العملاء',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                   ),
-                  Text(Formatters.currency(total, decimals: 0),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
-                          fontSize: 14)),
+                  Text(
+                    Formatters.currency(total, decimals: 0),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.primary,
+                      fontSize: 14,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -55,7 +64,8 @@ class CustomersScreen extends StatelessWidget {
               child: list.isEmpty
                   ? const EmptyState(
                       icon: Icons.people_outline,
-                      message: 'لا يوجد عملاء بعد. أضف أول عميل.')
+                      message: 'لا يوجد عملاء بعد. أضف أول عميل.',
+                    )
                   : ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemCount: list.length,
@@ -65,19 +75,27 @@ class CustomersScreen extends StatelessWidget {
                         return Card(
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundColor:
-                                  AppColors.primary.withValues(alpha: 0.15),
+                              backgroundColor: AppColors.primary.withValues(
+                                alpha: 0.15,
+                              ),
                               foregroundColor: AppColors.primary,
-                              child: Text(p.name.substring(0, 1),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            title: Text(p.name,
+                              child: Text(
+                                p.name.substring(0, 1),
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold)),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              p.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             subtitle: Text(
-                                '${p.city} • ${p.isCredit ? "آجل" : "نقدي"} • ${p.code}',
-                                style: const TextStyle(fontSize: 11.5)),
+                              '${p.city} • ${p.isCredit ? "آجل" : "نقدي"} • ${p.code}',
+                              style: const TextStyle(fontSize: 11.5),
+                            ),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -88,28 +106,35 @@ class CustomersScreen extends StatelessWidget {
                                     color: bal > 0
                                         ? AppColors.error
                                         : (bal < 0
-                                            ? AppColors.success
-                                            : AppColors.textLight),
+                                              ? AppColors.success
+                                              : AppColors.textLight),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
                                   ),
                                 ),
                                 Text(
-                                  bal > 0 ? 'مديونية' : (bal < 0 ? 'له لدينا' : 'مسوّى'),
+                                  bal > 0
+                                      ? 'مديونية'
+                                      : (bal < 0 ? 'له لدينا' : 'مسوّى'),
                                   style: const TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.textLight),
+                                    fontSize: 10,
+                                    color: AppColors.textLight,
+                                  ),
                                 ),
                               ],
                             ),
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) =>
-                                      PartnerStatementScreen(partnerId: p.id)),
+                                builder: (_) =>
+                                    PartnerStatementScreen(partnerId: p.id),
+                              ),
                             ),
-                            onLongPress: () => _showPartnerForm(context,
-                                kind: PartnerKind.customer, existing: p),
+                            onLongPress: () => _showPartnerForm(
+                              context,
+                              kind: PartnerKind.customer,
+                              existing: p,
+                            ),
                           ),
                         );
                       },
@@ -122,20 +147,28 @@ class CustomersScreen extends StatelessWidget {
   }
 }
 
-void showPartnerForm(BuildContext context,
-    {required PartnerKind kind, Partner? existing}) {
+void showPartnerForm(
+  BuildContext context, {
+  required PartnerKind kind,
+  Partner? existing,
+}) {
   _showPartnerForm(context, kind: kind, existing: existing);
 }
 
-void _showPartnerForm(BuildContext context,
-    {required PartnerKind kind, Partner? existing}) {
+void _showPartnerForm(
+  BuildContext context, {
+  required PartnerKind kind,
+  Partner? existing,
+}) {
   final acc = context.read<AccountingProvider>();
   final name = TextEditingController(text: existing?.name ?? '');
   final phone = TextEditingController(text: existing?.phone ?? '');
-  final creditLimit =
-      TextEditingController(text: (existing?.creditLimit ?? 0).toString());
-  final opening =
-      TextEditingController(text: (existing?.openingBalance ?? 0).toString());
+  final creditLimit = TextEditingController(
+    text: (existing?.creditLimit ?? 0).toString(),
+  );
+  final opening = TextEditingController(
+    text: (existing?.openingBalance ?? 0).toString(),
+  );
   String city = existing?.city ?? YemeniData.cities.first;
   bool isCredit = existing?.isCredit ?? true;
   String currency = existing?.currency ?? 'YER';
@@ -160,7 +193,10 @@ void _showPartnerForm(BuildContext context,
                 existing == null
                     ? (kind == PartnerKind.customer ? 'عميل جديد' : 'مورد جديد')
                     : 'تعديل ${existing.name}',
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 12),
               TextField(
@@ -180,7 +216,9 @@ void _showPartnerForm(BuildContext context,
               TextField(
                 controller: phone,
                 keyboardType: TextInputType.phone,
-                decoration: const InputDecoration(labelText: 'رقم الهاتف (اختياري)'),
+                decoration: const InputDecoration(
+                  labelText: 'رقم الهاتف (اختياري)',
+                ),
               ),
               const SizedBox(height: 8),
               DropdownButtonFormField<String>(
@@ -197,9 +235,11 @@ void _showPartnerForm(BuildContext context,
               SwitchListTile(
                 value: isCredit,
                 onChanged: (v) => setState(() => isCredit = v),
-                title: Text(kind == PartnerKind.customer
-                    ? 'تعامل آجل (مع مديونية)'
-                    : 'تعامل آجل'),
+                title: Text(
+                  kind == PartnerKind.customer
+                      ? 'تعامل آجل (مع مديونية)'
+                      : 'تعامل آجل',
+                ),
                 contentPadding: EdgeInsets.zero,
               ),
               if (kind == PartnerKind.customer && isCredit)
@@ -207,7 +247,8 @@ void _showPartnerForm(BuildContext context,
                   controller: creditLimit,
                   keyboardType: TextInputType.number,
                   decoration: const InputDecoration(
-                      labelText: 'حد الائتمان (ر.ي)'),
+                    labelText: 'حد الائتمان (ر.ي)',
+                  ),
                 ),
               const SizedBox(height: 8),
               TextField(
@@ -223,8 +264,10 @@ void _showPartnerForm(BuildContext context,
                   if (existing != null)
                     TextButton.icon(
                       icon: const Icon(Icons.delete, color: AppColors.error),
-                      label: const Text('حذف',
-                          style: TextStyle(color: AppColors.error)),
+                      label: const Text(
+                        'حذف',
+                        style: TextStyle(color: AppColors.error),
+                      ),
                       onPressed: () async {
                         await acc.deletePartner(existing.id);
                         if (ctx.mounted) Navigator.pop(ctx);

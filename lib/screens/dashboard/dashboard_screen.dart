@@ -29,10 +29,7 @@ class DashboardScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(AppStrings.dashboard),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: () {},
-          ),
+          IconButton(icon: const Icon(Icons.refresh), onPressed: () {}),
         ],
       ),
       body: SafeArea(
@@ -88,7 +85,9 @@ class DashboardScreen extends StatelessWidget {
                         child: LinearProgressIndicator(
                           value: progress.overallProgress,
                           backgroundColor: Colors.white24,
-                          valueColor: const AlwaysStoppedAnimation(AppColors.gold),
+                          valueColor: const AlwaysStoppedAnimation(
+                            AppColors.gold,
+                          ),
                           minHeight: 6,
                         ),
                       ),
@@ -115,20 +114,26 @@ class DashboardScreen extends StatelessWidget {
                   child: StatCard(
                     icon: Icons.school,
                     label: 'الدروس',
-                    value: '${progress.completedLessons}/${progress.totalLessons}',
+                    value:
+                        '${progress.completedLessons}/${progress.totalLessons}',
                     color: AppColors.primary,
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const LessonsScreen())),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const LessonsScreen()),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: StatCard(
                     icon: Icons.fitness_center,
                     label: 'تدريبات',
-                    value: '${progress.completedTrainings}/${progress.totalTrainings}',
+                    value:
+                        '${progress.completedTrainings}/${progress.totalTrainings}',
                     color: AppColors.accent,
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const TrainingListScreen())),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => const TrainingListScreen(),
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -141,8 +146,9 @@ class DashboardScreen extends StatelessWidget {
                     label: 'الشارات',
                     value: '${progress.progress.earnedBadges.length}',
                     color: AppColors.gold,
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const ProgressScreen())),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const ProgressScreen()),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -169,52 +175,66 @@ class DashboardScreen extends StatelessWidget {
                   icon: Icons.school,
                   title: AppStrings.lessons,
                   color: AppColors.primary,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const LessonsScreen())),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const LessonsScreen()),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.account_balance_wallet,
                   title: AppStrings.faShortName,
                   subtitle: 'من القيد إلى التحليل',
                   color: AppColors.equity,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) =>
-                          const FinancialAccountingHomeScreen())),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const FinancialAccountingHomeScreen(),
+                    ),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.fitness_center,
                   title: AppStrings.training,
                   color: AppColors.accent,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const TrainingListScreen())),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const TrainingListScreen(),
+                    ),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.computer,
                   title: AppStrings.simulator,
                   color: AppColors.success,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const SimulatorHomeScreen())),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const SimulatorHomeScreen(),
+                    ),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.quiz,
                   title: AppStrings.quizzes,
                   color: AppColors.warning,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const QuizzesListScreen())),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => const QuizzesListScreen(),
+                    ),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.emoji_events,
                   title: AppStrings.progress,
                   color: AppColors.gold,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const ProgressScreen())),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const ProgressScreen()),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.menu_book,
                   title: AppStrings.glossary,
                   color: AppColors.info,
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => const GlossaryScreen())),
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const GlossaryScreen()),
+                  ),
                 ),
               ],
             ),
@@ -241,10 +261,11 @@ class DashboardScreen extends StatelessWidget {
                           backgroundColor: AppColors.success,
                           padding: const EdgeInsets.symmetric(vertical: 14),
                         ),
-                        onPressed: () =>
-                            Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_) => const SimulatorHomeScreen(),
-                        )),
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => const SimulatorHomeScreen(),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -258,11 +279,15 @@ class DashboardScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    leading: const Icon(Icons.settings, color: AppColors.primary),
+                    leading: const Icon(
+                      Icons.settings,
+                      color: AppColors.primary,
+                    ),
                     title: const Text(AppStrings.settings),
                     trailing: const Icon(Icons.chevron_left),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (_) => const SettingsScreen())),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                    ),
                   ),
                 ],
               ),

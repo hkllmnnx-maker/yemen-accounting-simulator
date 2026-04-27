@@ -23,9 +23,12 @@ class _SplashScreenState extends State<SplashScreen> {
     await Future.delayed(const Duration(milliseconds: 1800));
     if (!mounted) return;
     final introSeen = DatabaseService.isIntroSeen();
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-      builder: (_) => introSeen ? const DashboardScreen() : const WelcomeScreen(),
-    ));
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) =>
+            introSeen ? const DashboardScreen() : const WelcomeScreen(),
+      ),
+    );
   }
 
   @override
@@ -50,7 +53,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.4), width: 2),
+                  border: Border.all(
+                    color: Colors.white.withValues(alpha: 0.4),
+                    width: 2,
+                  ),
                 ),
                 child: const Icon(
                   Icons.account_balance,

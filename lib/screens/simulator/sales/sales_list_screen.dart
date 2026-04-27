@@ -17,15 +17,19 @@ class SalesListScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('المبيعات'),
-          bottom: const TabBar(tabs: [
-            Tab(icon: Icon(Icons.point_of_sale), text: 'فواتير بيع'),
-            Tab(icon: Icon(Icons.assignment_return), text: 'مرتجعات بيع'),
-          ]),
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.point_of_sale), text: 'فواتير بيع'),
+              Tab(icon: Icon(Icons.assignment_return), text: 'مرتجعات بيع'),
+            ],
+          ),
         ),
-        body: const TabBarView(children: [
-          _List(kind: InvoiceKind.sale),
-          _List(kind: InvoiceKind.saleReturn),
-        ]),
+        body: const TabBarView(
+          children: [
+            _List(kind: InvoiceKind.sale),
+            _List(kind: InvoiceKind.saleReturn),
+          ],
+        ),
       ),
     );
   }
@@ -43,8 +47,10 @@ class _List extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.add),
         label: Text(kind == InvoiceKind.sale ? 'فاتورة بيع' : 'مرتجع بيع'),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (_) => InvoiceEditScreen(kind: kind))),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => InvoiceEditScreen(kind: kind)),
+        ),
       ),
       body: SafeArea(
         child: list.isEmpty
@@ -67,11 +73,15 @@ class _List extends StatelessWidget {
                       leading: CircleAvatar(
                         backgroundColor: color.withValues(alpha: 0.15),
                         foregroundColor: color,
-                        child: Text('#${inv.number}',
-                            style: const TextStyle(fontSize: 11)),
+                        child: Text(
+                          '#${inv.number}',
+                          style: const TextStyle(fontSize: 11),
+                        ),
                       ),
-                      title: Text(inv.partnerName,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      title: Text(
+                        inv.partnerName,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       subtitle: Text(
                         '${Formatters.date(inv.date)} • ${inv.lines.length} أصناف • ${_paymentLabel(inv.paymentType)}',
                         style: const TextStyle(fontSize: 11.5),
@@ -92,15 +102,17 @@ class _List extends StatelessWidget {
                             Text(
                               'باقي ${Formatters.number(inv.remaining, decimals: 0)}',
                               style: const TextStyle(
-                                  fontSize: 10, color: AppColors.warning),
+                                fontSize: 10,
+                                color: AppColors.warning,
+                              ),
                             ),
                         ],
                       ),
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => InvoiceEditScreen(
-                              kind: kind, invoiceId: inv.id),
+                          builder: (_) =>
+                              InvoiceEditScreen(kind: kind, invoiceId: inv.id),
                         ),
                       ),
                     ),

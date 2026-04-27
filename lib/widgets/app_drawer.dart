@@ -49,8 +49,11 @@ class AppDrawer extends StatelessWidget {
                           color: Colors.white.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        child: const Icon(Icons.account_balance,
-                            color: Colors.white, size: 28),
+                        child: const Icon(
+                          Icons.account_balance,
+                          color: Colors.white,
+                          size: 28,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       const Expanded(
@@ -74,8 +77,11 @@ class AppDrawer extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        const Icon(Icons.business,
-                            color: Colors.white70, size: 18),
+                        const Icon(
+                          Icons.business,
+                          color: Colors.white70,
+                          size: 18,
+                        ),
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
@@ -109,40 +115,77 @@ class AppDrawer extends StatelessWidget {
               const DashboardScreen(),
               replaceRoot: true,
             ),
-            _drawerItem(context, Icons.school, AppStrings.lessons, const LessonsScreen()),
+            _drawerItem(
+              context,
+              Icons.school,
+              AppStrings.lessons,
+              const LessonsScreen(),
+            ),
             _drawerItem(
               context,
               Icons.account_balance_wallet,
               AppStrings.faShortName,
               const FinancialAccountingHomeScreen(),
             ),
-            _drawerItem(context, Icons.fitness_center, AppStrings.training,
-                const TrainingListScreen()),
-            _drawerItem(context, Icons.computer, AppStrings.simulator,
-                const SimulatorHomeScreen()),
-            _drawerItem(context, Icons.quiz, AppStrings.quizzes,
-                const QuizzesListScreen()),
-            _drawerItem(context, Icons.emoji_events, AppStrings.progress,
-                const ProgressScreen()),
-            _drawerItem(context, Icons.menu_book, AppStrings.glossary,
-                const GlossaryScreen()),
+            _drawerItem(
+              context,
+              Icons.fitness_center,
+              AppStrings.training,
+              const TrainingListScreen(),
+            ),
+            _drawerItem(
+              context,
+              Icons.computer,
+              AppStrings.simulator,
+              const SimulatorHomeScreen(),
+            ),
+            _drawerItem(
+              context,
+              Icons.quiz,
+              AppStrings.quizzes,
+              const QuizzesListScreen(),
+            ),
+            _drawerItem(
+              context,
+              Icons.emoji_events,
+              AppStrings.progress,
+              const ProgressScreen(),
+            ),
+            _drawerItem(
+              context,
+              Icons.menu_book,
+              AppStrings.glossary,
+              const GlossaryScreen(),
+            ),
             const Divider(color: Colors.white24, height: 24),
             _drawerItem(
-                context, Icons.settings, AppStrings.settings, const SettingsScreen()),
+              context,
+              Icons.settings,
+              AppStrings.settings,
+              const SettingsScreen(),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _drawerItem(BuildContext context, IconData icon, String title,
-      Widget page, {bool replaceRoot = false}) {
+  Widget _drawerItem(
+    BuildContext context,
+    IconData icon,
+    String title,
+    Widget page, {
+    bool replaceRoot = false,
+  }) {
     return ListTile(
       leading: Icon(icon, color: Colors.white70),
       title: Text(
         title,
         style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.w500, fontSize: 14),
+          color: Colors.white,
+          fontWeight: FontWeight.w500,
+          fontSize: 14,
+        ),
       ),
       onTap: () {
         Navigator.of(context).pop();

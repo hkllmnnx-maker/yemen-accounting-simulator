@@ -35,36 +35,36 @@ class Voucher {
   });
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'number': number,
-        'kind': kind.index,
-        'date': date.millisecondsSinceEpoch,
-        'partnerId': partnerId,
-        'partnerName': partnerName,
-        'cashAccountId': cashAccountId,
-        'cashAccountName': cashAccountName,
-        'amount': amount,
-        'notes': notes,
-        'posted': posted,
-        'currency': currency,
-        'journalEntryId': journalEntryId,
-      };
+    'id': id,
+    'number': number,
+    'kind': kind.index,
+    'date': date.millisecondsSinceEpoch,
+    'partnerId': partnerId,
+    'partnerName': partnerName,
+    'cashAccountId': cashAccountId,
+    'cashAccountName': cashAccountName,
+    'amount': amount,
+    'notes': notes,
+    'posted': posted,
+    'currency': currency,
+    'journalEntryId': journalEntryId,
+  };
 
   factory Voucher.fromMap(Map m) => Voucher(
-        id: m['id'] as String,
-        number: m['number'] as int,
-        kind: VoucherKind.values[m['kind'] as int],
-        date: DateTime.fromMillisecondsSinceEpoch(m['date'] as int),
-        partnerId: m['partnerId'] as String,
-        partnerName: m['partnerName'] as String? ?? '',
-        cashAccountId: m['cashAccountId'] as String,
-        cashAccountName: m['cashAccountName'] as String? ?? '',
-        amount: (m['amount'] as num?)?.toDouble() ?? 0,
-        notes: m['notes'] as String?,
-        posted: m['posted'] as bool? ?? false,
-        currency: m['currency'] as String? ?? 'YER',
-        journalEntryId: m['journalEntryId'] as String?,
-      );
+    id: m['id'] as String,
+    number: m['number'] as int,
+    kind: VoucherKind.values[m['kind'] as int],
+    date: DateTime.fromMillisecondsSinceEpoch(m['date'] as int),
+    partnerId: m['partnerId'] as String,
+    partnerName: m['partnerName'] as String? ?? '',
+    cashAccountId: m['cashAccountId'] as String,
+    cashAccountName: m['cashAccountName'] as String? ?? '',
+    amount: (m['amount'] as num?)?.toDouble() ?? 0,
+    notes: m['notes'] as String?,
+    posted: m['posted'] as bool? ?? false,
+    currency: m['currency'] as String? ?? 'YER',
+    journalEntryId: m['journalEntryId'] as String?,
+  );
 }
 
 class VoucherAdapter extends TypeAdapter<Voucher> {

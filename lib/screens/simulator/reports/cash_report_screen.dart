@@ -32,10 +32,14 @@ class CashReportScreen extends StatelessWidget {
                           : Icons.account_balance,
                     ),
                   ),
-                  title: Text(a.name,
-                      style: const TextStyle(fontWeight: FontWeight.bold)),
-                  subtitle:
-                      Text('${a.code} • ${a.currency}', style: const TextStyle(fontSize: 11)),
+                  title: Text(
+                    a.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text(
+                    '${a.code} • ${a.currency}',
+                    style: const TextStyle(fontSize: 11),
+                  ),
                   trailing: Text(
                     Formatters.currency(bal, decimals: 0),
                     style: TextStyle(
@@ -57,19 +61,27 @@ class CashReportScreen extends StatelessWidget {
                     const Icon(Icons.summarize, color: AppColors.primary),
                     const SizedBox(width: 8),
                     const Expanded(
-                      child: Text('إجمالي السيولة (بالريال اليمني)',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 13)),
+                      child: Text(
+                        'إجمالي السيولة (بالريال اليمني)',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
                     ),
                     Text(
                       Formatters.currency(
-                        cashAccs.fold<double>(0, (s, a) => s + acc.accountBalance(a.id)),
+                        cashAccs.fold<double>(
+                          0,
+                          (s, a) => s + acc.accountBalance(a.id),
+                        ),
                         decimals: 0,
                       ),
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: AppColors.primary),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                        color: AppColors.primary,
+                      ),
                     ),
                   ],
                 ),

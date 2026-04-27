@@ -115,9 +115,13 @@ class _Section extends StatelessWidget {
               children: [
                 Icon(icon, color: color),
                 const SizedBox(width: 8),
-                Text(title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
               ],
             ),
             const Divider(),
@@ -125,38 +129,53 @@ class _Section extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.all(16),
                 child: Center(
-                    child: Text('لا توجد قيم',
-                        style: TextStyle(color: AppColors.textLight))),
+                  child: Text(
+                    'لا توجد قيم',
+                    style: TextStyle(color: AppColors.textLight),
+                  ),
+                ),
               )
             else
-              ...items.map((it) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Text(it.name,
-                                style: const TextStyle(fontSize: 13))),
-                        Text(
-                          Formatters.currency(it.amount, decimals: 0),
-                          style: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w600),
+              ...items.map(
+                (it) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          it.name,
+                          style: const TextStyle(fontSize: 13),
                         ),
-                      ],
-                    ),
-                  )),
+                      ),
+                      Text(
+                        Formatters.currency(it.amount, decimals: 0),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             const Divider(),
             Row(
               children: [
-                Text('إجمالي $title',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 14)),
+                Text(
+                  'إجمالي $title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
+                ),
                 const Spacer(),
                 Text(
                   Formatters.currency(total, decimals: 0),
                   style: TextStyle(
-                      color: color,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15),
+                    color: color,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                  ),
                 ),
               ],
             ),

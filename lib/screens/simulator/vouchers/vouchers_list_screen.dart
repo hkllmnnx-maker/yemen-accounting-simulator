@@ -45,18 +45,19 @@ class _VouchersList extends StatelessWidget {
     final list = kind == VoucherKind.receipt
         ? acc.receiptVouchers
         : acc.paymentVouchers;
-    final color =
-        kind == VoucherKind.receipt ? AppColors.success : AppColors.error;
+    final color = kind == VoucherKind.receipt
+        ? AppColors.success
+        : AppColors.error;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: color,
         icon: const Icon(Icons.add),
         label: Text(
-            kind == VoucherKind.receipt ? 'سند قبض جديد' : 'سند صرف جديد'),
+          kind == VoucherKind.receipt ? 'سند قبض جديد' : 'سند صرف جديد',
+        ),
         onPressed: () => Navigator.push(
           context,
-          MaterialPageRoute(
-              builder: (_) => VoucherEditScreen(kind: kind)),
+          MaterialPageRoute(builder: (_) => VoucherEditScreen(kind: kind)),
         ),
       ),
       body: SafeArea(
@@ -77,12 +78,15 @@ class _VouchersList extends StatelessWidget {
                       leading: CircleAvatar(
                         backgroundColor: color.withValues(alpha: 0.15),
                         foregroundColor: color,
-                        child: Text('#${v.number}',
-                            style: const TextStyle(fontSize: 11)),
+                        child: Text(
+                          '#${v.number}',
+                          style: const TextStyle(fontSize: 11),
+                        ),
                       ),
-                      title: Text(v.partnerName,
-                          style:
-                              const TextStyle(fontWeight: FontWeight.bold)),
+                      title: Text(
+                        v.partnerName,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       subtitle: Text(
                         '${Formatters.date(v.date)} • ${v.cashAccountName}${v.notes != null && v.notes!.isNotEmpty ? " • ${v.notes}" : ""}',
                         style: const TextStyle(fontSize: 11.5),
@@ -100,8 +104,9 @@ class _VouchersList extends StatelessWidget {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => VoucherEditScreen(
-                                kind: kind, voucherId: v.id)),
+                          builder: (_) =>
+                              VoucherEditScreen(kind: kind, voucherId: v.id),
+                        ),
                       ),
                     ),
                   );

@@ -35,19 +35,25 @@ class SuppliersScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.shopping_basket,
-                      color: AppColors.warning),
+                  const Icon(Icons.shopping_basket, color: AppColors.warning),
                   const SizedBox(width: 8),
                   const Expanded(
-                    child: Text('إجمالي ما علينا للموردين',
-                        style: TextStyle(
-                            fontSize: 13, color: AppColors.textPrimary)),
+                    child: Text(
+                      'إجمالي ما علينا للموردين',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                   ),
-                  Text(Formatters.currency(total, decimals: 0),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.warning,
-                          fontSize: 14)),
+                  Text(
+                    Formatters.currency(total, decimals: 0),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.warning,
+                      fontSize: 14,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -55,7 +61,8 @@ class SuppliersScreen extends StatelessWidget {
               child: list.isEmpty
                   ? const EmptyState(
                       icon: Icons.local_shipping_outlined,
-                      message: 'لا يوجد موردون بعد. أضف أول مورد.')
+                      message: 'لا يوجد موردون بعد. أضف أول مورد.',
+                    )
                   : ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemCount: list.length,
@@ -65,19 +72,27 @@ class SuppliersScreen extends StatelessWidget {
                         return Card(
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundColor:
-                                  AppColors.warning.withValues(alpha: 0.15),
+                              backgroundColor: AppColors.warning.withValues(
+                                alpha: 0.15,
+                              ),
                               foregroundColor: AppColors.warning,
-                              child: Text(p.name.substring(0, 1),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            title: Text(p.name,
+                              child: Text(
+                                p.name.substring(0, 1),
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold)),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              p.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             subtitle: Text(
-                                '${p.city} • ${p.code} • ${p.currency}',
-                                style: const TextStyle(fontSize: 11.5)),
+                              '${p.city} • ${p.code} • ${p.currency}',
+                              style: const TextStyle(fontSize: 11.5),
+                            ),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -88,8 +103,8 @@ class SuppliersScreen extends StatelessWidget {
                                     color: bal > 0
                                         ? AppColors.warning
                                         : (bal < 0
-                                            ? AppColors.success
-                                            : AppColors.textLight),
+                                              ? AppColors.success
+                                              : AppColors.textLight),
                                     fontWeight: FontWeight.bold,
                                     fontSize: 13,
                                   ),
@@ -99,19 +114,24 @@ class SuppliersScreen extends StatelessWidget {
                                       ? 'علينا'
                                       : (bal < 0 ? 'لنا لديه' : 'مسوّى'),
                                   style: const TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.textLight),
+                                    fontSize: 10,
+                                    color: AppColors.textLight,
+                                  ),
                                 ),
                               ],
                             ),
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => PartnerStatementScreen(
-                                      partnerId: p.id)),
+                                builder: (_) =>
+                                    PartnerStatementScreen(partnerId: p.id),
+                              ),
                             ),
-                            onLongPress: () => showPartnerForm(context,
-                                kind: PartnerKind.supplier, existing: p),
+                            onLongPress: () => showPartnerForm(
+                              context,
+                              kind: PartnerKind.supplier,
+                              existing: p,
+                            ),
                           ),
                         );
                       },

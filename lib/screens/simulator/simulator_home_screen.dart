@@ -22,14 +22,16 @@ class SimulatorHomeScreen extends StatelessWidget {
     final acc = context.watch<AccountingProvider>();
     final cashBalance = acc.accountBalance('a1111');
     final receivables = acc.customers.fold<double>(
-        0, (s, p) => s + acc.partnerBalance(p.id));
-    final payables = acc.suppliers
-        .fold<double>(0, (s, p) => s + acc.partnerBalance(p.id));
+      0,
+      (s, p) => s + acc.partnerBalance(p.id),
+    );
+    final payables = acc.suppliers.fold<double>(
+      0,
+      (s, p) => s + acc.partnerBalance(p.id),
+    );
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('النظام المحاسبي التدريبي'),
-      ),
+      appBar: AppBar(title: const Text('النظام المحاسبي التدريبي')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(12),
@@ -54,15 +56,18 @@ class SimulatorHomeScreen extends StatelessWidget {
                         child: Text(
                           acc.company.name,
                           style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                       Text(
                         'سنة ${acc.company.fiscalYear}',
                         style: const TextStyle(
-                            color: Colors.white70, fontSize: 12),
+                          color: Colors.white70,
+                          fontSize: 12,
+                        ),
                       ),
                     ],
                   ),
@@ -122,22 +127,32 @@ class SimulatorHomeScreen extends StatelessWidget {
                   icon: Icons.account_tree,
                   title: 'شجرة الحسابات',
                   color: AppColors.primary,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const AccountsScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const AccountsScreen()),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.book,
                   title: 'القيود اليومية',
                   color: AppColors.accent,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const JournalListScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const JournalListScreen(),
+                    ),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.receipt_long,
                   title: 'سندات قبض/صرف',
                   color: AppColors.success,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const VouchersListScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const VouchersListScreen(),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -152,22 +167,28 @@ class SimulatorHomeScreen extends StatelessWidget {
                   icon: Icons.people,
                   title: 'العملاء',
                   color: AppColors.primary,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const CustomersScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CustomersScreen()),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.local_shipping,
                   title: 'الموردون',
                   color: AppColors.warning,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const SuppliersScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SuppliersScreen()),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.inventory_2,
                   title: 'الأصناف والمخزون',
                   color: AppColors.accent,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const ItemsScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const ItemsScreen()),
+                  ),
                 ),
               ],
             ),
@@ -182,15 +203,21 @@ class SimulatorHomeScreen extends StatelessWidget {
                   icon: Icons.point_of_sale,
                   title: 'المبيعات',
                   color: AppColors.success,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const SalesListScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const SalesListScreen()),
+                  ),
                 ),
                 SectionCard(
                   icon: Icons.shopping_cart,
                   title: 'المشتريات',
                   color: AppColors.warning,
-                  onTap: () => Navigator.push(context, MaterialPageRoute(
-                      builder: (_) => const PurchasesListScreen())),
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const PurchasesListScreen(),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -202,13 +229,18 @@ class SimulatorHomeScreen extends StatelessWidget {
                   foregroundColor: Colors.white,
                   child: Icon(Icons.assessment),
                 ),
-                title: const Text('التقارير المالية',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                title: const Text(
+                  'التقارير المالية',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: const Text(
-                    'ميزان المراجعة • قائمة الدخل • المركز المالي • تقارير العملاء والمخزون'),
+                  'ميزان المراجعة • قائمة الدخل • المركز المالي • تقارير العملاء والمخزون',
+                ),
                 trailing: const Icon(Icons.chevron_left),
-                onTap: () => Navigator.push(context, MaterialPageRoute(
-                    builder: (_) => const ReportsHomeScreen())),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ReportsHomeScreen()),
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -229,17 +261,22 @@ class _Heading extends StatelessWidget {
       child: Row(
         children: [
           Container(
-              width: 4,
-              height: 18,
-              decoration: BoxDecoration(
-                  color: AppColors.primary,
-                  borderRadius: BorderRadius.circular(2))),
+            width: 4,
+            height: 18,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
           const SizedBox(width: 8),
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary)),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
         ],
       ),
     );

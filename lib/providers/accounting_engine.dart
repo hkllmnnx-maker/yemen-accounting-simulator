@@ -15,10 +15,7 @@ class AccountingEngine {
   static const String purchaseReturnsAccountId = 'a57';
 
   /// إنشاء قيد من فاتورة بيع
-  static JournalEntry journalFromInvoice(
-    Invoice inv,
-    AccountingProvider acc,
-  ) {
+  static JournalEntry journalFromInvoice(Invoice inv, AccountingProvider acc) {
     final lines = <JournalLine>[];
     final partner = acc.partnerById(inv.partnerId);
     final partnerAccountId = partner?.accountId ?? '';
@@ -47,108 +44,136 @@ class AccountingEngine {
       case InvoiceKind.sale:
         // المدين: الصندوق + العميل (الآجل)
         if (cashPaid > 0) {
-          lines.add(JournalLine(
-            accountId: mainCashAccountId,
-            accountName: cashAcc?.name ?? 'الصندوق',
-            debit: cashPaid,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: mainCashAccountId,
+              accountName: cashAcc?.name ?? 'الصندوق',
+              debit: cashPaid,
+            ),
+          );
         }
         if (credit > 0 && partnerAccountId.isNotEmpty) {
-          lines.add(JournalLine(
-            accountId: partnerAccountId,
-            accountName: partnerAccountName,
-            debit: credit,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: partnerAccountId,
+              accountName: partnerAccountName,
+              debit: credit,
+            ),
+          );
         }
         // الدائن: إيرادات المبيعات
-        lines.add(JournalLine(
-          accountId: salesRevenueAccountId,
-          accountName: salesAcc?.name ?? 'إيرادات المبيعات',
-          credit: total,
-        ));
+        lines.add(
+          JournalLine(
+            accountId: salesRevenueAccountId,
+            accountName: salesAcc?.name ?? 'إيرادات المبيعات',
+            credit: total,
+          ),
+        );
         // قيد ثانوي لتكلفة البضاعة المباعة
         if (cogs > 0) {
-          lines.add(JournalLine(
-            accountId: cogsAccountId,
-            accountName: cogsAcc?.name ?? 'تكلفة البضاعة المباعة',
-            debit: cogs,
-          ));
-          lines.add(JournalLine(
-            accountId: inventoryAccountId,
-            accountName: invAcc?.name ?? 'المخزون',
-            credit: cogs,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: cogsAccountId,
+              accountName: cogsAcc?.name ?? 'تكلفة البضاعة المباعة',
+              debit: cogs,
+            ),
+          );
+          lines.add(
+            JournalLine(
+              accountId: inventoryAccountId,
+              accountName: invAcc?.name ?? 'المخزون',
+              credit: cogs,
+            ),
+          );
         }
         break;
 
       case InvoiceKind.purchase:
         // المدين: المخزون
-        lines.add(JournalLine(
-          accountId: inventoryAccountId,
-          accountName: invAcc?.name ?? 'المخزون',
-          debit: total,
-        ));
+        lines.add(
+          JournalLine(
+            accountId: inventoryAccountId,
+            accountName: invAcc?.name ?? 'المخزون',
+            debit: total,
+          ),
+        );
         // الدائن: الصندوق + المورد
         if (cashPaid > 0) {
-          lines.add(JournalLine(
-            accountId: mainCashAccountId,
-            accountName: cashAcc?.name ?? 'الصندوق',
-            credit: cashPaid,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: mainCashAccountId,
+              accountName: cashAcc?.name ?? 'الصندوق',
+              credit: cashPaid,
+            ),
+          );
         }
         if (credit > 0 && partnerAccountId.isNotEmpty) {
-          lines.add(JournalLine(
-            accountId: partnerAccountId,
-            accountName: partnerAccountName,
-            credit: credit,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: partnerAccountId,
+              accountName: partnerAccountName,
+              credit: credit,
+            ),
+          );
         }
         break;
 
       case InvoiceKind.saleReturn:
         // المدين: مرتجعات المبيعات
-        lines.add(JournalLine(
-          accountId: salesReturnsAccountId,
-          accountName: salesReturnAcc?.name ?? 'مرتجعات المبيعات',
-          debit: total,
-        ));
+        lines.add(
+          JournalLine(
+            accountId: salesReturnsAccountId,
+            accountName: salesReturnAcc?.name ?? 'مرتجعات المبيعات',
+            debit: total,
+          ),
+        );
         // الدائن: العميل أو الصندوق
         if (inv.paymentType == InvoicePaymentType.cash) {
-          lines.add(JournalLine(
-            accountId: mainCashAccountId,
-            accountName: cashAcc?.name ?? 'الصندوق',
-            credit: total,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: mainCashAccountId,
+              accountName: cashAcc?.name ?? 'الصندوق',
+              credit: total,
+            ),
+          );
         } else {
-          lines.add(JournalLine(
-            accountId: partnerAccountId,
-            accountName: partnerAccountName,
-            credit: total,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: partnerAccountId,
+              accountName: partnerAccountName,
+              credit: total,
+            ),
+          );
         }
         break;
 
       case InvoiceKind.purchaseReturn:
         // المدين: المورد أو الصندوق
         if (inv.paymentType == InvoicePaymentType.cash) {
-          lines.add(JournalLine(
-            accountId: mainCashAccountId,
-            accountName: cashAcc?.name ?? 'الصندوق',
-            debit: total,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: mainCashAccountId,
+              accountName: cashAcc?.name ?? 'الصندوق',
+              debit: total,
+            ),
+          );
         } else {
-          lines.add(JournalLine(
-            accountId: partnerAccountId,
-            accountName: partnerAccountName,
-            debit: total,
-          ));
+          lines.add(
+            JournalLine(
+              accountId: partnerAccountId,
+              accountName: partnerAccountName,
+              debit: total,
+            ),
+          );
         }
         // الدائن: مرتجعات المشتريات
-        lines.add(JournalLine(
-          accountId: purchaseReturnsAccountId,
-          accountName: purchRetAcc?.name ?? 'مرتجعات المشتريات',
-          credit: total,
-        ));
+        lines.add(
+          JournalLine(
+            accountId: purchaseReturnsAccountId,
+            accountName: purchRetAcc?.name ?? 'مرتجعات المشتريات',
+            credit: total,
+          ),
+        );
         break;
     }
 
@@ -156,7 +181,8 @@ class AccountingEngine {
       id: 'je_inv_${inv.id}',
       number: 0,
       date: inv.date,
-      description: '${_invoiceKindAr(inv.kind)} رقم ${inv.number} - ${inv.partnerName}',
+      description:
+          '${_invoiceKindAr(inv.kind)} رقم ${inv.number} - ${inv.partnerName}',
       lines: lines,
       posted: true,
       source: _invoiceKindAr(inv.kind),
@@ -166,38 +192,43 @@ class AccountingEngine {
   }
 
   /// إنشاء قيد من سند قبض/صرف
-  static JournalEntry journalFromVoucher(
-    Voucher v,
-    AccountingProvider acc,
-  ) {
+  static JournalEntry journalFromVoucher(Voucher v, AccountingProvider acc) {
     final lines = <JournalLine>[];
     final partner = acc.partnerById(v.partnerId);
     final partnerAccountId = partner?.accountId ?? '';
 
     if (v.kind == VoucherKind.receipt) {
       // سند قبض: الصندوق مدين، العميل دائن
-      lines.add(JournalLine(
-        accountId: v.cashAccountId,
-        accountName: v.cashAccountName,
-        debit: v.amount,
-      ));
-      lines.add(JournalLine(
-        accountId: partnerAccountId,
-        accountName: partner?.name ?? v.partnerName,
-        credit: v.amount,
-      ));
+      lines.add(
+        JournalLine(
+          accountId: v.cashAccountId,
+          accountName: v.cashAccountName,
+          debit: v.amount,
+        ),
+      );
+      lines.add(
+        JournalLine(
+          accountId: partnerAccountId,
+          accountName: partner?.name ?? v.partnerName,
+          credit: v.amount,
+        ),
+      );
     } else {
       // سند صرف: المورد مدين، الصندوق دائن
-      lines.add(JournalLine(
-        accountId: partnerAccountId,
-        accountName: partner?.name ?? v.partnerName,
-        debit: v.amount,
-      ));
-      lines.add(JournalLine(
-        accountId: v.cashAccountId,
-        accountName: v.cashAccountName,
-        credit: v.amount,
-      ));
+      lines.add(
+        JournalLine(
+          accountId: partnerAccountId,
+          accountName: partner?.name ?? v.partnerName,
+          debit: v.amount,
+        ),
+      );
+      lines.add(
+        JournalLine(
+          accountId: v.cashAccountId,
+          accountName: v.cashAccountName,
+          credit: v.amount,
+        ),
+      );
     }
 
     return JournalEntry(
@@ -233,9 +264,9 @@ class AccountingEngine {
 class CashAccountsHelper {
   static List<Account> cashAndBankAccounts(AccountingProvider acc) {
     return acc.accounts
-        .where((a) =>
-            a.isPostable &&
-            (a.parentId == 'a111' || a.parentId == 'a112'))
+        .where(
+          (a) => a.isPostable && (a.parentId == 'a111' || a.parentId == 'a112'),
+        )
         .toList();
   }
 }

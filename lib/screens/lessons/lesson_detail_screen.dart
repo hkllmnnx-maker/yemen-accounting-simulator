@@ -26,9 +26,7 @@ class LessonDetailScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('الدرس'),
-      ),
+      appBar: AppBar(title: const Text('الدرس')),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.all(16),
@@ -68,35 +66,40 @@ class LessonDetailScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const _Heading(icon: Icons.article, title: 'الشرح'),
-            ...lesson.sections.map((s) => Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
-                  child: Container(
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: AppColors.border),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Icon(Icons.fiber_manual_record,
-                            size: 10, color: AppColors.primary),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            s,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              height: 1.7,
-                              color: AppColors.textPrimary,
-                            ),
+            ...lesson.sections.map(
+              (s) => Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: AppColors.border),
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Icon(
+                        Icons.fiber_manual_record,
+                        size: 10,
+                        color: AppColors.primary,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          s,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            height: 1.7,
+                            color: AppColors.textPrimary,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                )),
+                ),
+              ),
+            ),
             const SizedBox(height: 8),
             const _Heading(icon: Icons.lightbulb, title: 'مثال يمني واقعي'),
             Container(
@@ -104,7 +107,9 @@ class LessonDetailScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.warningLight,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.warning.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.warning.withValues(alpha: 0.3),
+                ),
               ),
               child: Text(
                 lesson.yemeniExample,
@@ -122,7 +127,9 @@ class LessonDetailScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.infoLight,
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(color: AppColors.info.withValues(alpha: 0.3)),
+                border: Border.all(
+                  color: AppColors.info.withValues(alpha: 0.3),
+                ),
               ),
               child: Text(
                 lesson.practicalExercise,
@@ -145,8 +152,11 @@ class LessonDetailScreen extends StatelessWidget {
                     foregroundColor: AppColors.accent,
                     side: const BorderSide(color: AppColors.accent),
                   ),
-                  onPressed: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => TrainingScreen(scenario: training!))),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => TrainingScreen(scenario: training!),
+                    ),
+                  ),
                 ),
               ),
             const SizedBox(height: 10),
@@ -160,10 +170,15 @@ class LessonDetailScreen extends StatelessWidget {
                   backgroundColor: AppColors.warning,
                 ),
                 onPressed: () async {
-                  await context.read<ProgressProvider>().completeLesson(lesson.id);
+                  await context.read<ProgressProvider>().completeLesson(
+                    lesson.id,
+                  );
                   if (!context.mounted) return;
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (_) => QuizScreen(lesson: lesson)));
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => QuizScreen(lesson: lesson),
+                    ),
+                  );
                 },
               ),
             ),
@@ -175,9 +190,9 @@ class LessonDetailScreen extends StatelessWidget {
                   icon: const Icon(Icons.check_circle_outline),
                   label: const Text('وضع علامة قرأت الدرس'),
                   onPressed: () async {
-                    await context
-                        .read<ProgressProvider>()
-                        .completeLesson(lesson.id);
+                    await context.read<ProgressProvider>().completeLesson(
+                      lesson.id,
+                    );
                     if (!context.mounted) return;
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('تم تسجيل إكمال الدرس')),

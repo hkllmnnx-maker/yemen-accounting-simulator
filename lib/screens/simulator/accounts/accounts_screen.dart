@@ -42,7 +42,10 @@ class AccountsScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'الحسابات الرئيسية لا تقبل قيودًا. القيود تُسجل على الحسابات الفرعية.',
-                      style: TextStyle(fontSize: 12.5, color: AppColors.textPrimary),
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                   ),
                 ],
@@ -72,19 +75,25 @@ class AccountsScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                    controller: code,
-                    decoration: const InputDecoration(labelText: 'الرقم')),
+                  controller: code,
+                  decoration: const InputDecoration(labelText: 'الرقم'),
+                ),
                 const SizedBox(height: 8),
                 TextField(
-                    controller: name,
-                    decoration: const InputDecoration(labelText: 'الاسم')),
+                  controller: name,
+                  decoration: const InputDecoration(labelText: 'الاسم'),
+                ),
                 const SizedBox(height: 8),
                 DropdownButtonFormField<AccountType>(
                   initialValue: type,
                   decoration: const InputDecoration(labelText: 'النوع'),
                   items: AccountType.values
-                      .map((t) =>
-                          DropdownMenuItem(value: t, child: Text(t.arabicName)))
+                      .map(
+                        (t) => DropdownMenuItem(
+                          value: t,
+                          child: Text(t.arabicName),
+                        ),
+                      )
                       .toList(),
                   onChanged: (v) => setState(() => type = v ?? type),
                 ),
@@ -94,12 +103,17 @@ class AccountsScreen extends StatelessWidget {
                   decoration: const InputDecoration(labelText: 'الحساب الأب'),
                   items: [
                     const DropdownMenuItem<String?>(
-                        value: null, child: Text('لا يوجد (حساب رئيسي)')),
+                      value: null,
+                      child: Text('لا يوجد (حساب رئيسي)'),
+                    ),
                     ...acc.accounts
                         .where((a) => !a.isPostable)
-                        .map((a) => DropdownMenuItem<String?>(
+                        .map(
+                          (a) => DropdownMenuItem<String?>(
                             value: a.id,
-                            child: Text('${a.code} - ${a.name}'))),
+                            child: Text('${a.code} - ${a.name}'),
+                          ),
+                        ),
                   ],
                   onChanged: (v) => setState(() => parent = v),
                 ),
@@ -113,16 +127,19 @@ class AccountsScreen extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async {
-                if (name.text.trim().isEmpty || code.text.trim().isEmpty) return;
+                if (name.text.trim().isEmpty || code.text.trim().isEmpty)
+                  return;
                 final id = 'acc_${DateTime.now().millisecondsSinceEpoch}';
-                await acc.addAccount(Account(
-                  id: id,
-                  code: code.text.trim(),
-                  name: name.text.trim(),
-                  type: type,
-                  parentId: parent,
-                  isPostable: true,
-                ));
+                await acc.addAccount(
+                  Account(
+                    id: id,
+                    code: code.text.trim(),
+                    name: name.text.trim(),
+                    type: type,
+                    parentId: parent,
+                    isPostable: true,
+                  ),
+                );
                 if (ctx.mounted) Navigator.pop(ctx);
               },
               child: const Text('حفظ'),
@@ -175,8 +192,10 @@ class _AccountTile extends StatelessWidget {
             '${root.code} • ${root.name}',
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5),
           ),
-          subtitle: Text(root.type.arabicName,
-              style: TextStyle(color: typeColor, fontSize: 11)),
+          subtitle: Text(
+            root.type.arabicName,
+            style: TextStyle(color: typeColor, fontSize: 11),
+          ),
           trailing: Text(
             Formatters.currency(balance, decimals: 0),
             style: TextStyle(
@@ -204,13 +223,17 @@ class _AccountTile extends StatelessWidget {
           '${root.code} • ${root.name}',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
         ),
-        subtitle: Text(root.type.arabicName,
-            style: TextStyle(color: typeColor, fontSize: 11)),
+        subtitle: Text(
+          root.type.arabicName,
+          style: TextStyle(color: typeColor, fontSize: 11),
+        ),
         children: children
-            .map((c) => Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 12),
-                  child: _AccountTile(root: c),
-                ))
+            .map(
+              (c) => Padding(
+                padding: const EdgeInsetsDirectional.only(start: 12),
+                child: _AccountTile(root: c),
+              ),
+            )
             .toList(),
       ),
     );
