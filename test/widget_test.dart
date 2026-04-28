@@ -18,6 +18,7 @@ import 'package:yemen_accounting_simulator/data/models/invoice.dart';
 import 'package:yemen_accounting_simulator/data/models/voucher.dart';
 import 'package:yemen_accounting_simulator/providers/accounting_provider.dart';
 import 'package:yemen_accounting_simulator/providers/progress_provider.dart';
+import 'package:yemen_accounting_simulator/providers/financial_accounting_provider.dart';
 
 import 'package:yemen_accounting_simulator/screens/dashboard/dashboard_screen.dart';
 import 'package:yemen_accounting_simulator/screens/welcome/welcome_screen.dart';
@@ -53,6 +54,9 @@ Widget _wrap(Widget child) {
         create: (_) => AccountingProvider()..loadCompany(),
       ),
       ChangeNotifierProvider(create: (_) => ProgressProvider()..load()),
+      ChangeNotifierProvider(
+        create: (_) => FinancialAccountingProvider()..load(),
+      ),
     ],
     child: MaterialApp(
       debugShowCheckedModeBanner: false,
