@@ -1,28 +1,36 @@
 import 'package:flutter/material.dart';
 import '../core/theme/app_colors.dart';
+import 'thumbnails/section_thumbnails.dart';
 
-/// بطاقة قسم رئيسية - تستخدم في لوحة التحكم وشاشات الفهرس
+/// بطاقة قسم رئيسية - تستخدم في لوحة التحكم وشاشات الفهرس.
 ///
-/// تصميم مُحدَّث: gradient ناعم + ظل + أيقونة بارزة + دعم عنوان فرعي.
+/// التصميم المُحدَّث:
+/// - دعم الصور المصغّرة الاحترافية (CustomPaint thumbnails) أو الأيقونات.
+/// - تخطيط متجاوب يحافظ على وضوح النص العربي حتى على الشاشات الصغيرة.
+/// - حدود ناعمة + ظل + تدرّج لوني لمظهر احترافي موحَّد.
+/// - لا يُسمح بقصّ النص بشكل مشوّه: يَلتفّ على سطرين عند الحاجة.
 class SectionCard extends StatelessWidget {
-  final IconData icon;
+  /// أيقونة احتياطية (تُستخدم فقط إذا لم يتم تحديد thumbnail).
+  final IconData? icon;
+
+  /// نوع الصورة المصغّرة الحقيقية المرسومة (يُفضَّل دومًا).
+  final ThumbnailKind? thumbnail;
+
   final String title;
   final String? subtitle;
   final Color color;
   final VoidCallback onTap;
 
-  /// عند true يستخدم تخطيطًا أفقيًا (مفيد للشاشات الواسعة).
-  final bool dense;
-
   const SectionCard({
     super.key,
-    required this.icon,
+    this.icon,
+    this.thumbnail,
     required this.title,
     this.subtitle,
     this.color = AppColors.primary,
     required this.onTap,
-    this.dense = false,
-  });
+  }) : assert(icon != null || thumbnail != null,
+            'يجب تمرير icon أو thumbnail على الأقل');
 
   @override
   Widget build(BuildContext context) {
@@ -31,83 +39,101 @@ class SectionCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: color.withValues(alpha: 0.15), width: 1),
+        side: BorderSide(color: color.withValues(alpha: 0.18), width: 1),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
         onTap: onTap,
         splashColor: color.withValues(alpha: 0.10),
         highlightColor: color.withValues(alpha: 0.06),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // أيقونة مع gradient وحدود ناعمة
-              Container(
-                width: 54,
-                height: 54,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      color.withValues(alpha: 0.18),
-                      color.withValues(alpha: 0.08),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(
-                    color: color.withValues(alpha: 0.25),
-                    width: 1,
-                  ),
-                ),
-                child: Icon(icon, color: color, size: 30),
-              ),
-              const SizedBox(height: 10),
-              Flexible(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.textPrimary,
-                    height: 1.25,
-                  ),
-                ),
-              ),
-              if (subtitle != null) ...[
-                const SizedBox(height: 3),
-                Flexible(
-                  child: Text(
-                    subtitle!,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 10.5,
-                      color: AppColors.textLight,
+        child: LayoutBuilder(
+          builder: (context, c) {
+            // حساب حجم الصورة المصغّرة بناءً على ارتفاع البطاقة المتاح
+            // لتجنّب أي تشويه أو ضغط على النص العربي.
+            final h = c.maxHeight.isFinite ? c.maxHeight : 140.0;
+            final thumbSize = (h * 0.42).clamp(40.0, 68.0);
+            final padding = h < 130 ? 8.0 : 10.0;
+
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding, vertical: padding),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (thumbnail != null)
+                    SectionThumbnail(
+                      kind: thumbnail!,
+                      color: color,
+                      size: thumbSize,
+                    )
+                  else
+                    Container(
+                      width: thumbSize,
+                      height: thumbSize,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            color.withValues(alpha: 0.18),
+                            color.withValues(alpha: 0.08),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(
+                          color: color.withValues(alpha: 0.25),
+                          width: 1,
+                        ),
+                      ),
+                      child:
+                          Icon(icon, color: color, size: thumbSize * 0.55),
+                    ),
+                  SizedBox(height: h < 130 ? 6 : 8),
+                  Flexible(
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12.5,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.textPrimary,
+                        height: 1.2,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ],
-          ),
+                  if (subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Flexible(
+                      child: Text(
+                        subtitle!,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 10.5,
+                          color: AppColors.textLight,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
   }
 }
 
-/// بطاقة إحصائية - رقم + تسمية + أيقونة
+/// بطاقة إحصائية - أيقونة (أو صورة مصغّرة) + تسمية + رقم.
 ///
-/// التصميم المُحدَّث يدعم أحجام شاشات صغيرة (Wrap + ellipsis للأرقام الطويلة).
+/// تخطيطها أفقي، وتستخدم FittedBox لمنع تجاوز الأرقام الطويلة.
 class StatCard extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final ThumbnailKind? thumbnail;
   final String label;
   final String value;
   final Color color;
@@ -115,12 +141,14 @@ class StatCard extends StatelessWidget {
 
   const StatCard({
     super.key,
-    required this.icon,
+    this.icon,
+    this.thumbnail,
     required this.label,
     required this.value,
     required this.color,
     this.onTap,
-  });
+  }) : assert(icon != null || thumbnail != null,
+            'يجب تمرير icon أو thumbnail على الأقل');
 
   @override
   Widget build(BuildContext context) {
@@ -128,32 +156,39 @@ class StatCard extends StatelessWidget {
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
-        side: BorderSide(color: color.withValues(alpha: 0.15), width: 1),
+        side: BorderSide(color: color.withValues(alpha: 0.18), width: 1),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(14),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(10),
           child: Row(
             children: [
-              Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      color.withValues(alpha: 0.18),
-                      color.withValues(alpha: 0.08),
-                    ],
+              if (thumbnail != null)
+                SectionThumbnail(
+                  kind: thumbnail!,
+                  color: color,
+                  size: 42,
+                )
+              else
+                Container(
+                  width: 42,
+                  height: 42,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      colors: [
+                        color.withValues(alpha: 0.18),
+                        color.withValues(alpha: 0.08),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(11),
                   ),
-                  borderRadius: BorderRadius.circular(11),
+                  child: Icon(icon, color: color, size: 22),
                 ),
-                child: Icon(icon, color: color, size: 22),
-              ),
-              const SizedBox(width: 10),
+              const SizedBox(width: 8),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,11 +199,11 @@ class StatCard extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                        fontSize: 11.5,
+                        fontSize: 11,
                         color: AppColors.textSecondary,
                       ),
                     ),
-                    const SizedBox(height: 3),
+                    const SizedBox(height: 2),
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       alignment: AlignmentDirectional.centerStart,
@@ -177,7 +212,7 @@ class StatCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                           color: AppColors.textPrimary,
                         ),
@@ -194,7 +229,7 @@ class StatCard extends StatelessWidget {
   }
 }
 
-/// شاشة فارغة عامة - تستخدم لما لا توجد بيانات
+/// شاشة فارغة عامة - تستخدم لما لا توجد بيانات.
 class EmptyState extends StatelessWidget {
   final IconData icon;
   final String message;
@@ -263,7 +298,7 @@ class EmptyState extends StatelessWidget {
   }
 }
 
-/// عنوان قسم بمؤشر شريطي يميني - عنصر بصري متكرر
+/// عنوان قسم بمؤشر شريطي يميني - عنصر بصري متكرر.
 class SectionHeader extends StatelessWidget {
   final String title;
   final String? subtitle;
@@ -307,18 +342,24 @@ class SectionHeader extends StatelessWidget {
               children: [
                 Text(
                   title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 15.5,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                     color: AppColors.textPrimary,
+                    height: 1.25,
                   ),
                 ),
                 if (subtitle != null)
                   Text(
                     subtitle!,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontSize: 11.5,
                       color: AppColors.textSecondary,
+                      height: 1.3,
                     ),
                   ),
               ],
