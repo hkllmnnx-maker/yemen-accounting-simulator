@@ -12,23 +12,41 @@ class ReportsHomeScreen extends StatelessWidget {
 
   final reports = const [
     _R(
-        Icons.balance,
-        'ميزان المراجعة',
-        'كل الحسابات وأرصدتها مع تأكيد توازن المدين والدائن',
-        AppColors.primary),
-    _R(Icons.trending_up, 'قائمة الدخل',
-        'الإيرادات - المصروفات = صافي الربح/الخسارة', AppColors.success),
+      Icons.balance,
+      'ميزان المراجعة',
+      'كل الحسابات وأرصدتها مع تأكيد توازن المدين والدائن',
+      AppColors.primary,
+    ),
     _R(
-        Icons.account_balance,
-        'المركز المالي (الميزانية)',
-        'الأصول = الالتزامات + حقوق الملكية',
-        AppColors.accent),
-    _R(Icons.point_of_sale, 'تقرير المبيعات',
-        'إجمالي المبيعات والأرباح المبسطة', AppColors.success),
-    _R(Icons.account_balance_wallet, 'تقرير الصندوق',
-        'حركات الصندوق المرحلة', AppColors.warning),
-    _R(Icons.inventory, 'تقرير المخزون',
-        'الأصناف والكميات وقيمة المخزون', AppColors.info),
+      Icons.trending_up,
+      'قائمة الدخل',
+      'الإيرادات - المصروفات = صافي الربح/الخسارة',
+      AppColors.success,
+    ),
+    _R(
+      Icons.account_balance,
+      'المركز المالي (الميزانية)',
+      'الأصول = الالتزامات + حقوق الملكية',
+      AppColors.accent,
+    ),
+    _R(
+      Icons.point_of_sale,
+      'تقرير المبيعات',
+      'إجمالي المبيعات والأرباح المبسطة',
+      AppColors.success,
+    ),
+    _R(
+      Icons.account_balance_wallet,
+      'تقرير الصندوق',
+      'حركات الصندوق المرحلة',
+      AppColors.warning,
+    ),
+    _R(
+      Icons.inventory,
+      'تقرير المخزون',
+      'الأصناف والكميات وقيمة المخزون',
+      AppColors.info,
+    ),
   ];
 
   @override
@@ -53,11 +71,15 @@ class ReportsHomeScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Icon(r.icon, color: r.color),
                 ),
-                title: Text(r.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                title: Text(
+                  r.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: Text(r.desc, style: const TextStyle(fontSize: 11.5)),
                 trailing: const Icon(Icons.chevron_left),
-                onTap: () => Navigator.push(context, MaterialPageRoute(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
                     builder: (_) {
                       switch (i) {
                         case 0:
@@ -75,7 +97,9 @@ class ReportsHomeScreen extends StatelessWidget {
                         default:
                           return const TrialBalanceScreen();
                       }
-                    })),
+                    },
+                  ),
+                ),
               ),
             );
           },

@@ -35,23 +35,32 @@ class CustomersScreen extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.account_balance_wallet,
-                      color: AppColors.primary),
+                  const Icon(
+                    Icons.account_balance_wallet,
+                    color: AppColors.primary,
+                  ),
                   const SizedBox(width: 8),
                   const Expanded(
-                    child: Text('إجمالي مديونية العملاء',
-                        style: TextStyle(
-                            fontSize: 13, color: AppColors.textPrimary)),
+                    child: Text(
+                      'إجمالي مديونية العملاء',
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                   ),
                   Flexible(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       alignment: AlignmentDirectional.centerEnd,
-                      child: Text(Formatters.currency(total, decimals: 0),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.primary,
-                              fontSize: 14)),
+                      child: Text(
+                        Formatters.currency(total, decimals: 0),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.primary,
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -61,7 +70,8 @@ class CustomersScreen extends StatelessWidget {
               child: list.isEmpty
                   ? const EmptyState(
                       icon: Icons.people_outline,
-                      message: 'لا يوجد عملاء بعد. أضف أول عميل.')
+                      message: 'لا يوجد عملاء بعد. أضف أول عميل.',
+                    )
                   : ListView.builder(
                       padding: const EdgeInsets.all(8),
                       itemCount: list.length,
@@ -71,24 +81,29 @@ class CustomersScreen extends StatelessWidget {
                         return Card(
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundColor:
-                                  AppColors.primary.withValues(alpha: 0.15),
+                              backgroundColor: AppColors.primary.withValues(
+                                alpha: 0.15,
+                              ),
                               foregroundColor: AppColors.primary,
                               child: Text(
-                                  p.name.isEmpty
-                                      ? '?'
-                                      : p.name.substring(0, 1),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                            title: Text(p.name,
+                                p.name.isEmpty ? '?' : p.name.substring(0, 1),
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.ellipsis),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            title: Text(
+                              p.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             subtitle: Text(
-                                '${p.city} • ${p.isCredit ? "آجل" : "نقدي"} • ${p.code}',
-                                style: const TextStyle(fontSize: 11.5),
-                                overflow: TextOverflow.ellipsis),
+                              '${p.city} • ${p.isCredit ? "آجل" : "نقدي"} • ${p.code}',
+                              style: const TextStyle(fontSize: 11.5),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
@@ -101,8 +116,8 @@ class CustomersScreen extends StatelessWidget {
                                       color: bal > 0
                                           ? AppColors.error
                                           : (bal < 0
-                                              ? AppColors.success
-                                              : AppColors.textLight),
+                                                ? AppColors.success
+                                                : AppColors.textLight),
                                       fontWeight: FontWeight.bold,
                                       fontSize: 13,
                                     ),
@@ -113,19 +128,24 @@ class CustomersScreen extends StatelessWidget {
                                       ? 'مديونية'
                                       : (bal < 0 ? 'له لدينا' : 'مسوّى'),
                                   style: const TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.textLight),
+                                    fontSize: 10,
+                                    color: AppColors.textLight,
+                                  ),
                                 ),
                               ],
                             ),
                             onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) =>
-                                      PartnerStatementScreen(partnerId: p.id)),
+                                builder: (_) =>
+                                    PartnerStatementScreen(partnerId: p.id),
+                              ),
                             ),
-                            onLongPress: () => _showPartnerForm(context,
-                                kind: PartnerKind.customer, existing: p),
+                            onLongPress: () => _showPartnerForm(
+                              context,
+                              kind: PartnerKind.customer,
+                              existing: p,
+                            ),
                           ),
                         );
                       },
@@ -138,13 +158,19 @@ class CustomersScreen extends StatelessWidget {
   }
 }
 
-void showPartnerForm(BuildContext context,
-    {required PartnerKind kind, Partner? existing}) {
+void showPartnerForm(
+  BuildContext context, {
+  required PartnerKind kind,
+  Partner? existing,
+}) {
   _showPartnerForm(context, kind: kind, existing: existing);
 }
 
-void _showPartnerForm(BuildContext context,
-    {required PartnerKind kind, Partner? existing}) {
+void _showPartnerForm(
+  BuildContext context, {
+  required PartnerKind kind,
+  Partner? existing,
+}) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -177,10 +203,12 @@ class _PartnerFormSheetState extends State<_PartnerFormSheet> {
     final e = widget.existing;
     _nameCtrl = TextEditingController(text: e?.name ?? '');
     _phoneCtrl = TextEditingController(text: e?.phone ?? '');
-    _creditLimitCtrl =
-        TextEditingController(text: (e?.creditLimit ?? 0).toString());
-    _openingCtrl =
-        TextEditingController(text: (e?.openingBalance ?? 0).toString());
+    _creditLimitCtrl = TextEditingController(
+      text: (e?.creditLimit ?? 0).toString(),
+    );
+    _openingCtrl = TextEditingController(
+      text: (e?.openingBalance ?? 0).toString(),
+    );
     _city = e?.city ?? YemeniData.cities.first;
     _isCredit = e?.isCredit ?? true;
     _currency = e?.currency ?? 'YER';
@@ -198,9 +226,9 @@ class _PartnerFormSheetState extends State<_PartnerFormSheet> {
   Future<void> _save() async {
     final name = _nameCtrl.text.trim();
     if (name.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('الرجاء إدخال الاسم')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('الرجاء إدخال الاسم')));
       return;
     }
     setState(() => _saving = true);
@@ -263,11 +291,10 @@ class _PartnerFormSheetState extends State<_PartnerFormSheet> {
             Text(
               existing == null
                   ? (widget.kind == PartnerKind.customer
-                      ? 'عميل جديد'
-                      : 'مورد جديد')
+                        ? 'عميل جديد'
+                        : 'مورد جديد')
                   : 'تعديل ${existing.name}',
-              style: const TextStyle(
-                  fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
             TextField(
@@ -288,8 +315,9 @@ class _PartnerFormSheetState extends State<_PartnerFormSheet> {
             TextField(
               controller: _phoneCtrl,
               keyboardType: TextInputType.phone,
-              decoration:
-                  const InputDecoration(labelText: 'رقم الهاتف (اختياري)'),
+              decoration: const InputDecoration(
+                labelText: 'رقم الهاتف (اختياري)',
+              ),
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
@@ -307,24 +335,29 @@ class _PartnerFormSheetState extends State<_PartnerFormSheet> {
             SwitchListTile(
               value: _isCredit,
               onChanged: (v) => setState(() => _isCredit = v),
-              title: Text(widget.kind == PartnerKind.customer
-                  ? 'تعامل آجل (مع مديونية)'
-                  : 'تعامل آجل'),
+              title: Text(
+                widget.kind == PartnerKind.customer
+                    ? 'تعامل آجل (مع مديونية)'
+                    : 'تعامل آجل',
+              ),
               contentPadding: EdgeInsets.zero,
             ),
             if (widget.kind == PartnerKind.customer && _isCredit)
               TextField(
                 controller: _creditLimitCtrl,
                 keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true),
-                decoration:
-                    const InputDecoration(labelText: 'حد الائتمان (ر.ي)'),
+                  decimal: true,
+                ),
+                decoration: const InputDecoration(
+                  labelText: 'حد الائتمان (ر.ي)',
+                ),
               ),
             const SizedBox(height: 8),
             TextField(
               controller: _openingCtrl,
-              keyboardType:
-                  const TextInputType.numberWithOptions(decimal: true),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
               decoration: const InputDecoration(
                 labelText: 'الرصيد الافتتاحي (اختياري)',
               ),
@@ -335,8 +368,10 @@ class _PartnerFormSheetState extends State<_PartnerFormSheet> {
                 if (existing != null)
                   TextButton.icon(
                     icon: const Icon(Icons.delete, color: AppColors.error),
-                    label: const Text('حذف',
-                        style: TextStyle(color: AppColors.error)),
+                    label: const Text(
+                      'حذف',
+                      style: TextStyle(color: AppColors.error),
+                    ),
                     onPressed: _saving ? null : _delete,
                   ),
                 const Spacer(),

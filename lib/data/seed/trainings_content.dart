@@ -52,7 +52,8 @@ const List<TrainingScenario> appTrainings = [
   TrainingScenario(
     id: 'training_company_setup',
     title: 'إنشاء شركة جديدة',
-    description: 'تدرّب على إعداد بيانات الشركة ابتداءً، تمامًا كما يحدث في أي نظام محاسبي يمني.',
+    description:
+        'تدرّب على إعداد بيانات الشركة ابتداءً، تمامًا كما يحدث في أي نظام محاسبي يمني.',
     yemeniContext:
         'أنت محاسب في "مؤسسة النور التجارية" في صنعاء، طُلب منك إعداد النظام المحاسبي لأول مرة.',
     steps: [
@@ -98,9 +99,9 @@ const List<TrainingScenario> appTrainings = [
   TrainingScenario(
     id: 'training_chart_of_accounts',
     title: 'استكشاف شجرة الحسابات',
-    description: 'تعرّف على شجرة الحسابات اليمنية الافتراضية وتأكد من معرفتك بتصنيفات الحسابات.',
-    yemeniContext:
-        'محاسب مؤسسة النور يحتاج معرفة تصنيف كل حساب رئيسي.',
+    description:
+        'تعرّف على شجرة الحسابات اليمنية الافتراضية وتأكد من معرفتك بتصنيفات الحسابات.',
+    yemeniContext: 'محاسب مؤسسة النور يحتاج معرفة تصنيف كل حساب رئيسي.',
     steps: [
       TrainingStep(
         instruction: 'إلى أي مجموعة ينتمي حساب "الصندوق الرئيسي"؟',
@@ -153,8 +154,7 @@ const List<TrainingScenario> appTrainings = [
   TrainingScenario(
     id: 'training_journal_entry',
     title: 'تسجيل قيد يومي',
-    description:
-        'تدرّب على تسجيل قيد إثبات مصروف كهرباء في النظام المحاسبي.',
+    description: 'تدرّب على تسجيل قيد إثبات مصروف كهرباء في النظام المحاسبي.',
     yemeniContext:
         'في نهاية الشهر، استلمت مؤسسة النور فاتورة كهرباء بمبلغ 30,000 ر.ي ودُفعت من الصندوق.',
     steps: [
@@ -233,8 +233,7 @@ const List<TrainingScenario> appTrainings = [
     id: 'training_payment_voucher',
     title: 'سند صرف لمورد',
     description: 'تدرّب على إصدار سند صرف لسداد مديونية مورد.',
-    yemeniContext:
-        'مؤسسة النور سدّدت 80,000 ر.ي لـ "مؤسسة سبأ للتوريدات".',
+    yemeniContext: 'مؤسسة النور سدّدت 80,000 ر.ي لـ "مؤسسة سبأ للتوريدات".',
     steps: [
       TrainingStep(
         instruction: 'ماذا يحدث لرصيد الصندوق بعد سند الصرف؟',
@@ -437,8 +436,7 @@ const List<TrainingScenario> appTrainings = [
     id: 'training_inventory',
     title: 'استعراض المخزون',
     description: 'تدرّب على فهم بيانات الأصناف ومتابعة المخزون.',
-    yemeniContext:
-        'كمحاسب، عليك معرفة كيفية حساب قيمة المخزون وهامش الربح.',
+    yemeniContext: 'كمحاسب، عليك معرفة كيفية حساب قيمة المخزون وهامش الربح.',
     steps: [
       TrainingStep(
         instruction:
@@ -458,8 +456,7 @@ const List<TrainingScenario> appTrainings = [
         tolerance: 1,
       ),
     ],
-    successMessage:
-        'ممتاز! تعرف الآن كيف تحسب قيمة المخزون وهامش الربح.',
+    successMessage: 'ممتاز! تعرف الآن كيف تحسب قيمة المخزون وهامش الربح.',
     xpReward: 15,
   ),
 
@@ -497,8 +494,7 @@ const List<TrainingScenario> appTrainings = [
         tolerance: 1,
       ),
     ],
-    successMessage:
-        'فرق العملة 10,000 ر.ي يُسجل كمصروف فروقات صرف.',
+    successMessage: 'فرق العملة 10,000 ر.ي يُسجل كمصروف فروقات صرف.',
     xpReward: 30,
   ),
 
@@ -531,8 +527,7 @@ const List<TrainingScenario> appTrainings = [
         tolerance: 1,
       ),
       TrainingStep(
-        instruction:
-            'في المركز المالي: الأصول = الالتزامات + ?',
+        instruction: 'في المركز المالي: الأصول = الالتزامات + ?',
         hint: 'العنصر المتبقي في معادلة الميزانية',
         type: 'choice',
         fieldKey: 'eqEq',

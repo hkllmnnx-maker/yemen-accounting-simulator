@@ -30,20 +30,20 @@ class QuizzesListScreen extends StatelessWidget {
                       ? AppColors.success
                       : AppColors.warning.withValues(alpha: 0.15),
                   foregroundColor: passed ? Colors.white : AppColors.warning,
-                  child: Icon(
-                    passed ? Icons.check : Icons.quiz,
-                    size: 20,
-                  ),
+                  child: Icon(passed ? Icons.check : Icons.quiz, size: 20),
                 ),
-                title: Text(l.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                title: Text(
+                  l.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: Text(
                   '${l.quiz.length} أسئلة • ${score == 0 ? 'لم يبدأ' : 'أعلى نتيجة: $score%'}',
                   style: const TextStyle(fontSize: 12),
                 ),
                 trailing: const Icon(Icons.chevron_left),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => QuizScreen(lesson: l))),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => QuizScreen(lesson: l)),
+                ),
               ),
             );
           },

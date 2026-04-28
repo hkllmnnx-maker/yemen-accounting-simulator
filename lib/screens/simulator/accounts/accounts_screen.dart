@@ -43,7 +43,9 @@ class AccountsScreen extends StatelessWidget {
                     child: Text(
                       'الحسابات الرئيسية لا تقبل قيودًا. القيود تُسجل على الحسابات الفرعية.',
                       style: TextStyle(
-                          fontSize: 12.5, color: AppColors.textPrimary),
+                        fontSize: 12.5,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                   ),
                 ],
@@ -57,10 +59,7 @@ class AccountsScreen extends StatelessWidget {
   }
 
   void _showAddAccount(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (_) => const _AddAccountDialog(),
-    );
+    showDialog(context: context, builder: (_) => const _AddAccountDialog());
   }
 }
 
@@ -97,21 +96,23 @@ class _AddAccountDialogState extends State<_AddAccountDialog> {
     }
     // Prevent duplicate codes
     if (acc.accounts.any((a) => a.code == code)) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('رقم الحساب مستخدم مسبقًا')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('رقم الحساب مستخدم مسبقًا')));
       return;
     }
     setState(() => _saving = true);
     final id = 'acc_${DateTime.now().millisecondsSinceEpoch}';
-    await acc.addAccount(Account(
-      id: id,
-      code: code,
-      name: name,
-      type: _type,
-      parentId: _parent,
-      isPostable: true,
-    ));
+    await acc.addAccount(
+      Account(
+        id: id,
+        code: code,
+        name: name,
+        type: _type,
+        parentId: _parent,
+        isPostable: true,
+      ),
+    );
     if (!mounted) return;
     Navigator.pop(context);
   }
@@ -140,8 +141,10 @@ class _AddAccountDialogState extends State<_AddAccountDialog> {
               initialValue: _type,
               decoration: const InputDecoration(labelText: 'النوع'),
               items: AccountType.values
-                  .map((t) =>
-                      DropdownMenuItem(value: t, child: Text(t.arabicName)))
+                  .map(
+                    (t) =>
+                        DropdownMenuItem(value: t, child: Text(t.arabicName)),
+                  )
                   .toList(),
               onChanged: (v) => setState(() => _type = v ?? _type),
             ),
@@ -152,15 +155,20 @@ class _AddAccountDialogState extends State<_AddAccountDialog> {
               isExpanded: true,
               items: [
                 const DropdownMenuItem<String?>(
-                    value: null, child: Text('لا يوجد (حساب رئيسي)')),
+                  value: null,
+                  child: Text('لا يوجد (حساب رئيسي)'),
+                ),
                 ...acc.accounts
                     .where((a) => !a.isPostable)
-                    .map((a) => DropdownMenuItem<String?>(
+                    .map(
+                      (a) => DropdownMenuItem<String?>(
                         value: a.id,
                         child: Text(
                           '${a.code} - ${a.name}',
                           overflow: TextOverflow.ellipsis,
-                        ))),
+                        ),
+                      ),
+                    ),
               ],
               onChanged: (v) => setState(() => _parent = v),
             ),
@@ -223,8 +231,10 @@ class _AccountTile extends StatelessWidget {
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5),
             overflow: TextOverflow.ellipsis,
           ),
-          subtitle: Text(root.type.arabicName,
-              style: TextStyle(color: typeColor, fontSize: 11)),
+          subtitle: Text(
+            root.type.arabicName,
+            style: TextStyle(color: typeColor, fontSize: 11),
+          ),
           trailing: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 110),
             child: FittedBox(
@@ -262,13 +272,17 @@ class _AccountTile extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
           overflow: TextOverflow.ellipsis,
         ),
-        subtitle: Text(root.type.arabicName,
-            style: TextStyle(color: typeColor, fontSize: 11)),
+        subtitle: Text(
+          root.type.arabicName,
+          style: TextStyle(color: typeColor, fontSize: 11),
+        ),
         children: children
-            .map((c) => Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 12),
-                  child: _AccountTile(root: c),
-                ))
+            .map(
+              (c) => Padding(
+                padding: const EdgeInsetsDirectional.only(start: 12),
+                child: _AccountTile(root: c),
+              ),
+            )
             .toList(),
       ),
     );

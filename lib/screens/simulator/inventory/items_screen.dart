@@ -33,11 +33,14 @@ class _ItemsScreenState extends State<ItemsScreen> {
   Widget build(BuildContext context) {
     final acc = context.watch<AccountingProvider>();
     final list = acc.items
-        .where((it) =>
-            _q.isEmpty || it.name.contains(_q) || it.code.contains(_q))
+        .where(
+          (it) => _q.isEmpty || it.name.contains(_q) || it.code.contains(_q),
+        )
         .toList();
-    final totalValue =
-        acc.items.fold<double>(0, (s, it) => s + (it.cost * it.quantity));
+    final totalValue = acc.items.fold<double>(
+      0,
+      (s, it) => s + (it.cost * it.quantity),
+    );
     return Scaffold(
       appBar: AppBar(title: const Text('الأصناف والمخزون')),
       floatingActionButton: FloatingActionButton.extended(
@@ -60,18 +63,23 @@ class _ItemsScreenState extends State<ItemsScreen> {
                   const Icon(Icons.inventory, color: AppColors.accent),
                   const SizedBox(width: 8),
                   const Expanded(
-                    child: Text('قيمة المخزون بالتكلفة',
-                        style: TextStyle(fontSize: 13)),
+                    child: Text(
+                      'قيمة المخزون بالتكلفة',
+                      style: TextStyle(fontSize: 13),
+                    ),
                   ),
                   Flexible(
                     child: FittedBox(
                       fit: BoxFit.scaleDown,
                       alignment: AlignmentDirectional.centerEnd,
-                      child: Text(Formatters.currency(totalValue, decimals: 0),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: AppColors.accent,
-                              fontSize: 14)),
+                      child: Text(
+                        Formatters.currency(totalValue, decimals: 0),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.accent,
+                          fontSize: 14,
+                        ),
+                      ),
                     ),
                   ),
                 ],
@@ -118,11 +126,14 @@ class _ItemsScreenState extends State<ItemsScreen> {
                                 color: low ? AppColors.error : AppColors.accent,
                               ),
                             ),
-                            title: Text(it.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13.5),
-                                overflow: TextOverflow.ellipsis),
+                            title: Text(
+                              it.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13.5,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                             subtitle: Text(
                               '${it.code} • ${it.unit} • تكلفة ${Formatters.number(it.cost, decimals: 0)} • سعر ${Formatters.number(it.price, decimals: 0)}',
                               style: const TextStyle(fontSize: 11),
@@ -146,10 +157,13 @@ class _ItemsScreenState extends State<ItemsScreen> {
                                   ),
                                 ),
                                 if (low)
-                                  const Text('مخزون منخفض',
-                                      style: TextStyle(
-                                          fontSize: 9,
-                                          color: AppColors.error)),
+                                  const Text(
+                                    'مخزون منخفض',
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      color: AppColors.error,
+                                    ),
+                                  ),
                               ],
                             ),
                             onLongPress: () =>
@@ -214,18 +228,18 @@ class _ItemFormSheetState extends State<_ItemFormSheet> {
   Future<void> _save() async {
     final name = _nameCtrl.text.trim();
     if (name.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('الرجاء إدخال اسم الصنف')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('الرجاء إدخال اسم الصنف')));
       return;
     }
     final cost = double.tryParse(_costCtrl.text) ?? 0;
     final price = double.tryParse(_priceCtrl.text) ?? 0;
     final qty = double.tryParse(_qtyCtrl.text) ?? 0;
     if (cost < 0 || price < 0 || qty < 0) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('لا يُسمح بقيم سالبة')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('لا يُسمح بقيم سالبة')));
       return;
     }
     setState(() => _saving = true);
@@ -234,15 +248,17 @@ class _ItemFormSheetState extends State<_ItemFormSheet> {
       final id = 'item_${DateTime.now().millisecondsSinceEpoch}';
       final code =
           'P${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
-      await acc.addItem(Item(
-        id: id,
-        code: code,
-        name: name,
-        unit: _unitCtrl.text.trim(),
-        cost: cost,
-        price: price,
-        quantity: qty,
-      ));
+      await acc.addItem(
+        Item(
+          id: id,
+          code: code,
+          name: name,
+          unit: _unitCtrl.text.trim(),
+          cost: cost,
+          price: price,
+          quantity: qty,
+        ),
+      );
     } else {
       final existing = widget.existing!;
       existing.name = name;
@@ -278,58 +294,66 @@ class _ItemFormSheetState extends State<_ItemFormSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.existing == null ? 'صنف جديد' : 'تعديل الصنف',
-                style: const TextStyle(
-                    fontSize: 16, fontWeight: FontWeight.bold)),
+            Text(
+              widget.existing == null ? 'صنف جديد' : 'تعديل الصنف',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 12),
             TextField(
-                controller: _nameCtrl,
-                decoration:
-                    const InputDecoration(labelText: 'اسم الصنف')),
+              controller: _nameCtrl,
+              decoration: const InputDecoration(labelText: 'اسم الصنف'),
+            ),
             const SizedBox(height: 8),
             TextField(
-                controller: _unitCtrl,
-                decoration: const InputDecoration(
-                    labelText: 'وحدة القياس (كرتون، كيس، حبة...)')),
+              controller: _unitCtrl,
+              decoration: const InputDecoration(
+                labelText: 'وحدة القياس (كرتون، كيس، حبة...)',
+              ),
+            ),
             const SizedBox(height: 8),
             Row(
               children: [
                 Expanded(
                   child: TextField(
                     controller: _costCtrl,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    decoration:
-                        const InputDecoration(labelText: 'سعر التكلفة'),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    decoration: const InputDecoration(labelText: 'سعر التكلفة'),
                   ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: TextField(
                     controller: _priceCtrl,
-                    keyboardType:
-                        const TextInputType.numberWithOptions(decimal: true),
-                    decoration:
-                        const InputDecoration(labelText: 'سعر البيع'),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                    decoration: const InputDecoration(labelText: 'سعر البيع'),
                   ),
                 ),
               ],
             ),
             const SizedBox(height: 8),
             TextField(
-                controller: _qtyCtrl,
-                keyboardType:
-                    const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(
-                    labelText: 'الرصيد الافتتاحي / الكمية')),
+              controller: _qtyCtrl,
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              decoration: const InputDecoration(
+                labelText: 'الرصيد الافتتاحي / الكمية',
+              ),
+            ),
             const SizedBox(height: 16),
             Row(
               children: [
                 if (widget.existing != null)
                   TextButton.icon(
                     icon: const Icon(Icons.delete, color: AppColors.error),
-                    label: const Text('حذف',
-                        style: TextStyle(color: AppColors.error)),
+                    label: const Text(
+                      'حذف',
+                      style: TextStyle(color: AppColors.error),
+                    ),
                     onPressed: _saving ? null : _delete,
                   ),
                 const Spacer(),

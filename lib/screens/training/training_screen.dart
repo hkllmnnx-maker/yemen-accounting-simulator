@@ -51,7 +51,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
     }
 
     if (!ok) {
-      setState(() => _error = 'الإجابة غير صحيحة. تحقق من الإدخال أو استخدم التلميح.');
+      setState(
+        () => _error = 'الإجابة غير صحيحة. تحقق من الإدخال أو استخدم التلميح.',
+      );
       return;
     }
 
@@ -107,7 +109,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
                   Text(
                     'الخطوة ${_index + 1} من ${widget.scenario.steps.length}',
                     style: const TextStyle(
-                        color: AppColors.textSecondary, fontSize: 12),
+                      color: AppColors.textSecondary,
+                      fontSize: 12,
+                    ),
                   ),
                   const SizedBox(height: 12),
                   Container(
@@ -119,8 +123,11 @@ class _TrainingScreenState extends State<TrainingScreen> {
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Icon(Icons.business,
-                            color: AppColors.warning, size: 18),
+                        const Icon(
+                          Icons.business,
+                          color: AppColors.warning,
+                          size: 18,
+                        ),
                         const SizedBox(width: 6),
                         Expanded(
                           child: Text(
@@ -142,7 +149,8 @@ class _TrainingScreenState extends State<TrainingScreen> {
                       color: AppColors.primary.withValues(alpha: 0.06),
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                          color: AppColors.primary.withValues(alpha: 0.2)),
+                        color: AppColors.primary.withValues(alpha: 0.2),
+                      ),
                     ),
                     child: Text(
                       current.instruction,
@@ -166,13 +174,20 @@ class _TrainingScreenState extends State<TrainingScreen> {
                       ),
                       child: Row(
                         children: [
-                          const Icon(Icons.error,
-                              color: AppColors.error, size: 18),
+                          const Icon(
+                            Icons.error,
+                            color: AppColors.error,
+                            size: 18,
+                          ),
                           const SizedBox(width: 6),
                           Expanded(
-                            child: Text(_error!,
-                                style: const TextStyle(
-                                    color: AppColors.error, fontSize: 13)),
+                            child: Text(
+                              _error!,
+                              style: const TextStyle(
+                                color: AppColors.error,
+                                fontSize: 13,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -189,15 +204,21 @@ class _TrainingScreenState extends State<TrainingScreen> {
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Icon(Icons.lightbulb,
-                              color: AppColors.info, size: 18),
+                          const Icon(
+                            Icons.lightbulb,
+                            color: AppColors.info,
+                            size: 18,
+                          ),
                           const SizedBox(width: 6),
                           Expanded(
-                            child: Text(current.hint,
-                                style: const TextStyle(
-                                    color: AppColors.info,
-                                    fontSize: 13,
-                                    height: 1.5)),
+                            child: Text(
+                              current.hint,
+                              style: const TextStyle(
+                                color: AppColors.info,
+                                fontSize: 13,
+                                height: 1.5,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -221,7 +242,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
                     label: const Text('تحقّق'),
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 28, vertical: 14),
+                        horizontal: 28,
+                        vertical: 14,
+                      ),
                       backgroundColor: AppColors.accent,
                     ),
                     onPressed: _check,
@@ -266,9 +289,13 @@ class _TrainingScreenState extends State<TrainingScreen> {
                   ),
                   const SizedBox(width: 8),
                   Expanded(
-                    child: Text(c,
-                        style: const TextStyle(
-                            fontSize: 14, color: AppColors.textPrimary)),
+                    child: Text(
+                      c,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -279,12 +306,12 @@ class _TrainingScreenState extends State<TrainingScreen> {
     }
     return TextField(
       controller: _controller,
-      keyboardType:
-          step.type == 'number' ? TextInputType.number : TextInputType.text,
+      keyboardType: step.type == 'number'
+          ? TextInputType.number
+          : TextInputType.text,
       onChanged: (v) => setState(() => _input = v),
       decoration: InputDecoration(
-        hintText:
-            step.type == 'number' ? 'أدخل الرقم' : 'اكتب الإجابة هنا',
+        hintText: step.type == 'number' ? 'أدخل الرقم' : 'اكتب الإجابة هنا',
       ),
     );
   }
@@ -298,8 +325,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.emoji_events,
-                  size: 120, color: AppColors.gold),
+              const Icon(Icons.emoji_events, size: 120, color: AppColors.gold),
               const SizedBox(height: 16),
               const Text(
                 'مبروك!',

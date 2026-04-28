@@ -11,10 +11,14 @@ class InventoryReportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final acc = context.watch<AccountingProvider>();
     final items = acc.items;
-    final totalCost =
-        items.fold<double>(0, (s, it) => s + (it.cost * it.quantity));
-    final totalSale =
-        items.fold<double>(0, (s, it) => s + (it.price * it.quantity));
+    final totalCost = items.fold<double>(
+      0,
+      (s, it) => s + (it.cost * it.quantity),
+    );
+    final totalSale = items.fold<double>(
+      0,
+      (s, it) => s + (it.price * it.quantity),
+    );
     final lowStock = items.where((it) => it.quantity < 5).length;
 
     return Scaffold(
@@ -27,47 +31,76 @@ class InventoryReportScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                      child: _stat('قيمة بالتكلفة',
-                          Formatters.currency(totalCost, decimals: 0),
-                          AppColors.accent)),
+                    child: _stat(
+                      'قيمة بالتكلفة',
+                      Formatters.currency(totalCost, decimals: 0),
+                      AppColors.accent,
+                    ),
+                  ),
                   Expanded(
-                      child: _stat('قيمة بالبيع',
-                          Formatters.currency(totalSale, decimals: 0),
-                          AppColors.success)),
+                    child: _stat(
+                      'قيمة بالبيع',
+                      Formatters.currency(totalSale, decimals: 0),
+                      AppColors.success,
+                    ),
+                  ),
                   Expanded(
-                      child: _stat('مخزون منخفض', '$lowStock صنف',
-                          AppColors.error)),
+                    child: _stat(
+                      'مخزون منخفض',
+                      '$lowStock صنف',
+                      AppColors.error,
+                    ),
+                  ),
                 ],
               ),
             ),
             Container(
               color: AppColors.primary.withValues(alpha: 0.06),
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: const Row(
                 children: [
                   Expanded(
-                      child: Text('الصنف',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    child: Text(
+                      'الصنف',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 60,
-                      child: Text('الكمية',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    width: 60,
+                    child: Text(
+                      'الكمية',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 70,
-                      child: Text('تكلفة',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    width: 70,
+                    child: Text(
+                      'تكلفة',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 80,
-                      child: Text('قيمة',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    width: 80,
+                    child: Text(
+                      'قيمة',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -80,21 +113,29 @@ class InventoryReportScreen extends StatelessWidget {
                   final value = it.cost * it.quantity;
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 6),
+                      horizontal: 8,
+                      vertical: 6,
+                    ),
                     child: Row(
                       children: [
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(it.name,
-                                  style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold)),
-                              Text('${it.code} • ${it.unit}',
-                                  style: const TextStyle(
-                                      fontSize: 10,
-                                      color: AppColors.textLight)),
+                              Text(
+                                it.name,
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${it.code} • ${it.unit}',
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  color: AppColors.textLight,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -126,9 +167,10 @@ class InventoryReportScreen extends StatelessWidget {
                             Formatters.number(value, decimals: 0),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
-                                fontSize: 11.5,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.accent),
+                              fontSize: 11.5,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.accent,
+                            ),
                           ),
                         ),
                       ],
@@ -149,17 +191,24 @@ class InventoryReportScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: Column(
           children: [
-            Text(label,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 11, color: AppColors.textSecondary)),
+            Text(
+              label,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 11,
+                color: AppColors.textSecondary,
+              ),
+            ),
             const SizedBox(height: 4),
-            Text(value,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.bold,
-                    color: color)),
+            Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
           ],
         ),
       ),

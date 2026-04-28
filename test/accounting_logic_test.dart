@@ -79,8 +79,7 @@ void main() {
       expect(j.isBalanced, isFalse);
     });
 
-    test('compound balanced entry (multi line) returns isBalanced == true',
-        () {
+    test('compound balanced entry (multi line) returns isBalanced == true', () {
       final j = JournalEntry(
         id: 't3',
         number: 3,
@@ -112,8 +111,11 @@ void main() {
           JournalLine(accountId: 'b', accountName: 'b', credit: 100.0),
         ],
       );
-      expect(j.isBalanced, isTrue,
-          reason: 'difference < 0.001 must be considered balanced');
+      expect(
+        j.isBalanced,
+        isTrue,
+        reason: 'difference < 0.001 must be considered balanced',
+      );
     });
   });
 
@@ -165,11 +167,7 @@ void main() {
           date: sample.operationDate,
           description: 'غير متوازن',
           lines: const [
-            FinJournalLine(
-              accountId: 'cash',
-              side: 'debit',
-              amount: 5000000,
-            ),
+            FinJournalLine(accountId: 'cash', side: 'debit', amount: 5000000),
             FinJournalLine(
               accountId: 'capital',
               side: 'credit',
@@ -189,11 +187,7 @@ void main() {
           date: sample.operationDate,
           description: 'تأسيس',
           lines: const [
-            FinJournalLine(
-              accountId: 'cash',
-              side: 'debit',
-              amount: 5000000,
-            ),
+            FinJournalLine(accountId: 'cash', side: 'debit', amount: 5000000),
             FinJournalLine(
               accountId: 'capital',
               side: 'credit',
@@ -213,11 +207,7 @@ void main() {
           date: sample.operationDate,
           description: 'حسابات خاطئة',
           lines: const [
-            FinJournalLine(
-              accountId: 'bank',
-              side: 'debit',
-              amount: 5000000,
-            ),
+            FinJournalLine(accountId: 'bank', side: 'debit', amount: 5000000),
             FinJournalLine(
               accountId: 'capital',
               side: 'credit',
@@ -289,11 +279,7 @@ void main() {
           date: DateTime(2024, 1, 1),
           description: 'تأسيس',
           lines: const [
-            FinJournalLine(
-              accountId: 'cash',
-              side: 'debit',
-              amount: 5000000,
-            ),
+            FinJournalLine(accountId: 'cash', side: 'debit', amount: 5000000),
             FinJournalLine(
               accountId: 'capital',
               side: 'credit',
@@ -318,11 +304,7 @@ void main() {
           date: DateTime(2024, 1, 1),
           description: 'تأسيس',
           lines: const [
-            FinJournalLine(
-              accountId: 'cash',
-              side: 'debit',
-              amount: 5000000,
-            ),
+            FinJournalLine(accountId: 'cash', side: 'debit', amount: 5000000),
             FinJournalLine(
               accountId: 'capital',
               side: 'credit',
@@ -342,11 +324,7 @@ void main() {
               side: 'debit',
               amount: 1200000,
             ),
-            FinJournalLine(
-              accountId: 'cash',
-              side: 'credit',
-              amount: 1200000,
-            ),
+            FinJournalLine(accountId: 'cash', side: 'credit', amount: 1200000),
           ],
         ),
       );
@@ -361,11 +339,7 @@ void main() {
               side: 'debit',
               amount: 150000,
             ),
-            FinJournalLine(
-              accountId: 'cash',
-              side: 'credit',
-              amount: 150000,
-            ),
+            FinJournalLine(accountId: 'cash', side: 'credit', amount: 150000),
           ],
         ),
       );
@@ -379,13 +353,20 @@ void main() {
       final bs = provider.buildBalanceSheet();
       final lhs = bs.totalAssets;
       final rhs = bs.totalLiabilities + bs.totalEquity;
-      expect((lhs - rhs).abs() < 0.5, isTrue,
-          reason: 'Assets (${bs.totalAssets}) must equal '
-              'Liabilities (${bs.totalLiabilities}) + '
-              'Equity-with-netIncome (${bs.totalEquity}). '
-              'lhs=$lhs rhs=$rhs (netIncome=${bs.netIncome})');
-      expect(bs.isBalanced, isTrue,
-          reason: 'BalanceSheetReport.isBalanced should be true.');
+      expect(
+        (lhs - rhs).abs() < 0.5,
+        isTrue,
+        reason:
+            'Assets (${bs.totalAssets}) must equal '
+            'Liabilities (${bs.totalLiabilities}) + '
+            'Equity-with-netIncome (${bs.totalEquity}). '
+            'lhs=$lhs rhs=$rhs (netIncome=${bs.netIncome})',
+      );
+      expect(
+        bs.isBalanced,
+        isTrue,
+        reason: 'BalanceSheetReport.isBalanced should be true.',
+      );
 
       // Income statement: net income should be negative (only expenses).
       final inc = provider.buildIncomeStatement();
@@ -402,15 +383,21 @@ void main() {
   group('All seeded financial exercises are valid', () {
     test('every expected entry is balanced and amounts > 0', () {
       for (final ex in financialExercises) {
-        expect(ex.expected.isBalanced, isTrue,
-            reason:
-                'Exercise ${ex.id} (${ex.title}) has unbalanced expected entry. '
-                'debit=${ex.expected.totalDebit}, credit=${ex.expected.totalCredit}');
+        expect(
+          ex.expected.isBalanced,
+          isTrue,
+          reason:
+              'Exercise ${ex.id} (${ex.title}) has unbalanced expected entry. '
+              'debit=${ex.expected.totalDebit}, credit=${ex.expected.totalCredit}',
+        );
         for (final l in ex.expected.lines) {
-          expect(l.amount > 0, isTrue,
-              reason:
-                  'Exercise ${ex.id} has a line with non-positive amount '
-                  '(account=${l.accountId}, amount=${l.amount}).');
+          expect(
+            l.amount > 0,
+            isTrue,
+            reason:
+                'Exercise ${ex.id} has a line with non-positive amount '
+                '(account=${l.accountId}, amount=${l.amount}).',
+          );
         }
       }
     });
@@ -419,9 +406,12 @@ void main() {
       for (final ex in financialExercises) {
         for (final l in ex.expected.lines) {
           final acc = FinAccountsCatalog.byId(l.accountId);
-          expect(acc, isNotNull,
-              reason:
-                  'Exercise ${ex.id} references unknown account "${l.accountId}".');
+          expect(
+            acc,
+            isNotNull,
+            reason:
+                'Exercise ${ex.id} references unknown account "${l.accountId}".',
+          );
         }
       }
     });
@@ -431,72 +421,77 @@ void main() {
   // AccountingProvider trial-balance / income / balance-sheet behaviour
   // ==========================================================================
   group('AccountingProvider posting & balances', () {
-    test('posted balanced journal updates account balances correctly',
-        () async {
-      final acc = AccountingProvider();
-      await acc.loadCompany();
+    test(
+      'posted balanced journal updates account balances correctly',
+      () async {
+        final acc = AccountingProvider();
+        await acc.loadCompany();
 
-      // Pick a postable cash and a postable expense from the seeded chart.
-      final cash = acc.postableAccounts.firstWhere((a) => a.id == 'a1111');
-      final expense = acc.postableAccounts.firstWhere(
-        (a) => a.type == AccountType.expense,
-      );
+        // Pick a postable cash and a postable expense from the seeded chart.
+        final cash = acc.postableAccounts.firstWhere((a) => a.id == 'a1111');
+        final expense = acc.postableAccounts.firstWhere(
+          (a) => a.type == AccountType.expense,
+        );
 
-      final beforeCash = acc.accountBalance(cash.id);
-      final beforeExp = acc.accountBalance(expense.id);
+        final beforeCash = acc.accountBalance(cash.id);
+        final beforeExp = acc.accountBalance(expense.id);
 
-      final j = JournalEntry(
-        id: 'j_unit_${DateTime.now().millisecondsSinceEpoch}',
-        number: 0,
-        date: DateTime.now(),
-        description: 'دفع مصروف من الصندوق',
-        lines: [
-          JournalLine(
-            accountId: expense.id,
-            accountName: expense.name,
-            debit: 25000,
-          ),
-          JournalLine(
-            accountId: cash.id,
-            accountName: cash.name,
-            credit: 25000,
-          ),
-        ],
-        posted: true,
-      );
-      expect(j.isBalanced, isTrue);
-      await acc.addJournal(j);
+        final j = JournalEntry(
+          id: 'j_unit_${DateTime.now().millisecondsSinceEpoch}',
+          number: 0,
+          date: DateTime.now(),
+          description: 'دفع مصروف من الصندوق',
+          lines: [
+            JournalLine(
+              accountId: expense.id,
+              accountName: expense.name,
+              debit: 25000,
+            ),
+            JournalLine(
+              accountId: cash.id,
+              accountName: cash.name,
+              credit: 25000,
+            ),
+          ],
+          posted: true,
+        );
+        expect(j.isBalanced, isTrue);
+        await acc.addJournal(j);
 
-      // Cash is asset (debit nature) -> credit reduces it.
-      expect(acc.accountBalance(cash.id), beforeCash - 25000);
-      // Expense is expense (debit nature) -> debit increases it.
-      expect(acc.accountBalance(expense.id), beforeExp + 25000);
+        // Cash is asset (debit nature) -> credit reduces it.
+        expect(acc.accountBalance(cash.id), beforeCash - 25000);
+        // Expense is expense (debit nature) -> debit increases it.
+        expect(acc.accountBalance(expense.id), beforeExp + 25000);
 
-      // Trial balance derived from postable accounts must balance.
-      final balances = acc.allBalances();
-      double td = 0;
-      double tc = 0;
-      for (final entry in balances.entries) {
-        final a = acc.accountById(entry.key);
-        if (a == null) continue;
-        final bal = entry.value;
-        if (a.type.isDebitNature) {
-          if (bal > 0) {
-            td += bal;
+        // Trial balance derived from postable accounts must balance.
+        final balances = acc.allBalances();
+        double td = 0;
+        double tc = 0;
+        for (final entry in balances.entries) {
+          final a = acc.accountById(entry.key);
+          if (a == null) continue;
+          final bal = entry.value;
+          if (a.type.isDebitNature) {
+            if (bal > 0) {
+              td += bal;
+            } else {
+              tc += -bal;
+            }
           } else {
-            tc += -bal;
-          }
-        } else {
-          if (bal > 0) {
-            tc += bal;
-          } else {
-            td += -bal;
+            if (bal > 0) {
+              tc += bal;
+            } else {
+              td += -bal;
+            }
           }
         }
-      }
-      expect((td - tc).abs() < 0.5, isTrue,
-          reason: 'Trial balance must balance. debit=$td credit=$tc');
-    });
+        expect(
+          (td - tc).abs() < 0.5,
+          isTrue,
+          reason: 'Trial balance must balance. debit=$td credit=$tc',
+        );
+      },
+    );
   });
 
   // ==========================================================================

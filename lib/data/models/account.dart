@@ -54,26 +54,26 @@ class Account {
   });
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'code': code,
-        'name': name,
-        'type': type.index,
-        'parentId': parentId,
-        'isPostable': isPostable,
-        'openingBalance': openingBalance,
-        'currency': currency,
-      };
+    'id': id,
+    'code': code,
+    'name': name,
+    'type': type.index,
+    'parentId': parentId,
+    'isPostable': isPostable,
+    'openingBalance': openingBalance,
+    'currency': currency,
+  };
 
   factory Account.fromMap(Map m) => Account(
-        id: m['id'] as String,
-        code: m['code'] as String,
-        name: m['name'] as String,
-        type: AccountType.values[m['type'] as int],
-        parentId: m['parentId'] as String?,
-        isPostable: m['isPostable'] as bool? ?? true,
-        openingBalance: (m['openingBalance'] as num?)?.toDouble() ?? 0,
-        currency: m['currency'] as String? ?? 'YER',
-      );
+    id: m['id'] as String,
+    code: m['code'] as String,
+    name: m['name'] as String,
+    type: AccountType.values[m['type'] as int],
+    parentId: m['parentId'] as String?,
+    isPostable: m['isPostable'] as bool? ?? true,
+    openingBalance: (m['openingBalance'] as num?)?.toDouble() ?? 0,
+    currency: m['currency'] as String? ?? 'YER',
+  );
 }
 
 class AccountAdapter extends TypeAdapter<Account> {

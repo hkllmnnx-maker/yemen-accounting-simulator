@@ -17,20 +17,20 @@ class JournalLine {
   });
 
   Map<String, dynamic> toMap() => {
-        'accountId': accountId,
-        'accountName': accountName,
-        'debit': debit,
-        'credit': credit,
-        'description': description,
-      };
+    'accountId': accountId,
+    'accountName': accountName,
+    'debit': debit,
+    'credit': credit,
+    'description': description,
+  };
 
   factory JournalLine.fromMap(Map m) => JournalLine(
-        accountId: m['accountId'] as String,
-        accountName: m['accountName'] as String? ?? '',
-        debit: (m['debit'] as num?)?.toDouble() ?? 0,
-        credit: (m['credit'] as num?)?.toDouble() ?? 0,
-        description: m['description'] as String?,
-      );
+    accountId: m['accountId'] as String,
+    accountName: m['accountName'] as String? ?? '',
+    debit: (m['debit'] as num?)?.toDouble() ?? 0,
+    credit: (m['credit'] as num?)?.toDouble() ?? 0,
+    description: m['description'] as String?,
+  );
 }
 
 /// قيد يومية
@@ -62,30 +62,30 @@ class JournalEntry {
   bool get isBalanced => (totalDebit - totalCredit).abs() < 0.001;
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'number': number,
-        'date': date.millisecondsSinceEpoch,
-        'description': description,
-        'lines': lines.map((l) => l.toMap()).toList(),
-        'posted': posted,
-        'source': source,
-        'sourceId': sourceId,
-        'currency': currency,
-      };
+    'id': id,
+    'number': number,
+    'date': date.millisecondsSinceEpoch,
+    'description': description,
+    'lines': lines.map((l) => l.toMap()).toList(),
+    'posted': posted,
+    'source': source,
+    'sourceId': sourceId,
+    'currency': currency,
+  };
 
   factory JournalEntry.fromMap(Map m) => JournalEntry(
-        id: m['id'] as String,
-        number: m['number'] as int,
-        date: DateTime.fromMillisecondsSinceEpoch(m['date'] as int),
-        description: m['description'] as String? ?? '',
-        lines: ((m['lines'] as List?) ?? [])
-            .map((e) => JournalLine.fromMap(Map.from(e as Map)))
-            .toList(),
-        posted: m['posted'] as bool? ?? false,
-        source: m['source'] as String? ?? 'يدوي',
-        sourceId: m['sourceId'] as String?,
-        currency: m['currency'] as String? ?? 'YER',
-      );
+    id: m['id'] as String,
+    number: m['number'] as int,
+    date: DateTime.fromMillisecondsSinceEpoch(m['date'] as int),
+    description: m['description'] as String? ?? '',
+    lines: ((m['lines'] as List?) ?? [])
+        .map((e) => JournalLine.fromMap(Map.from(e as Map)))
+        .toList(),
+    posted: m['posted'] as bool? ?? false,
+    source: m['source'] as String? ?? 'يدوي',
+    sourceId: m['sourceId'] as String?,
+    currency: m['currency'] as String? ?? 'YER',
+  );
 }
 
 class JournalEntryAdapter extends TypeAdapter<JournalEntry> {

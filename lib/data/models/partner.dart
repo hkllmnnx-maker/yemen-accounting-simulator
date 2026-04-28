@@ -31,32 +31,32 @@ class Partner {
   });
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'code': code,
-        'name': name,
-        'kind': kind.index,
-        'city': city,
-        'phone': phone,
-        'isCredit': isCredit,
-        'creditLimit': creditLimit,
-        'currency': currency,
-        'openingBalance': openingBalance,
-        'accountId': accountId,
-      };
+    'id': id,
+    'code': code,
+    'name': name,
+    'kind': kind.index,
+    'city': city,
+    'phone': phone,
+    'isCredit': isCredit,
+    'creditLimit': creditLimit,
+    'currency': currency,
+    'openingBalance': openingBalance,
+    'accountId': accountId,
+  };
 
   factory Partner.fromMap(Map m) => Partner(
-        id: m['id'] as String,
-        code: m['code'] as String,
-        name: m['name'] as String,
-        kind: PartnerKind.values[m['kind'] as int],
-        city: m['city'] as String? ?? '',
-        phone: m['phone'] as String?,
-        isCredit: m['isCredit'] as bool? ?? true,
-        creditLimit: (m['creditLimit'] as num?)?.toDouble() ?? 0,
-        currency: m['currency'] as String? ?? 'YER',
-        openingBalance: (m['openingBalance'] as num?)?.toDouble() ?? 0,
-        accountId: m['accountId'] as String,
-      );
+    id: m['id'] as String,
+    code: m['code'] as String,
+    name: m['name'] as String,
+    kind: PartnerKind.values[m['kind'] as int],
+    city: m['city'] as String? ?? '',
+    phone: m['phone'] as String?,
+    isCredit: m['isCredit'] as bool? ?? true,
+    creditLimit: (m['creditLimit'] as num?)?.toDouble() ?? 0,
+    currency: m['currency'] as String? ?? 'YER',
+    openingBalance: (m['openingBalance'] as num?)?.toDouble() ?? 0,
+    accountId: m['accountId'] as String,
+  );
 }
 
 class PartnerAdapter extends TypeAdapter<Partner> {

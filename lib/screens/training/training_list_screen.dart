@@ -40,8 +40,10 @@ class TrainingListScreen extends StatelessWidget {
                     size: 24,
                   ),
                 ),
-                title: Text(t.title,
-                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                title: Text(
+                  t.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 subtitle: Padding(
                   padding: const EdgeInsets.only(top: 4),
                   child: Text(
@@ -56,7 +58,9 @@ class TrainingListScreen extends StatelessWidget {
                 ),
                 trailing: Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8, vertical: 4),
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.gold.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(6),
@@ -70,8 +74,11 @@ class TrainingListScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => TrainingScreen(scenario: t))),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => TrainingScreen(scenario: t),
+                  ),
+                ),
               ),
             );
           },

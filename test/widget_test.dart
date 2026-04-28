@@ -49,7 +49,9 @@ import 'package:yemen_accounting_simulator/screens/simulator/customers/partner_s
 Widget _wrap(Widget child) {
   return MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => AccountingProvider()..loadCompany()),
+      ChangeNotifierProvider(
+        create: (_) => AccountingProvider()..loadCompany(),
+      ),
       ChangeNotifierProvider(create: (_) => ProgressProvider()..load()),
     ],
     child: MaterialApp(
@@ -61,10 +63,8 @@ Widget _wrap(Widget child) {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      builder: (context, ch) => Directionality(
-        textDirection: TextDirection.rtl,
-        child: ch!,
-      ),
+      builder: (context, ch) =>
+          Directionality(textDirection: TextDirection.rtl, child: ch!),
       home: child,
     ),
   );
@@ -215,16 +215,20 @@ void main() {
       await tester.pumpAndSettle(const Duration(seconds: 1));
     });
 
-    testWidgets('Partner statement renders for default customer', (tester) async {
+    testWidgets('Partner statement renders for default customer', (
+      tester,
+    ) async {
       await tester.pumpWidget(
-          _wrap(const PartnerStatementScreen(partnerId: 'cust_001')));
+        _wrap(const PartnerStatementScreen(partnerId: 'cust_001')),
+      );
       await tester.pumpAndSettle(const Duration(seconds: 1));
     });
   });
 
   group('Data flow tests - human-like operations', () {
-    testWidgets('Add a new customer through the API and verify list updates',
-        (tester) async {
+    testWidgets('Add a new customer through the API and verify list updates', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const CustomersScreen()));
       await tester.pump();
 
@@ -255,11 +259,14 @@ void main() {
 
       expect(acc.customers.length, before + 1);
       expect(
-          acc.customers.any((e) => e.name == 'مؤسسة النور التجارية'), isTrue);
+        acc.customers.any((e) => e.name == 'مؤسسة النور التجارية'),
+        isTrue,
+      );
     });
 
-    testWidgets('Add a new item and verify it appears in items list',
-        (tester) async {
+    testWidgets('Add a new item and verify it appears in items list', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const ItemsScreen()));
       await tester.pump();
 
@@ -288,8 +295,9 @@ void main() {
       expect(acc.items.any((e) => e.name == 'كرتون شاي أحمدي'), isTrue);
     });
 
-    testWidgets('Add a balanced journal entry and verify it appears',
-        (tester) async {
+    testWidgets('Add a balanced journal entry and verify it appears', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const JournalListScreen()));
       await tester.pumpAndSettle();
 
@@ -297,11 +305,14 @@ void main() {
       final acc = Provider.of<AccountingProvider>(ctx, listen: false);
 
       // Find a postable cash account and a postable expense account
-      final cash = acc.postableAccounts
-          .firstWhere((a) => a.id == 'a1111', orElse: () => acc.postableAccounts.first);
-      final expense = acc.postableAccounts
-          .firstWhere((a) => a.type == AccountType.expense,
-              orElse: () => acc.postableAccounts.last);
+      final cash = acc.postableAccounts.firstWhere(
+        (a) => a.id == 'a1111',
+        orElse: () => acc.postableAccounts.first,
+      );
+      final expense = acc.postableAccounts.firstWhere(
+        (a) => a.type == AccountType.expense,
+        orElse: () => acc.postableAccounts.last,
+      );
 
       final j = JournalEntry(
         id: 'j_test_${DateTime.now().millisecondsSinceEpoch}',
@@ -331,51 +342,54 @@ void main() {
       expect(acc.journals.any((e) => e.id == j.id), isTrue);
     });
 
-    testWidgets('Create a sale invoice (cash) and verify totals + inventory update',
-        (tester) async {
-      await tester.pumpWidget(_wrap(const SalesListScreen()));
-      await tester.pumpAndSettle();
+    testWidgets(
+      'Create a sale invoice (cash) and verify totals + inventory update',
+      (tester) async {
+        await tester.pumpWidget(_wrap(const SalesListScreen()));
+        await tester.pumpAndSettle();
 
-      final ctx = tester.element(find.byType(SalesListScreen));
-      final acc = Provider.of<AccountingProvider>(ctx, listen: false);
+        final ctx = tester.element(find.byType(SalesListScreen));
+        final acc = Provider.of<AccountingProvider>(ctx, listen: false);
 
-      final cust = acc.customers.first;
-      final item = acc.items.first;
-      final initialQty = item.quantity;
+        final cust = acc.customers.first;
+        final item = acc.items.first;
+        final initialQty = item.quantity;
 
-      final inv = Invoice(
-        id: 'inv_test_${DateTime.now().millisecondsSinceEpoch}',
-        number: 0,
-        kind: InvoiceKind.sale,
-        date: DateTime.now(),
-        partnerId: cust.id,
-        partnerName: cust.name,
-        lines: [
-          InvoiceLine(
-            itemId: item.id,
-            itemName: item.name,
-            quantity: 5,
-            unitPrice: item.price,
-          ),
-        ],
-        paymentType: InvoicePaymentType.cash,
-        paidAmount: item.price * 5,
-      );
-      expect(inv.total, item.price * 5);
+        final inv = Invoice(
+          id: 'inv_test_${DateTime.now().millisecondsSinceEpoch}',
+          number: 0,
+          kind: InvoiceKind.sale,
+          date: DateTime.now(),
+          partnerId: cust.id,
+          partnerName: cust.name,
+          lines: [
+            InvoiceLine(
+              itemId: item.id,
+              itemName: item.name,
+              quantity: 5,
+              unitPrice: item.price,
+            ),
+          ],
+          paymentType: InvoicePaymentType.cash,
+          paidAmount: item.price * 5,
+        );
+        expect(inv.total, item.price * 5);
 
-      await tester.runAsync(() async {
-        await acc.addInvoice(inv);
-      });
-      await tester.pump();
+        await tester.runAsync(() async {
+          await acc.addInvoice(inv);
+        });
+        await tester.pump();
 
-      // Quantity should decrement by 5
-      final updated = acc.itemById(item.id)!;
-      expect(updated.quantity, initialQty - 5);
-      expect(acc.salesInvoices.any((e) => e.id == inv.id), isTrue);
-    });
+        // Quantity should decrement by 5
+        final updated = acc.itemById(item.id)!;
+        expect(updated.quantity, initialQty - 5);
+        expect(acc.salesInvoices.any((e) => e.id == inv.id), isTrue);
+      },
+    );
 
-    testWidgets('Create a purchase invoice and verify inventory increases',
-        (tester) async {
+    testWidgets('Create a purchase invoice and verify inventory increases', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const PurchasesListScreen()));
       await tester.pumpAndSettle();
 
@@ -412,8 +426,9 @@ void main() {
       expect(updated.quantity, initialQty + 20);
     });
 
-    testWidgets('Create a receipt voucher and verify it persists',
-        (tester) async {
+    testWidgets('Create a receipt voucher and verify it persists', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const VouchersListScreen()));
       await tester.pumpAndSettle();
 
@@ -440,21 +455,24 @@ void main() {
       expect(acc.receiptVouchers.any((e) => e.id == v.id), isTrue);
     });
 
-    testWidgets('Account balance computation - cash account reflects journals',
-        (tester) async {
-      await tester.pumpWidget(_wrap(const SimulatorHomeScreen()));
-      await tester.pumpAndSettle();
+    testWidgets(
+      'Account balance computation - cash account reflects journals',
+      (tester) async {
+        await tester.pumpWidget(_wrap(const SimulatorHomeScreen()));
+        await tester.pumpAndSettle();
 
-      final ctx = tester.element(find.byType(SimulatorHomeScreen));
-      final acc = Provider.of<AccountingProvider>(ctx, listen: false);
+        final ctx = tester.element(find.byType(SimulatorHomeScreen));
+        final acc = Provider.of<AccountingProvider>(ctx, listen: false);
 
-      // Cash balance must be a numeric (no exception)
-      final bal = acc.accountBalance('a1111');
-      expect(bal, isA<double>());
-    });
+        // Cash balance must be a numeric (no exception)
+        final bal = acc.accountBalance('a1111');
+        expect(bal, isA<double>());
+      },
+    );
 
-    testWidgets('All postable accounts have balances computable',
-        (tester) async {
+    testWidgets('All postable accounts have balances computable', (
+      tester,
+    ) async {
       await tester.pumpWidget(_wrap(const ReportsHomeScreen()));
       await tester.pumpAndSettle();
 

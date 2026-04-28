@@ -65,16 +65,23 @@ class LessonsScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     if (done)
-                      const Icon(Icons.check_circle,
-                          color: AppColors.success, size: 24)
+                      const Icon(
+                        Icons.check_circle,
+                        color: AppColors.success,
+                        size: 24,
+                      )
                     else
-                      const Icon(Icons.chevron_left,
-                          color: AppColors.textLight),
+                      const Icon(
+                        Icons.chevron_left,
+                        color: AppColors.textLight,
+                      ),
                     if (passed)
                       Container(
                         margin: const EdgeInsets.only(top: 2),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 2),
+                          horizontal: 6,
+                          vertical: 2,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.gold.withValues(alpha: 0.15),
                           borderRadius: BorderRadius.circular(8),
@@ -90,8 +97,11 @@ class LessonsScreen extends StatelessWidget {
                       ),
                   ],
                 ),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (_) => LessonDetailScreen(lesson: l))),
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => LessonDetailScreen(lesson: l),
+                  ),
+                ),
               ),
             );
           },
