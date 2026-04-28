@@ -55,12 +55,16 @@ class DashboardScreen extends StatelessWidget {
                     children: [
                       Icon(Icons.waving_hand, color: AppColors.gold, size: 20),
                       SizedBox(width: 6),
-                      Text(
-                        'مرحبًا أيها المحاسب اليمني',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15,
+                      Expanded(
+                        child: Text(
+                          'مرحبًا أيها المحاسب اليمني',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
                         ),
                       ),
                     ],
@@ -68,6 +72,8 @@ class DashboardScreen extends StatelessWidget {
                   const SizedBox(height: 6),
                   Text(
                     acc.company.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -76,6 +82,8 @@ class DashboardScreen extends StatelessWidget {
                   ),
                   Text(
                     '${acc.company.city} • السنة المالية ${acc.company.fiscalYear}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.85),
                       fontSize: 12,
@@ -159,12 +167,20 @@ class DashboardScreen extends StatelessWidget {
             const SizedBox(height: 16),
             const _SectionTitle(title: 'الأقسام التعليمية'),
             const SizedBox(height: 8),
-            GridView.count(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              crossAxisCount: 3,
-              childAspectRatio: 0.95,
-              children: [
+            LayoutBuilder(
+              builder: (context, constraints) {
+                // Responsive: 2 columns on narrow phones, 3 on wider screens.
+                final crossAxisCount = constraints.maxWidth < 360 ? 2 : 3;
+                // Slightly taller cells to fit subtitle without overflow.
+                final aspectRatio = constraints.maxWidth < 360 ? 1.0 : 0.85;
+                return GridView.count(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  crossAxisCount: crossAxisCount,
+                  childAspectRatio: aspectRatio,
+                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 4,
+                  children: [
                 SectionCard(
                   icon: Icons.school,
                   title: AppStrings.lessons,
@@ -217,6 +233,8 @@ class DashboardScreen extends StatelessWidget {
                       builder: (_) => const GlossaryScreen())),
                 ),
               ],
+                );
+              },
             ),
             const SizedBox(height: 16),
             const _SectionTitle(title: 'النظام المحاسبي'),

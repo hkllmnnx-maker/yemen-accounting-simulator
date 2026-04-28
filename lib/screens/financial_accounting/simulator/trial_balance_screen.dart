@@ -134,34 +134,42 @@ class FaTrialBalanceScreen extends StatelessWidget {
                           flex: 4,
                           child: Text(
                             r.accountName,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: const TextStyle(fontSize: 12),
                           ),
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text(
-                            r.debitBalance > 0
-                                ? Formatters.currency(r.debitBalance)
-                                : '-',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 11.5,
-                              color: AppColors.debit,
-                              fontWeight: FontWeight.bold,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              r.debitBalance > 0
+                                  ? Formatters.currency(r.debitBalance)
+                                  : '-',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 11.5,
+                                color: AppColors.debit,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text(
-                            r.creditBalance > 0
-                                ? Formatters.currency(r.creditBalance)
-                                : '-',
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 11.5,
-                              color: AppColors.credit,
-                              fontWeight: FontWeight.bold,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              r.creditBalance > 0
+                                  ? Formatters.currency(r.creditBalance)
+                                  : '-',
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 11.5,
+                                color: AppColors.credit,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -195,25 +203,31 @@ class FaTrialBalanceScreen extends StatelessWidget {
                       ),
                       Expanded(
                         flex: 3,
-                        child: Text(
-                          Formatters.currency(totalDebit),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: AppColors.debit,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            Formatters.currency(totalDebit),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: AppColors.debit,
+                            ),
                           ),
                         ),
                       ),
                       Expanded(
                         flex: 3,
-                        child: Text(
-                          Formatters.currency(totalCredit),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 12,
-                            color: AppColors.credit,
+                        child: FittedBox(
+                          fit: BoxFit.scaleDown,
+                          child: Text(
+                            Formatters.currency(totalCredit),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 12,
+                              color: AppColors.credit,
+                            ),
                           ),
                         ),
                       ),

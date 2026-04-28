@@ -424,18 +424,27 @@ class _Line extends StatelessWidget {
           Expanded(
             child: Text(
               label,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 fontSize: 12,
                 color: AppColors.textPrimary,
               ),
             ),
           ),
-          Text(
-            Formatters.currency(amount),
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: valueColor ?? AppColors.textPrimary,
+          const SizedBox(width: 8),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerEnd,
+              child: Text(
+                Formatters.currency(amount),
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: valueColor ?? AppColors.textPrimary,
+                ),
+              ),
             ),
           ),
         ],
@@ -469,6 +478,8 @@ class _TotalLine extends StatelessWidget {
           Expanded(
             child: Text(
               label,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 color: color,
                 fontWeight: FontWeight.bold,
@@ -476,12 +487,19 @@ class _TotalLine extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            Formatters.currency(amount),
-            style: TextStyle(
-              color: color,
-              fontWeight: FontWeight.bold,
-              fontSize: 13,
+          const SizedBox(width: 8),
+          Flexible(
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerEnd,
+              child: Text(
+                Formatters.currency(amount),
+                style: TextStyle(
+                  color: color,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
             ),
           ),
         ],

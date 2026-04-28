@@ -5,22 +5,26 @@
 ## آخر تحديث
 - التاريخ: 2025 (الجلسة الحالية)
 - Branch: `continue-audit-fixes-stabilization`
-- آخر commit قبل بدء العمل: `c22ee07 fix(controllers): move TextEditingController out of build() and dispose properly`
+- آخر commit مرفوع: `3e6185e test(accounting_logic): add unit tests for journal balance, trial balance, financial statements`
 
 ## آخر مهمة مكتملة
-- **المهمة 0**: استلام المشروع وفحصه (git status, git log, flutter pub get, flutter analyze, flutter test).
-- النتائج:
-  - `flutter analyze` => **No issues found!**
-  - `flutter test` => **All 34 tests passed!**
+- **المهمة 1**: مراجعة وتصحيح المنطق المحاسبي + إضافة 19 اختبار وحدوي شامل في `test/accounting_logic_test.dart`.
+- **المهمة 2 (تقدّم)**: إصلاحات RTL/overflow على الشاشات الأساسية:
+  - `lib/screens/dashboard/dashboard_screen.dart`: حماية Banner من overflow + GridView responsive عبر LayoutBuilder.
+  - `lib/screens/financial_accounting/simulator/trial_balance_screen.dart`: FittedBox + maxLines/ellipsis في الجدول.
+  - `lib/screens/financial_accounting/simulator/financial_statements_screen.dart`: حماية _Line و _TotalLine من overflow.
+  - `lib/screens/financial_accounting/simulator/journal_list_screen.dart`: حماية _JournalCard.
+  - `lib/screens/financial_accounting/simulator/ledger_screen.dart`: حماية T-account وخلية الـ ledger.
+  - `lib/screens/financial_accounting/simulator/financial_analysis_screen.dart`: حماية بطاقة النسب المالية.
 
 ## المهمة الحالية
-- المهمة 1: مراجعة وتصحيح المنطق المحاسبي + إضافة اختبارات وحدوية إضافية للمنطق المحاسبي الحرج.
+- إكمال مراجعة شاشات أخرى لـ RTL/overflow ثم بناء APK.
 
 ## المهام المتبقية
 - [x] المهمة 0: فحص الحالة الحالية.
-- [ ] المهمة 1: مراجعة وتصحيح المنطق المحاسبي + اختبارات.
-- [ ] المهمة 2: إصلاح Arabic RTL و overflow.
-- [ ] المهمة 3: تشغيل وإصلاح الاختبارات (الحالي: ناجح).
+- [x] المهمة 1: مراجعة وتصحيح المنطق المحاسبي + اختبارات.
+- [~] المهمة 2: إصلاح Arabic RTL و overflow (منجز جزئيًا - الشاشات الرئيسية).
+- [ ] المهمة 3: تشغيل وإصلاح الاختبارات (الحالي: 72 اختبار ناجح).
 - [ ] المهمة 4: بناء APK debug.
 - [ ] المهمة 5: dart format + إعادة التحقق.
 - [ ] المهمة 6: تحديث README.md.
@@ -28,31 +32,38 @@
 - [ ] المهمة 8: commit و push (مع رفع تدريجي بعد كل مهمة).
 
 ## آخر نتائج الأوامر
-- `flutter pub get` => Got dependencies (12 packages have newer versions but compatible with current constraints).
-- `flutter analyze` => **No issues found! (ran in 27.7s)**
-- `flutter test` => **All 34 tests passed!**
+- `flutter pub get` => Got dependencies.
+- `flutter analyze` => **No issues found! (ran in 3.4s)**
+- `flutter test` => **All 72 tests passed!** (53 widget + 19 accounting logic).
 - `flutter build apk --debug` => لم يُشغّل بعد.
 
 ## الملفات المعدلة في هذه الجلسة
-- (سيتم تحديث القائمة عند إجراء التعديلات).
+- `AGENT_CONTINUATION_STATE.md` (جديد)
+- `test/accounting_logic_test.dart` (جديد - 19 اختبار)
+- `lib/screens/dashboard/dashboard_screen.dart` (RTL/overflow)
+- `lib/screens/financial_accounting/simulator/trial_balance_screen.dart` (RTL/overflow)
+- `lib/screens/financial_accounting/simulator/financial_statements_screen.dart` (RTL/overflow)
+- `lib/screens/financial_accounting/simulator/journal_list_screen.dart` (RTL/overflow)
+- `lib/screens/financial_accounting/simulator/ledger_screen.dart` (RTL/overflow)
+- `lib/screens/financial_accounting/simulator/financial_analysis_screen.dart` (RTL/overflow)
 
 ## آخر خطأ ظهر
 - لا يوجد.
 
 ## الخطوة التالية
-- إضافة ملف `test/accounting_logic_test.dart` يحتوي على اختبارات وحدوية لـ:
-  - توازن قيود اليومية.
-  - رفض القيود غير المتوازنة.
-  - رفض المبالغ الصفرية والسالبة.
-  - حساب ميزان المراجعة وحساب الأرصدة.
-  - حساب قائمة الدخل وقائمة المركز المالي.
-  - تنسيق العملة اليمنية.
-  - تقييم محاولات الطلاب في `FinancialAccountingProvider`.
+- رفع المهمة 2 إلى المستودع (RTL/overflow fixes).
+- تشغيل `flutter build apk --debug` (المهمة 4).
+- تشغيل `dart format .` ثم إعادة التحقق (المهمة 5).
+- تحديث README.md (المهمة 6) وإنشاء التقرير (المهمة 7).
 
 ## RESUME PROMPT (للاستئناف في حال انقطعت الجلسة)
 ```
 استلم متابعة مشروع yemen-accounting-simulator على branch continue-audit-fixes-stabilization.
-تم بالفعل: فحص شامل، flutter analyze بلا مشاكل، 34 اختبار ناجح.
-أكمل من المهمة 1: مراجعة وتصحيح المنطق المحاسبي.
-الخطوة التالية: أضف ملف test/accounting_logic_test.dart يحتوي على اختبارات وحدوية للمنطق المحاسبي الحرج (توازن القيود، رفض القيم السالبة، ميزان المراجعة، قائمة الدخل، المركز المالي، تنسيق العملة)، ثم نفّذ Tasks 2-8 بالترتيب مع رفع كل مهمة فور إنجازها إلى المستودع البعيد.
+تم بالفعل:
+- المهمة 1 مكتملة: 19 اختبار وحدوي للمنطق المحاسبي مرفوعة (commit 3e6185e).
+- المهمة 2: إصلاحات RTL/overflow على الشاشات الأساسية (dashboard, trial balance, ledger, journal list, financial statements, financial analysis).
+- جميع الاختبارات ناجحة (72/72) ولا توجد مشاكل في flutter analyze.
+- المهمة 2 مرفوعة (commit جديد بعد هذا التحديث).
+
+أكمل من المهمة 4: تشغيل `flutter build apk --debug`. ثم المهمة 5: `dart format .` + إعادة التحقق. ثم المهمة 6: تحديث README.md. ثم المهمة 7: إنشاء PROJECT_AUDIT_AND_FIX_REPORT.md. ثم رفع كل مهمة فور إنجازها إلى origin/continue-audit-fixes-stabilization.
 ```

@@ -242,6 +242,8 @@ class _JournalCard extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 6),
                 child: Text(
                   entry.description as String,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 12.5,
                     fontStyle: FontStyle.italic,
@@ -266,18 +268,29 @@ class _JournalCard extends StatelessWidget {
                       child: Text(
                         '${l.isDebit ? 'من ح/' : 'إلى ح/'} '
                         '${FinAccountsCatalog.byId(l.accountId)?.name ?? l.accountId}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(
                           fontSize: 12.5,
                           color: l.isDebit ? AppColors.debit : AppColors.credit,
                         ),
                       ),
                     ),
-                    Text(
-                      Formatters.currency(l.amount),
-                      style: TextStyle(
-                        fontSize: 12.5,
-                        fontWeight: FontWeight.bold,
-                        color: l.isDebit ? AppColors.debit : AppColors.credit,
+                    const SizedBox(width: 6),
+                    Flexible(
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: AlignmentDirectional.centerEnd,
+                        child: Text(
+                          Formatters.currency(l.amount),
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.bold,
+                            color: l.isDebit
+                                ? AppColors.debit
+                                : AppColors.credit,
+                          ),
+                        ),
                       ),
                     ),
                   ],
