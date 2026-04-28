@@ -134,6 +134,8 @@ class _RatioCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     ratio.name,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14,
@@ -141,12 +143,18 @@ class _RatioCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(
-                  '${ratio.value} ${ratio.unit}',
-                  style: TextStyle(
-                    color: color,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
+                const SizedBox(width: 6),
+                Flexible(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      '${ratio.value} ${ratio.unit}',
+                      style: TextStyle(
+                        color: color,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
                   ),
                 ),
               ],

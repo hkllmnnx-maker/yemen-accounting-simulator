@@ -21,14 +21,16 @@ class PartnerStatementScreen extends StatelessWidget {
     for (final j in acc.journals.where((j) => j.posted)) {
       for (final l in j.lines) {
         if (l.accountId == p.accountId) {
-          movements.add(_Move(
-            date: j.date,
-            desc: j.description,
-            debit: l.debit,
-            credit: l.credit,
-            number: j.number,
-            source: j.source,
-          ));
+          movements.add(
+            _Move(
+              date: j.date,
+              desc: j.description,
+              debit: l.debit,
+              credit: l.credit,
+              number: j.number,
+              source: j.source,
+            ),
+          );
         }
       }
     }
@@ -50,9 +52,7 @@ class PartnerStatementScreen extends StatelessWidget {
         : acc.accountBalance(p.accountId);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('كشف حساب ${p.name}'),
-      ),
+      appBar: AppBar(title: Text('كشف حساب ${p.name}')),
       body: SafeArea(
         child: Column(
           children: [
@@ -68,18 +68,28 @@ class PartnerStatementScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(p.name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 16)),
+                  Text(
+                    p.name,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
                   const SizedBox(height: 4),
-                  Text('${p.city} • ${p.code} • ${p.currency}',
-                      style: const TextStyle(
-                          fontSize: 12, color: AppColors.textSecondary)),
+                  Text(
+                    '${p.city} • ${p.code} • ${p.currency}',
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textSecondary,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Text('الرصيد الحالي: ',
-                          style: TextStyle(fontSize: 13)),
+                      const Text(
+                        'الرصيد الحالي: ',
+                        style: TextStyle(fontSize: 13),
+                      ),
                       Text(
                         Formatters.currency(balance.abs(), decimals: 0),
                         style: TextStyle(
@@ -87,8 +97,8 @@ class PartnerStatementScreen extends StatelessWidget {
                           fontSize: 16,
                           color: balance > 0
                               ? (isCustomer
-                                  ? AppColors.error
-                                  : AppColors.warning)
+                                    ? AppColors.error
+                                    : AppColors.warning)
                               : AppColors.success,
                         ),
                       ),
@@ -97,10 +107,12 @@ class PartnerStatementScreen extends StatelessWidget {
                         balance > 0
                             ? (isCustomer ? '(مديونية)' : '(علينا)')
                             : (balance < 0
-                                ? (isCustomer ? '(له لدينا)' : '(لنا لديه)')
-                                : '(مسوّى)'),
+                                  ? (isCustomer ? '(له لدينا)' : '(لنا لديه)')
+                                  : '(مسوّى)'),
                         style: const TextStyle(
-                            fontSize: 12, color: AppColors.textLight),
+                          fontSize: 12,
+                          color: AppColors.textLight,
+                        ),
                       ),
                     ],
                   ),
@@ -114,36 +126,59 @@ class PartnerStatementScreen extends StatelessWidget {
               child: const Row(
                 children: [
                   SizedBox(
-                      width: 80,
-                      child: Text('التاريخ',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    width: 80,
+                    child: Text(
+                      'التاريخ',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                   Expanded(
-                      child: Text('البيان',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    child: Text(
+                      'البيان',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 60,
-                      child: Text('مدين',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                              color: AppColors.debit))),
+                    width: 60,
+                    child: Text(
+                      'مدين',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                        color: AppColors.debit,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 60,
-                      child: Text('دائن',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 11,
-                              color: AppColors.credit))),
+                    width: 60,
+                    child: Text(
+                      'دائن',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                        color: AppColors.credit,
+                      ),
+                    ),
+                  ),
                   SizedBox(
-                      width: 70,
-                      child: Text('الرصيد',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 11))),
+                    width: 70,
+                    child: Text(
+                      'الرصيد',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -163,26 +198,36 @@ class PartnerStatementScreen extends StatelessWidget {
                         final m = movements[i];
                         return Padding(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 8, vertical: 6),
+                            horizontal: 8,
+                            vertical: 6,
+                          ),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                  width: 80,
-                                  child: Text(Formatters.date(m.date),
-                                      style: const TextStyle(fontSize: 11))),
+                                width: 80,
+                                child: Text(
+                                  Formatters.date(m.date),
+                                  style: const TextStyle(fontSize: 11),
+                                ),
+                              ),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(m.desc,
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontSize: 12)),
-                                    Text(m.source,
-                                        style: const TextStyle(
-                                            fontSize: 10,
-                                            color: AppColors.textLight)),
+                                    Text(
+                                      m.desc,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(fontSize: 12),
+                                    ),
+                                    Text(
+                                      m.source,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                        color: AppColors.textLight,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -194,7 +239,9 @@ class PartnerStatementScreen extends StatelessWidget {
                                       : Formatters.number(m.debit, decimals: 0),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                      fontSize: 11, color: AppColors.debit),
+                                    fontSize: 11,
+                                    color: AppColors.debit,
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -202,10 +249,15 @@ class PartnerStatementScreen extends StatelessWidget {
                                 child: Text(
                                   m.credit == 0
                                       ? '-'
-                                      : Formatters.number(m.credit, decimals: 0),
+                                      : Formatters.number(
+                                          m.credit,
+                                          decimals: 0,
+                                        ),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                      fontSize: 11, color: AppColors.credit),
+                                    fontSize: 11,
+                                    color: AppColors.credit,
+                                  ),
                                 ),
                               ),
                               SizedBox(
@@ -214,8 +266,9 @@ class PartnerStatementScreen extends StatelessWidget {
                                   Formatters.number(m.balance, decimals: 0),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.bold),
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ],

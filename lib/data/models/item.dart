@@ -25,28 +25,28 @@ class Item {
   });
 
   Map<String, dynamic> toMap() => {
-        'id': id,
-        'code': code,
-        'name': name,
-        'unit': unit,
-        'cost': cost,
-        'price': price,
-        'quantity': quantity,
-        'category': category,
-        'currency': currency,
-      };
+    'id': id,
+    'code': code,
+    'name': name,
+    'unit': unit,
+    'cost': cost,
+    'price': price,
+    'quantity': quantity,
+    'category': category,
+    'currency': currency,
+  };
 
   factory Item.fromMap(Map m) => Item(
-        id: m['id'] as String,
-        code: m['code'] as String,
-        name: m['name'] as String,
-        unit: m['unit'] as String? ?? 'حبة',
-        cost: (m['cost'] as num?)?.toDouble() ?? 0,
-        price: (m['price'] as num?)?.toDouble() ?? 0,
-        quantity: (m['quantity'] as num?)?.toDouble() ?? 0,
-        category: m['category'] as String?,
-        currency: m['currency'] as String? ?? 'YER',
-      );
+    id: m['id'] as String,
+    code: m['code'] as String,
+    name: m['name'] as String,
+    unit: m['unit'] as String? ?? 'حبة',
+    cost: (m['cost'] as num?)?.toDouble() ?? 0,
+    price: (m['price'] as num?)?.toDouble() ?? 0,
+    quantity: (m['quantity'] as num?)?.toDouble() ?? 0,
+    category: m['category'] as String?,
+    currency: m['currency'] as String? ?? 'YER',
+  );
 }
 
 class ItemAdapter extends TypeAdapter<Item> {

@@ -28,8 +28,7 @@ class ProgressScreen extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  const Icon(Icons.emoji_events,
-                      color: Colors.white, size: 56),
+                  const Icon(Icons.emoji_events, color: Colors.white, size: 56),
                   const SizedBox(height: 8),
                   Text(
                     '${p.progress.totalXp}',
@@ -45,8 +44,10 @@ class ProgressScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.25),
                       borderRadius: BorderRadius.circular(20),
@@ -54,9 +55,10 @@ class ProgressScreen extends StatelessWidget {
                     child: Text(
                       'مستوى ${(p.progress.totalXp / 100).floor() + 1}',
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14),
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                 ],
@@ -64,15 +66,24 @@ class ProgressScreen extends StatelessWidget {
             ),
             const SizedBox(height: 16),
             const _Heading(title: 'الإحصائيات', icon: Icons.bar_chart),
-            _statRow('الدروس المكتملة',
-                '${p.completedLessons}/${p.totalLessons}', AppColors.primary,
-                Icons.school),
-            _statRow('التدريبات المكتملة',
-                '${p.completedTrainings}/${p.totalTrainings}',
-                AppColors.accent, Icons.fitness_center),
-            _statRow('الاختبارات الناجحة',
-                '${p.passedQuizzes}/${p.totalQuizzes}', AppColors.warning,
-                Icons.quiz),
+            _statRow(
+              'الدروس المكتملة',
+              '${p.completedLessons}/${p.totalLessons}',
+              AppColors.primary,
+              Icons.school,
+            ),
+            _statRow(
+              'التدريبات المكتملة',
+              '${p.completedTrainings}/${p.totalTrainings}',
+              AppColors.accent,
+              Icons.fitness_center,
+            ),
+            _statRow(
+              'الاختبارات الناجحة',
+              '${p.passedQuizzes}/${p.totalQuizzes}',
+              AppColors.warning,
+              Icons.quiz,
+            ),
             const SizedBox(height: 16),
             Card(
               child: Padding(
@@ -82,14 +93,18 @@ class ProgressScreen extends StatelessWidget {
                   children: [
                     const Text(
                       'الإنجاز الكلّي',
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     LinearProgressIndicator(
                       value: p.overallProgress,
                       backgroundColor: AppColors.border,
-                      valueColor:
-                          const AlwaysStoppedAnimation(AppColors.success),
+                      valueColor: const AlwaysStoppedAnimation(
+                        AppColors.success,
+                      ),
                       minHeight: 12,
                       borderRadius: BorderRadius.circular(6),
                     ),
@@ -97,7 +112,9 @@ class ProgressScreen extends StatelessWidget {
                     Text(
                       Formatters.percent(p.overallProgress),
                       style: const TextStyle(
-                          color: AppColors.success, fontWeight: FontWeight.bold),
+                        color: AppColors.success,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ],
                 ),
@@ -121,8 +138,10 @@ class ProgressScreen extends StatelessWidget {
                       children: [
                         Opacity(
                           opacity: earned ? 1 : 0.35,
-                          child: Text(b.emoji,
-                              style: const TextStyle(fontSize: 38)),
+                          child: Text(
+                            b.emoji,
+                            style: const TextStyle(fontSize: 38),
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -133,8 +152,9 @@ class ProgressScreen extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 12.5,
                             fontWeight: FontWeight.bold,
-                            color:
-                                earned ? AppColors.gold : AppColors.textLight,
+                            color: earned
+                                ? AppColors.gold
+                                : AppColors.textLight,
                           ),
                         ),
                         const SizedBox(height: 2),
@@ -144,9 +164,10 @@ class ProgressScreen extends StatelessWidget {
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                              fontSize: 10,
-                              color: AppColors.textSecondary,
-                              height: 1.4),
+                            fontSize: 10,
+                            color: AppColors.textSecondary,
+                            height: 1.4,
+                          ),
                         ),
                       ],
                     ),
@@ -169,9 +190,14 @@ class ProgressScreen extends StatelessWidget {
           child: Icon(ic, size: 20),
         ),
         title: Text(label, style: const TextStyle(fontSize: 14)),
-        trailing: Text(value,
-            style: TextStyle(
-                color: color, fontWeight: FontWeight.bold, fontSize: 16)),
+        trailing: Text(
+          value,
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
       ),
     );
   }
@@ -189,11 +215,14 @@ class _Heading extends StatelessWidget {
         children: [
           Icon(icon, color: AppColors.primary),
           const SizedBox(width: 8),
-          Text(title,
-              style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textPrimary)),
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: AppColors.textPrimary,
+            ),
+          ),
         ],
       ),
     );

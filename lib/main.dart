@@ -25,10 +25,13 @@ class YemenAccountingApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => AccountingProvider()..loadCompany()),
+        ChangeNotifierProvider(
+          create: (_) => AccountingProvider()..loadCompany(),
+        ),
         ChangeNotifierProvider(create: (_) => ProgressProvider()..load()),
         ChangeNotifierProvider(
-            create: (_) => FinancialAccountingProvider()..load()),
+          create: (_) => FinancialAccountingProvider()..load(),
+        ),
       ],
       child: MaterialApp(
         title: AppStrings.appName,

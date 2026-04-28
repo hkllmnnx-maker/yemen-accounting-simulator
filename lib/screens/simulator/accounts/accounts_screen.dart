@@ -42,7 +42,10 @@ class AccountsScreen extends StatelessWidget {
                   Expanded(
                     child: Text(
                       'الحسابات الرئيسية لا تقبل قيودًا. القيود تُسجل على الحسابات الفرعية.',
-                      style: TextStyle(fontSize: 12.5, color: AppColors.textPrimary),
+                      style: TextStyle(
+                        fontSize: 12.5,
+                        color: AppColors.textPrimary,
+                      ),
                     ),
                   ),
                 ],
@@ -56,80 +59,132 @@ class AccountsScreen extends StatelessWidget {
   }
 
   void _showAddAccount(BuildContext context) {
-    final acc = context.read<AccountingProvider>();
-    final name = TextEditingController();
-    final code = TextEditingController();
-    AccountType type = AccountType.asset;
-    String? parent;
+    showDialog(context: context, builder: (_) => const _AddAccountDialog());
+  }
+}
 
-    showDialog(
-      context: context,
-      builder: (_) => StatefulBuilder(
-        builder: (ctx, setState) => AlertDialog(
-          title: const Text('إضافة حساب جديد'),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                    controller: code,
-                    decoration: const InputDecoration(labelText: 'الرقم')),
-                const SizedBox(height: 8),
-                TextField(
-                    controller: name,
-                    decoration: const InputDecoration(labelText: 'الاسم')),
-                const SizedBox(height: 8),
-                DropdownButtonFormField<AccountType>(
-                  initialValue: type,
-                  decoration: const InputDecoration(labelText: 'النوع'),
-                  items: AccountType.values
-                      .map((t) =>
-                          DropdownMenuItem(value: t, child: Text(t.arabicName)))
-                      .toList(),
-                  onChanged: (v) => setState(() => type = v ?? type),
+class _AddAccountDialog extends StatefulWidget {
+  const _AddAccountDialog();
+
+  @override
+  State<_AddAccountDialog> createState() => _AddAccountDialogState();
+}
+
+class _AddAccountDialogState extends State<_AddAccountDialog> {
+  final _nameCtrl = TextEditingController();
+  final _codeCtrl = TextEditingController();
+  AccountType _type = AccountType.asset;
+  String? _parent;
+  bool _saving = false;
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _codeCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final acc = context.read<AccountingProvider>();
+    final name = _nameCtrl.text.trim();
+    final code = _codeCtrl.text.trim();
+    if (name.isEmpty || code.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('الرجاء إدخال الاسم والرقم')),
+      );
+      return;
+    }
+    // Prevent duplicate codes
+    if (acc.accounts.any((a) => a.code == code)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('رقم الحساب مستخدم مسبقًا')));
+      return;
+    }
+    setState(() => _saving = true);
+    final id = 'acc_${DateTime.now().millisecondsSinceEpoch}';
+    await acc.addAccount(
+      Account(
+        id: id,
+        code: code,
+        name: name,
+        type: _type,
+        parentId: _parent,
+        isPostable: true,
+      ),
+    );
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final acc = context.watch<AccountingProvider>();
+    return AlertDialog(
+      title: const Text('إضافة حساب جديد'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _codeCtrl,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'الرقم'),
+            ),
+            const SizedBox(height: 8),
+            TextField(
+              controller: _nameCtrl,
+              decoration: const InputDecoration(labelText: 'الاسم'),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<AccountType>(
+              initialValue: _type,
+              decoration: const InputDecoration(labelText: 'النوع'),
+              items: AccountType.values
+                  .map(
+                    (t) =>
+                        DropdownMenuItem(value: t, child: Text(t.arabicName)),
+                  )
+                  .toList(),
+              onChanged: (v) => setState(() => _type = v ?? _type),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String?>(
+              initialValue: _parent,
+              decoration: const InputDecoration(labelText: 'الحساب الأب'),
+              isExpanded: true,
+              items: [
+                const DropdownMenuItem<String?>(
+                  value: null,
+                  child: Text('لا يوجد (حساب رئيسي)'),
                 ),
-                const SizedBox(height: 8),
-                DropdownButtonFormField<String?>(
-                  initialValue: parent,
-                  decoration: const InputDecoration(labelText: 'الحساب الأب'),
-                  items: [
-                    const DropdownMenuItem<String?>(
-                        value: null, child: Text('لا يوجد (حساب رئيسي)')),
-                    ...acc.accounts
-                        .where((a) => !a.isPostable)
-                        .map((a) => DropdownMenuItem<String?>(
-                            value: a.id,
-                            child: Text('${a.code} - ${a.name}'))),
-                  ],
-                  onChanged: (v) => setState(() => parent = v),
-                ),
+                ...acc.accounts
+                    .where((a) => !a.isPostable)
+                    .map(
+                      (a) => DropdownMenuItem<String?>(
+                        value: a.id,
+                        child: Text(
+                          '${a.code} - ${a.name}',
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ),
               ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(ctx),
-              child: const Text('إلغاء'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (name.text.trim().isEmpty || code.text.trim().isEmpty) return;
-                final id = 'acc_${DateTime.now().millisecondsSinceEpoch}';
-                await acc.addAccount(Account(
-                  id: id,
-                  code: code.text.trim(),
-                  name: name.text.trim(),
-                  type: type,
-                  parentId: parent,
-                  isPostable: true,
-                ));
-                if (ctx.mounted) Navigator.pop(ctx);
-              },
-              child: const Text('حفظ'),
+              onChanged: (v) => setState(() => _parent = v),
             ),
           ],
         ),
       ),
+      actions: [
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.pop(context),
+          child: const Text('إلغاء'),
+        ),
+        ElevatedButton(
+          onPressed: _saving ? null : _save,
+          child: const Text('حفظ'),
+        ),
+      ],
     );
   }
 }
@@ -174,15 +229,27 @@ class _AccountTile extends StatelessWidget {
           title: Text(
             '${root.code} • ${root.name}',
             style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13.5),
+            overflow: TextOverflow.ellipsis,
           ),
-          subtitle: Text(root.type.arabicName,
-              style: TextStyle(color: typeColor, fontSize: 11)),
-          trailing: Text(
-            Formatters.currency(balance, decimals: 0),
-            style: TextStyle(
-              color: balance == 0 ? AppColors.textLight : AppColors.textPrimary,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
+          subtitle: Text(
+            root.type.arabicName,
+            style: TextStyle(color: typeColor, fontSize: 11),
+          ),
+          trailing: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 110),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: AlignmentDirectional.centerEnd,
+              child: Text(
+                Formatters.currency(balance, decimals: 0),
+                style: TextStyle(
+                  color: balance == 0
+                      ? AppColors.textLight
+                      : AppColors.textPrimary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 12,
+                ),
+              ),
             ),
           ),
         ),
@@ -203,14 +270,19 @@ class _AccountTile extends StatelessWidget {
         title: Text(
           '${root.code} • ${root.name}',
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+          overflow: TextOverflow.ellipsis,
         ),
-        subtitle: Text(root.type.arabicName,
-            style: TextStyle(color: typeColor, fontSize: 11)),
+        subtitle: Text(
+          root.type.arabicName,
+          style: TextStyle(color: typeColor, fontSize: 11),
+        ),
         children: children
-            .map((c) => Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 12),
-                  child: _AccountTile(root: c),
-                ))
+            .map(
+              (c) => Padding(
+                padding: const EdgeInsetsDirectional.only(start: 12),
+                child: _AccountTile(root: c),
+              ),
+            )
             .toList(),
       ),
     );

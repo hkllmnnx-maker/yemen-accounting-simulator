@@ -15,10 +15,12 @@ class _GlossaryScreenState extends State<GlossaryScreen> {
   @override
   Widget build(BuildContext context) {
     final filtered = glossary
-        .where((g) =>
-            _query.isEmpty ||
-            g.term.contains(_query) ||
-            g.definition.contains(_query))
+        .where(
+          (g) =>
+              _query.isEmpty ||
+              g.term.contains(_query) ||
+              g.definition.contains(_query),
+        )
         .toList();
     return Scaffold(
       appBar: AppBar(title: const Text(AppStrings.glossary)),
@@ -57,9 +59,10 @@ class _GlossaryScreenState extends State<GlossaryScreen> {
                         Text(
                           g.definition,
                           style: const TextStyle(
-                              fontSize: 14,
-                              height: 1.6,
-                              color: AppColors.textPrimary),
+                            fontSize: 14,
+                            height: 1.6,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                         if (g.example != null) ...[
                           const SizedBox(height: 8),
@@ -72,8 +75,11 @@ class _GlossaryScreenState extends State<GlossaryScreen> {
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(Icons.lightbulb,
-                                    color: AppColors.warning, size: 16),
+                                const Icon(
+                                  Icons.lightbulb,
+                                  color: AppColors.warning,
+                                  size: 16,
+                                ),
                                 const SizedBox(width: 6),
                                 Expanded(
                                   child: Text(

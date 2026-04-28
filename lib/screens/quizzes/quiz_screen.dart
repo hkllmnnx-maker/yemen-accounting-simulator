@@ -54,9 +54,7 @@ class _QuizScreenState extends State<QuizScreen> {
     final isCorrect = _selected == q.correctIndex;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('اختبار: ${widget.lesson.title}'),
-      ),
+      appBar: AppBar(title: Text('اختبار: ${widget.lesson.title}')),
       body: SafeArea(
         child: Column(
           children: [
@@ -71,7 +69,9 @@ class _QuizScreenState extends State<QuizScreen> {
               child: Text(
                 'سؤال ${_index + 1} من ${widget.lesson.quiz.length}',
                 style: const TextStyle(
-                    color: AppColors.textSecondary, fontSize: 12),
+                  color: AppColors.textSecondary,
+                  fontSize: 12,
+                ),
               ),
             ),
             Expanded(
@@ -132,15 +132,19 @@ class _QuizScreenState extends State<QuizScreen> {
                                     ? AppColors.primary
                                     : Colors.white,
                                 border: Border.all(
-                                    color: _selected == i
-                                        ? AppColors.primary
-                                        : AppColors.border),
+                                  color: _selected == i
+                                      ? AppColors.primary
+                                      : AppColors.border,
+                                ),
                                 shape: BoxShape.circle,
                               ),
                               alignment: Alignment.center,
                               child: _selected == i
-                                  ? const Icon(Icons.check,
-                                      color: Colors.white, size: 16)
+                                  ? const Icon(
+                                      Icons.check,
+                                      color: Colors.white,
+                                      size: 16,
+                                    )
                                   : null,
                             ),
                             const SizedBox(width: 10),
@@ -154,9 +158,13 @@ class _QuizScreenState extends State<QuizScreen> {
                               ),
                             ),
                             if (_showAnswer && i == q.correctIndex)
-                              const Icon(Icons.check_circle,
-                                  color: AppColors.success),
-                            if (_showAnswer && i == _selected && i != q.correctIndex)
+                              const Icon(
+                                Icons.check_circle,
+                                color: AppColors.success,
+                              ),
+                            if (_showAnswer &&
+                                i == _selected &&
+                                i != q.correctIndex)
                               const Icon(Icons.cancel, color: AppColors.error),
                           ],
                         ),
@@ -200,9 +208,10 @@ class _QuizScreenState extends State<QuizScreen> {
                                 Text(
                                   q.explanation,
                                   style: const TextStyle(
-                                      fontSize: 13,
-                                      height: 1.5,
-                                      color: AppColors.textPrimary),
+                                    fontSize: 13,
+                                    height: 1.5,
+                                    color: AppColors.textPrimary,
+                                  ),
                                 ),
                               ],
                             ),
@@ -224,11 +233,13 @@ class _QuizScreenState extends State<QuizScreen> {
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 14),
                   ),
-                  child: Text(_showAnswer
-                      ? (_index < widget.lesson.quiz.length - 1
-                          ? 'السؤال التالي'
-                          : 'النتيجة')
-                      : 'تأكيد الإجابة'),
+                  child: Text(
+                    _showAnswer
+                        ? (_index < widget.lesson.quiz.length - 1
+                              ? 'السؤال التالي'
+                              : 'النتيجة')
+                        : 'تأكيد الإجابة',
+                  ),
                 ),
               ),
             ),
@@ -272,7 +283,9 @@ class _QuizScreenState extends State<QuizScreen> {
               Text(
                 '$correct من ${widget.lesson.quiz.length} إجابات صحيحة',
                 style: const TextStyle(
-                    fontSize: 16, color: AppColors.textSecondary),
+                  fontSize: 16,
+                  color: AppColors.textSecondary,
+                ),
               ),
               const SizedBox(height: 16),
               Container(

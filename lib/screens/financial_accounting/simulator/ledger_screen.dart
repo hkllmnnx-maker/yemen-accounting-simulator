@@ -103,6 +103,8 @@ class _AccountTSheet extends StatelessWidget {
                     children: [
                       Text(
                         account.accountName,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 14,
@@ -111,11 +113,14 @@ class _AccountTSheet extends StatelessWidget {
                       ),
                       Text(
                         account.accountType.arabicName,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 10.5, color: _typeColor),
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(width: 8),
                 Container(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
@@ -130,16 +135,21 @@ class _AccountTSheet extends StatelessWidget {
                     children: [
                       Text(
                         'الرصيد ${balanceData['side']}',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 10, color: _typeColor),
                       ),
-                      Text(
-                        Formatters.currency(
-                          (balanceData['amount'] as double).abs(),
-                        ),
-                        style: TextStyle(
-                          fontSize: 12.5,
-                          fontWeight: FontWeight.bold,
-                          color: _typeColor,
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          Formatters.currency(
+                            (balanceData['amount'] as double).abs(),
+                          ),
+                          style: TextStyle(
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.bold,
+                            color: _typeColor,
+                          ),
                         ),
                       ),
                     ],
@@ -216,13 +226,16 @@ class _AccountTSheet extends StatelessWidget {
                       color: AppColors.debit.withValues(alpha: 0.06),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Text(
-                      'إجمالي المدين: ${Formatters.currency(account.totalDebit)}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.debit,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'إجمالي المدين: ${Formatters.currency(account.totalDebit)}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.debit,
+                        ),
                       ),
                     ),
                   ),
@@ -235,13 +248,16 @@ class _AccountTSheet extends StatelessWidget {
                       color: AppColors.credit.withValues(alpha: 0.06),
                       borderRadius: BorderRadius.circular(4),
                     ),
-                    child: Text(
-                      'إجمالي الدائن: ${Formatters.currency(account.totalCredit)}',
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 11,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.credit,
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'إجمالي الدائن: ${Formatters.currency(account.totalCredit)}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 11,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.credit,
+                        ),
                       ),
                     ),
                   ),
@@ -287,12 +303,16 @@ class _LedgerCell extends StatelessWidget {
               color: AppColors.textSecondary,
             ),
           ),
-          Text(
-            Formatters.currency(amount),
-            style: TextStyle(
-              fontSize: 12.5,
-              fontWeight: FontWeight.bold,
-              color: color,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            alignment: AlignmentDirectional.centerStart,
+            child: Text(
+              Formatters.currency(amount),
+              style: TextStyle(
+                fontSize: 12.5,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
             ),
           ),
         ],

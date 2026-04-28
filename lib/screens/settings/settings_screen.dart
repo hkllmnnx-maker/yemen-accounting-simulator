@@ -32,13 +32,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _city = c.city;
     _currency = c.baseCurrency;
     _usdRate = TextEditingController(
-        text: (c.exchangeRates['USD'] ?? 530).toString());
+      text: (c.exchangeRates['USD'] ?? 530).toString(),
+    );
     _sarRate = TextEditingController(
-        text: (c.exchangeRates['SAR'] ?? 141).toString());
+      text: (c.exchangeRates['SAR'] ?? 141).toString(),
+    );
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _yearCtrl.dispose();
+    _usdRate.dispose();
+    _sarRate.dispose();
+    super.dispose();
   }
 
   Future<void> _save() async {
     final acc = context.read<AccountingProvider>();
+    final messenger = ScaffoldMessenger.of(context);
     final newSettings = CompanySettings(
       name: _nameCtrl.text.trim().isEmpty
           ? YemeniData.defaultCompanyName
@@ -54,9 +66,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
     await acc.saveCompany(newSettings);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تم حفظ الإعدادات')),
-    );
+    messenger.showSnackBar(const SnackBar(content: Text('تم حفظ الإعدادات')));
   }
 
   @override
@@ -87,7 +97,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               decoration: const InputDecoration(labelText: 'العملة الأساسية'),
               items: const [
                 DropdownMenuItem(value: 'YER', child: Text('ريال يمني (YER)')),
-                DropdownMenuItem(value: 'USD', child: Text('دولار أمريكي (USD)')),
+                DropdownMenuItem(
+                  value: 'USD',
+                  child: Text('دولار أمريكي (USD)'),
+                ),
                 DropdownMenuItem(value: 'SAR', child: Text('ريال سعودي (SAR)')),
               ],
               onChanged: (v) => setState(() => _currency = v ?? _currency),
@@ -99,8 +112,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
               decoration: const InputDecoration(labelText: 'السنة المالية'),
             ),
             const SizedBox(height: 24),
-            const _Section(title: 'أسعار الصرف (مقابل الريال اليمني)',
-                icon: Icons.currency_exchange),
+            const _Section(
+              title: 'أسعار الصرف (مقابل الريال اليمني)',
+              icon: Icons.currency_exchange,
+            ),
             TextField(
               controller: _usdRate,
               keyboardType: TextInputType.number,
@@ -132,17 +147,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
             const SizedBox(height: 12),
             const Divider(),
-            const _Section(title: 'إدارة البيانات',
-                icon: Icons.settings_backup_restore),
+            const _Section(
+              title: 'إدارة البيانات',
+              icon: Icons.settings_backup_restore,
+            ),
             Card(
               color: AppColors.errorLight,
               child: ListTile(
-                leading: const Icon(Icons.delete_forever, color: AppColors.error),
+                leading: const Icon(
+                  Icons.delete_forever,
+                  color: AppColors.error,
+                ),
                 title: const Text(
                   'إعادة ضبط البيانات والتدريب',
-                  style: TextStyle(color: AppColors.error, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: AppColors.error,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                subtitle: const Text('يحذف كل البيانات ويعيد البيانات الافتراضية'),
+                subtitle: const Text(
+                  'يحذف كل البيانات ويعيد البيانات الافتراضية',
+                ),
                 onTap: () => _confirmReset(context),
               ),
             ),
@@ -157,8 +182,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
             Center(
               child: Text(
                 'العملة الافتراضية: ${Formatters.currencyName(_currency)}',
-                style:
-                    const TextStyle(color: AppColors.textLight, fontSize: 11),
+                style: const TextStyle(
+                  color: AppColors.textLight,
+                  fontSize: 11,
+                ),
               ),
             ),
           ],
@@ -168,12 +195,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _confirmReset(BuildContext context) async {
+    // Capture providers BEFORE the async showDialog to avoid using the
+    // BuildContext across async gaps later.
+    final accProvider = context.read<AccountingProvider>();
+    final progProvider = context.read<ProgressProvider>();
+    final messenger = ScaffoldMessenger.of(context);
+
     final ok = await showDialog<bool>(
       context: context,
       builder: (dialogCtx) => AlertDialog(
         title: const Text('تأكيد إعادة الضبط'),
         content: const Text(
-            'سيتم حذف جميع العملاء، الموردين، الفواتير، السندات، القيود، وتقدّم التدريب. هل أنت متأكد؟'),
+          'سيتم حذف جميع العملاء، الموردين، الفواتير، السندات، القيود، وتقدّم التدريب. هل أنت متأكد؟',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(dialogCtx, false),
@@ -188,13 +222,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
     if (ok != true) return;
+    await accProvider.resetAll();
+    await progProvider.resetProgress();
     if (!mounted) return;
-    await context.read<AccountingProvider>().resetAll();
-    await context.read<ProgressProvider>().resetProgress();
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تمت إعادة الضبط')),
-    );
+    messenger.showSnackBar(const SnackBar(content: Text('تمت إعادة الضبط')));
   }
 }
 
@@ -210,12 +241,14 @@ class _Section extends StatelessWidget {
         children: [
           Icon(icon, color: AppColors.primary, size: 20),
           const SizedBox(width: 8),
-          Text(title,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-                color: AppColors.textPrimary,
-              )),
+          Text(
+            title,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: AppColors.textPrimary,
+            ),
+          ),
         ],
       ),
     );

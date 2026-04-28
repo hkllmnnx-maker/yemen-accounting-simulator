@@ -16,8 +16,10 @@ class JournalListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('القيود اليومية')),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (_) => const JournalEditScreen())),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const JournalEditScreen()),
+        ),
         icon: const Icon(Icons.add),
         label: const Text('قيد جديد'),
       ),
@@ -38,36 +40,57 @@ class JournalListScreen extends StatelessWidget {
                         backgroundColor: j.posted
                             ? AppColors.success.withValues(alpha: 0.15)
                             : AppColors.warning.withValues(alpha: 0.15),
-                        foregroundColor:
-                            j.posted ? AppColors.success : AppColors.warning,
-                        child: Text('#${j.number}',
-                            style: const TextStyle(
-                                fontSize: 11, fontWeight: FontWeight.bold)),
-                      ),
-                      title: Text(j.description,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                        foregroundColor: j.posted
+                            ? AppColors.success
+                            : AppColors.warning,
+                        child: Text(
+                          '#${j.number}',
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 13.5)),
+                            fontSize: 11,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      title: Text(
+                        j.description,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13.5,
+                        ),
+                      ),
                       subtitle: Padding(
                         padding: const EdgeInsets.only(top: 4),
                         child: Row(
                           children: [
-                            Icon(Icons.calendar_today,
-                                size: 12, color: AppColors.textLight),
+                            Icon(
+                              Icons.calendar_today,
+                              size: 12,
+                              color: AppColors.textLight,
+                            ),
                             const SizedBox(width: 4),
-                            Text(Formatters.date(j.date),
-                                style: const TextStyle(
-                                    fontSize: 11,
-                                    color: AppColors.textSecondary)),
+                            Text(
+                              Formatters.date(j.date),
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
                             const SizedBox(width: 10),
-                            Icon(Icons.label_outline,
-                                size: 12, color: AppColors.textLight),
+                            Icon(
+                              Icons.label_outline,
+                              size: 12,
+                              color: AppColors.textLight,
+                            ),
                             const SizedBox(width: 4),
-                            Text(j.source,
-                                style: const TextStyle(
-                                    fontSize: 11,
-                                    color: AppColors.textSecondary)),
+                            Text(
+                              j.source,
+                              style: const TextStyle(
+                                fontSize: 11,
+                                color: AppColors.textSecondary,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -75,14 +98,19 @@ class JournalListScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(Formatters.currency(j.totalDebit, decimals: 0),
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13)),
+                          Text(
+                            Formatters.currency(j.totalDebit, decimals: 0),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 13,
+                            ),
+                          ),
                           Container(
                             margin: const EdgeInsets.only(top: 2),
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 6, vertical: 2),
+                              horizontal: 6,
+                              vertical: 2,
+                            ),
                             decoration: BoxDecoration(
                               color: j.posted
                                   ? AppColors.successLight
@@ -105,8 +133,7 @@ class JournalListScreen extends StatelessWidget {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) =>
-                              JournalEditScreen(journalId: j.id),
+                          builder: (_) => JournalEditScreen(journalId: j.id),
                         ),
                       ),
                     ),

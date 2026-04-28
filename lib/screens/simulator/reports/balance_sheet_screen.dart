@@ -54,20 +54,23 @@ class BalanceSheetScreen extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           children: [
             _Sect(
-                title: 'الأصول',
-                color: AppColors.assets,
-                items: assets,
-                total: totalAssets),
+              title: 'الأصول',
+              color: AppColors.assets,
+              items: assets,
+              total: totalAssets,
+            ),
             _Sect(
-                title: 'الالتزامات',
-                color: AppColors.liabilities,
-                items: liabs,
-                total: totalLiabs),
+              title: 'الالتزامات',
+              color: AppColors.liabilities,
+              items: liabs,
+              total: totalLiabs,
+            ),
             _Sect(
-                title: 'حقوق الملكية',
-                color: AppColors.equity,
-                items: equities,
-                total: totalEquity),
+              title: 'حقوق الملكية',
+              color: AppColors.equity,
+              items: equities,
+              total: totalEquity,
+            ),
             const SizedBox(height: 12),
             Card(
               color: AppColors.primary.withValues(alpha: 0.05),
@@ -78,32 +81,37 @@ class BalanceSheetScreen extends StatelessWidget {
                     const Text(
                       'معادلة الميزانية',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       'الأصول = الالتزامات + حقوق الملكية',
                       style: const TextStyle(
-                          fontStyle: FontStyle.italic, fontSize: 12),
+                        fontStyle: FontStyle.italic,
+                        fontSize: 12,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       '${Formatters.currency(totalAssets, decimals: 0)} = ${Formatters.currency(totalLiabs + totalEquity, decimals: 0)}',
                       style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.bold,
-                          color: (totalAssets - (totalLiabs + totalEquity))
-                                      .abs() <
-                                  0.5
-                              ? AppColors.success
-                              : AppColors.error),
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            (totalAssets - (totalLiabs + totalEquity)).abs() <
+                                0.5
+                            ? AppColors.success
+                            : AppColors.error,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.all(8),
                       decoration: BoxDecoration(
-                        color: (totalAssets - (totalLiabs + totalEquity))
-                                    .abs() <
+                        color:
+                            (totalAssets - (totalLiabs + totalEquity)).abs() <
                                 0.5
                             ? AppColors.successLight
                             : AppColors.errorLight,
@@ -114,8 +122,8 @@ class BalanceSheetScreen extends StatelessWidget {
                             ? '✓ الميزانية متوازنة'
                             : '✗ الميزانية غير متوازنة - الفرق: ${Formatters.number((totalAssets - (totalLiabs + totalEquity)).abs(), decimals: 0)}',
                         style: TextStyle(
-                          color: (totalAssets - (totalLiabs + totalEquity))
-                                      .abs() <
+                          color:
+                              (totalAssets - (totalLiabs + totalEquity)).abs() <
                                   0.5
                               ? AppColors.success
                               : AppColors.error,
@@ -166,16 +174,21 @@ class _Sect extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 8),
-                Text(title,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16)),
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
                 const Spacer(),
                 Text(
                   Formatters.currency(total, decimals: 0),
                   style: TextStyle(
-                      color: color,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14),
+                    color: color,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
@@ -183,25 +196,31 @@ class _Sect extends StatelessWidget {
             if (items.isEmpty)
               const Padding(
                 padding: EdgeInsets.all(8),
-                child: Text('لا توجد بنود',
-                    style: TextStyle(
-                        color: AppColors.textLight, fontSize: 12)),
+                child: Text(
+                  'لا توجد بنود',
+                  style: TextStyle(color: AppColors.textLight, fontSize: 12),
+                ),
               )
             else
-              ...items.map((it) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 3),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Text(it.name,
-                                style: const TextStyle(fontSize: 13))),
-                        Text(
-                          Formatters.currency(it.amount, decimals: 0),
-                          style: const TextStyle(fontSize: 12.5),
+              ...items.map(
+                (it) => Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 3),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          it.name,
+                          style: const TextStyle(fontSize: 13),
                         ),
-                      ],
-                    ),
-                  )),
+                      ),
+                      Text(
+                        Formatters.currency(it.amount, decimals: 0),
+                        style: const TextStyle(fontSize: 12.5),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         ),
       ),
