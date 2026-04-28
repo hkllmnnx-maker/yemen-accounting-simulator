@@ -1,5 +1,6 @@
 /// نماذج القوائم المالية والتحليل المالي المستخدمة داخل قسم
 /// "المحاسبة المالية من القيد إلى التحليل المالي".
+library;
 
 class FinancialStatementLine {
   final String label;

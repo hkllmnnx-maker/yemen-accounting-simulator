@@ -45,6 +45,13 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
     _notesCtrl.text = _v.notes ?? '';
   }
 
+  @override
+  void dispose() {
+    _amountCtrl.dispose();
+    _notesCtrl.dispose();
+    super.dispose();
+  }
+
   Future<void> _save() async {
     final acc = context.read<AccountingProvider>();
     if (_v.partnerId.isEmpty) {
@@ -58,8 +65,14 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
       _err('أدخل مبلغًا صحيحًا');
       return;
     }
+    if (_v.cashAccountId.isEmpty) {
+      _err('اختر الصندوق أو البنك');
+      return;
+    }
     _v.amount = amt;
     _v.notes = _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim();
+    final messenger = ScaffoldMessenger.of(context);
+    final navigator = Navigator.of(context);
 
     // إنشاء قيد محاسبي تلقائي
     final je = AccountingEngine.journalFromVoucher(_v, acc);
@@ -69,10 +82,10 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
     await acc.addVoucher(_v);
 
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       const SnackBar(content: Text('تم حفظ السند وترحيل القيد')),
     );
-    Navigator.pop(context);
+    navigator.pop();
   }
 
   void _err(String s) {
@@ -101,8 +114,9 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 await acc.deleteVoucher(_v.id);
-                if (mounted) Navigator.pop(context);
+                if (mounted) navigator.pop();
               },
             ),
         ],

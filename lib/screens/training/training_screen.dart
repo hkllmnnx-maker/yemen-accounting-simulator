@@ -23,6 +23,12 @@ class _TrainingScreenState extends State<TrainingScreen> {
 
   TrainingStep get current => widget.scenario.steps[_index];
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   void _check() {
     setState(() => _error = null);
     final step = current;

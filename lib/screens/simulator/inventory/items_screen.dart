@@ -15,6 +15,20 @@ class ItemsScreen extends StatefulWidget {
 
 class _ItemsScreenState extends State<ItemsScreen> {
   String _q = '';
+  late final TextEditingController _searchCtrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchCtrl = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _searchCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final acc = context.watch<AccountingProvider>();
@@ -49,17 +63,24 @@ class _ItemsScreenState extends State<ItemsScreen> {
                     child: Text('قيمة المخزون بالتكلفة',
                         style: TextStyle(fontSize: 13)),
                   ),
-                  Text(Formatters.currency(totalValue, decimals: 0),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.accent,
-                          fontSize: 14)),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerEnd,
+                      child: Text(Formatters.currency(totalValue, decimals: 0),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.accent,
+                              fontSize: 14)),
+                    ),
+                  ),
                 ],
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: TextField(
+                controller: _searchCtrl,
                 onChanged: (v) => setState(() => _q = v),
                 decoration: const InputDecoration(
                   hintText: 'بحث عن صنف...',
@@ -100,23 +121,28 @@ class _ItemsScreenState extends State<ItemsScreen> {
                             title: Text(it.name,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold,
-                                    fontSize: 13.5)),
+                                    fontSize: 13.5),
+                                overflow: TextOverflow.ellipsis),
                             subtitle: Text(
                               '${it.code} • ${it.unit} • تكلفة ${Formatters.number(it.cost, decimals: 0)} • سعر ${Formatters.number(it.price, decimals: 0)}',
                               style: const TextStyle(fontSize: 11),
+                              overflow: TextOverflow.ellipsis,
                             ),
                             trailing: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(
-                                  '${Formatters.number(it.quantity, decimals: 0)} ${it.unit}',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13,
-                                    color: low
-                                        ? AppColors.error
-                                        : AppColors.success,
+                                FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: Text(
+                                    '${Formatters.number(it.quantity, decimals: 0)} ${it.unit}',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                      color: low
+                                          ? AppColors.error
+                                          : AppColors.success,
+                                    ),
                                   ),
                                 ),
                                 if (low)
@@ -140,112 +166,181 @@ class _ItemsScreenState extends State<ItemsScreen> {
   }
 
   void _showItemForm(BuildContext context, {Item? existing}) {
-    final acc = context.read<AccountingProvider>();
-    final name = TextEditingController(text: existing?.name ?? '');
-    final unit = TextEditingController(text: existing?.unit ?? 'حبة');
-    final cost = TextEditingController(text: (existing?.cost ?? 0).toString());
-    final price = TextEditingController(text: (existing?.price ?? 0).toString());
-    final qty = TextEditingController(
-        text: (existing?.quantity ?? 0).toString());
-
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      builder: (ctx) => Padding(
-        padding: EdgeInsets.only(
-          left: 16, right: 16, top: 16,
-          bottom: MediaQuery.of(ctx).viewInsets.bottom + 16,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(existing == null ? 'صنف جديد' : 'تعديل الصنف',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 12),
-              TextField(
-                  controller: name,
-                  decoration: const InputDecoration(labelText: 'اسم الصنف')),
-              const SizedBox(height: 8),
-              TextField(
-                  controller: unit,
-                  decoration: const InputDecoration(
-                      labelText: 'وحدة القياس (كرتون، كيس، حبة...)')),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      controller: cost,
-                      keyboardType: TextInputType.number,
-                      decoration:
-                          const InputDecoration(labelText: 'سعر التكلفة'),
-                    ),
+      builder: (ctx) => _ItemFormSheet(existing: existing),
+    );
+  }
+}
+
+class _ItemFormSheet extends StatefulWidget {
+  final Item? existing;
+  const _ItemFormSheet({this.existing});
+
+  @override
+  State<_ItemFormSheet> createState() => _ItemFormSheetState();
+}
+
+class _ItemFormSheetState extends State<_ItemFormSheet> {
+  late final TextEditingController _nameCtrl;
+  late final TextEditingController _unitCtrl;
+  late final TextEditingController _costCtrl;
+  late final TextEditingController _priceCtrl;
+  late final TextEditingController _qtyCtrl;
+  bool _saving = false;
+
+  @override
+  void initState() {
+    super.initState();
+    final e = widget.existing;
+    _nameCtrl = TextEditingController(text: e?.name ?? '');
+    _unitCtrl = TextEditingController(text: e?.unit ?? 'حبة');
+    _costCtrl = TextEditingController(text: (e?.cost ?? 0).toString());
+    _priceCtrl = TextEditingController(text: (e?.price ?? 0).toString());
+    _qtyCtrl = TextEditingController(text: (e?.quantity ?? 0).toString());
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _unitCtrl.dispose();
+    _costCtrl.dispose();
+    _priceCtrl.dispose();
+    _qtyCtrl.dispose();
+    super.dispose();
+  }
+
+  Future<void> _save() async {
+    final name = _nameCtrl.text.trim();
+    if (name.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('الرجاء إدخال اسم الصنف')),
+      );
+      return;
+    }
+    final cost = double.tryParse(_costCtrl.text) ?? 0;
+    final price = double.tryParse(_priceCtrl.text) ?? 0;
+    final qty = double.tryParse(_qtyCtrl.text) ?? 0;
+    if (cost < 0 || price < 0 || qty < 0) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('لا يُسمح بقيم سالبة')),
+      );
+      return;
+    }
+    setState(() => _saving = true);
+    final acc = context.read<AccountingProvider>();
+    if (widget.existing == null) {
+      final id = 'item_${DateTime.now().millisecondsSinceEpoch}';
+      final code =
+          'P${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
+      await acc.addItem(Item(
+        id: id,
+        code: code,
+        name: name,
+        unit: _unitCtrl.text.trim(),
+        cost: cost,
+        price: price,
+        quantity: qty,
+      ));
+    } else {
+      final existing = widget.existing!;
+      existing.name = name;
+      existing.unit = _unitCtrl.text.trim();
+      existing.cost = cost;
+      existing.price = price;
+      existing.quantity = qty;
+      await acc.updateItem(existing);
+    }
+    if (!mounted) return;
+    Navigator.pop(context);
+  }
+
+  Future<void> _delete() async {
+    final acc = context.read<AccountingProvider>();
+    final navigator = Navigator.of(context);
+    await acc.deleteItem(widget.existing!.id);
+    if (!mounted) return;
+    navigator.pop();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 16,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(widget.existing == null ? 'صنف جديد' : 'تعديل الصنف',
+                style: const TextStyle(
+                    fontSize: 16, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+            TextField(
+                controller: _nameCtrl,
+                decoration:
+                    const InputDecoration(labelText: 'اسم الصنف')),
+            const SizedBox(height: 8),
+            TextField(
+                controller: _unitCtrl,
+                decoration: const InputDecoration(
+                    labelText: 'وحدة القياس (كرتون، كيس، حبة...)')),
+            const SizedBox(height: 8),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _costCtrl,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    decoration:
+                        const InputDecoration(labelText: 'سعر التكلفة'),
                   ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: TextField(
-                      controller: price,
-                      keyboardType: TextInputType.number,
-                      decoration: const InputDecoration(labelText: 'سعر البيع'),
-                    ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: _priceCtrl,
+                    keyboardType:
+                        const TextInputType.numberWithOptions(decimal: true),
+                    decoration:
+                        const InputDecoration(labelText: 'سعر البيع'),
                   ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              TextField(
-                  controller: qty,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      labelText: 'الرصيد الافتتاحي / الكمية')),
-              const SizedBox(height: 16),
-              Row(
-                children: [
-                  if (existing != null)
-                    TextButton.icon(
-                      icon: const Icon(Icons.delete, color: AppColors.error),
-                      label: const Text('حذف',
-                          style: TextStyle(color: AppColors.error)),
-                      onPressed: () async {
-                        await acc.deleteItem(existing.id);
-                        if (ctx.mounted) Navigator.pop(ctx);
-                      },
-                    ),
-                  const Spacer(),
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.save),
-                    label: const Text('حفظ'),
-                    onPressed: () async {
-                      if (name.text.trim().isEmpty) return;
-                      if (existing == null) {
-                        final id = 'item_${DateTime.now().millisecondsSinceEpoch}';
-                        final code = 'P${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
-                        await acc.addItem(Item(
-                          id: id,
-                          code: code,
-                          name: name.text.trim(),
-                          unit: unit.text.trim(),
-                          cost: double.tryParse(cost.text) ?? 0,
-                          price: double.tryParse(price.text) ?? 0,
-                          quantity: double.tryParse(qty.text) ?? 0,
-                        ));
-                      } else {
-                        existing.name = name.text.trim();
-                        existing.unit = unit.text.trim();
-                        existing.cost = double.tryParse(cost.text) ?? 0;
-                        existing.price = double.tryParse(price.text) ?? 0;
-                        existing.quantity = double.tryParse(qty.text) ?? 0;
-                        await acc.updateItem(existing);
-                      }
-                      if (ctx.mounted) Navigator.pop(ctx);
-                    },
+                ),
+              ],
+            ),
+            const SizedBox(height: 8),
+            TextField(
+                controller: _qtyCtrl,
+                keyboardType:
+                    const TextInputType.numberWithOptions(decimal: true),
+                decoration: const InputDecoration(
+                    labelText: 'الرصيد الافتتاحي / الكمية')),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                if (widget.existing != null)
+                  TextButton.icon(
+                    icon: const Icon(Icons.delete, color: AppColors.error),
+                    label: const Text('حذف',
+                        style: TextStyle(color: AppColors.error)),
+                    onPressed: _saving ? null : _delete,
                   ),
-                ],
-              ),
-            ],
-          ),
+                const Spacer(),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.save),
+                  label: const Text('حفظ'),
+                  onPressed: _saving ? null : _save,
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

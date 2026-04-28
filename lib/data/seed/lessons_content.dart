@@ -1,4 +1,5 @@
 /// المحتوى التعليمي - الدروس واختباراتها
+library;
 
 class LessonContent {
   final String id;

@@ -1,4 +1,5 @@
 /// قاموس المصطلحات المحاسبية اليمنية
+library;
 
 class GlossaryTerm {
   final String term;

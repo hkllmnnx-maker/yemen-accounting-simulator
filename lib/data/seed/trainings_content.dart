@@ -1,4 +1,5 @@
 /// سيناريوهات التدريب العملي
+library;
 
 class TrainingStep {
   final String instruction;

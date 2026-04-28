@@ -37,8 +37,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
         text: (c.exchangeRates['SAR'] ?? 141).toString());
   }
 
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    _yearCtrl.dispose();
+    _usdRate.dispose();
+    _sarRate.dispose();
+    super.dispose();
+  }
+
   Future<void> _save() async {
     final acc = context.read<AccountingProvider>();
+    final messenger = ScaffoldMessenger.of(context);
     final newSettings = CompanySettings(
       name: _nameCtrl.text.trim().isEmpty
           ? YemeniData.defaultCompanyName
@@ -54,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
     await acc.saveCompany(newSettings);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       const SnackBar(content: Text('تم حفظ الإعدادات')),
     );
   }
@@ -168,6 +178,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Future<void> _confirmReset(BuildContext context) async {
+    // Capture providers BEFORE the async showDialog to avoid using the
+    // BuildContext across async gaps later.
+    final accProvider = context.read<AccountingProvider>();
+    final progProvider = context.read<ProgressProvider>();
+    final messenger = ScaffoldMessenger.of(context);
+
     final ok = await showDialog<bool>(
       context: context,
       builder: (dialogCtx) => AlertDialog(
@@ -188,11 +204,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
     if (ok != true) return;
+    await accProvider.resetAll();
+    await progProvider.resetProgress();
     if (!mounted) return;
-    await context.read<AccountingProvider>().resetAll();
-    await context.read<ProgressProvider>().resetProgress();
-    if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
+    messenger.showSnackBar(
       const SnackBar(content: Text('تمت إعادة الضبط')),
     );
   }
