@@ -40,8 +40,7 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
         paymentType: InvoicePaymentType.cash,
       );
     }
-    _paidCtrl.text =
-        _inv.paidAmount == 0 ? '' : _inv.paidAmount.toString();
+    _paidCtrl.text = _inv.paidAmount == 0 ? '' : _inv.paidAmount.toString();
     _notesCtrl.text = _inv.notes ?? '';
   }
 
@@ -98,7 +97,9 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
         return StatefulBuilder(
           builder: (ctx, setState) => Padding(
             padding: EdgeInsets.only(
-              left: 16, right: 16, top: 16,
+              left: 16,
+              right: 16,
+              top: 16,
               bottom: MediaQuery.of(ctx).viewInsets.bottom + 16,
             ),
             child: SingleChildScrollView(
@@ -106,57 +107,66 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('إضافة صنف للفاتورة',
-                      style: TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.bold)),
+                  const Text(
+                    'إضافة صنف للفاتورة',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
                     initialValue: selectedItemId,
                     decoration: const InputDecoration(labelText: 'الصنف'),
                     isExpanded: true,
                     items: acc.items
-                        .map((it) => DropdownMenuItem(
-                              value: it.id,
-                              child: Text(
-                                  '${it.name} (متاح: ${Formatters.number(it.quantity, decimals: 0)} ${it.unit})',
-                                  overflow: TextOverflow.ellipsis),
-                            ))
+                        .map(
+                          (it) => DropdownMenuItem(
+                            value: it.id,
+                            child: Text(
+                              '${it.name} (متاح: ${Formatters.number(it.quantity, decimals: 0)} ${it.unit})',
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        )
                         .toList(),
                     onChanged: (v) {
                       setState(() {
                         selectedItemId = v;
                         if (v != null) {
                           final it = acc.itemById(v)!;
-                          priceCtrl.text =
-                              (_isPurchase ? it.cost : it.price).toString();
+                          priceCtrl.text = (_isPurchase ? it.cost : it.price)
+                              .toString();
                         }
                       });
                     },
                   ),
                   const SizedBox(height: 8),
-                  Row(children: [
-                    Expanded(
-                      child: TextField(
-                        controller: qtyCtrl,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: 'الكمية'),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller: qtyCtrl,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            labelText: 'الكمية',
+                          ),
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: TextField(
-                        controller: priceCtrl,
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(labelText: 'السعر'),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: TextField(
+                          controller: priceCtrl,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(labelText: 'السعر'),
+                        ),
                       ),
-                    ),
-                  ]),
+                    ],
+                  ),
                   const SizedBox(height: 8),
                   TextField(
                     controller: discountCtrl,
                     keyboardType: TextInputType.number,
-                    decoration:
-                        const InputDecoration(labelText: 'الخصم (اختياري)'),
+                    decoration: const InputDecoration(
+                      labelText: 'الخصم (اختياري)',
+                    ),
                   ),
                   const SizedBox(height: 12),
                   SizedBox(
@@ -172,13 +182,15 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                         final disc = double.tryParse(discountCtrl.text) ?? 0;
                         if (qty <= 0 || price <= 0) return;
                         this.setState(() {
-                          _inv.lines.add(InvoiceLine(
-                            itemId: it.id,
-                            itemName: it.name,
-                            quantity: qty,
-                            unitPrice: price,
-                            discount: disc,
-                          ));
+                          _inv.lines.add(
+                            InvoiceLine(
+                              itemId: it.id,
+                              itemName: it.name,
+                              quantity: qty,
+                              unitPrice: price,
+                              discount: disc,
+                            ),
+                          );
                         });
                         Navigator.pop(ctx);
                       },
@@ -206,7 +218,9 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
     if (_inv.paymentType == InvoicePaymentType.mixed) {
       _inv.paidAmount = double.tryParse(_paidCtrl.text) ?? 0;
       if (_inv.paidAmount <= 0 || _inv.paidAmount >= _inv.total) {
-        _err('في الفاتورة المختلطة، المدفوع يجب أن يكون أقل من الإجمالي وأكبر من صفر');
+        _err(
+          'في الفاتورة المختلطة، المدفوع يجب أن يكون أقل من الإجمالي وأكبر من صفر',
+        );
         return;
       }
     }
@@ -227,9 +241,9 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
     Navigator.pop(context);
   }
 
-  void _err(String s) => ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(s), backgroundColor: AppColors.error),
-      );
+  void _err(String s) => ScaffoldMessenger.of(
+    context,
+  ).showSnackBar(SnackBar(content: Text(s), backgroundColor: AppColors.error));
 
   @override
   Widget build(BuildContext context) {
@@ -282,8 +296,9 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                     ),
                     const SizedBox(height: 8),
                     DropdownButtonFormField<String>(
-                      initialValue:
-                          _inv.partnerId.isEmpty ? null : _inv.partnerId,
+                      initialValue: _inv.partnerId.isEmpty
+                          ? null
+                          : _inv.partnerId,
                       decoration: InputDecoration(
                         labelText: _isPurchase ? 'المورد' : 'العميل',
                         isDense: true,
@@ -291,11 +306,15 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                       ),
                       isExpanded: true,
                       items: partners
-                          .map((p) => DropdownMenuItem(
-                                value: p.id,
-                                child: Text(p.name,
-                                    overflow: TextOverflow.ellipsis),
-                              ))
+                          .map(
+                            (p) => DropdownMenuItem(
+                              value: p.id,
+                              child: Text(
+                                p.name,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
                           .toList(),
                       onChanged: _isNew
                           ? (v) {
@@ -320,20 +339,22 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                         ),
                         items: const [
                           DropdownMenuItem(
-                              value: InvoicePaymentType.cash,
-                              child: Text('نقدي')),
+                            value: InvoicePaymentType.cash,
+                            child: Text('نقدي'),
+                          ),
                           DropdownMenuItem(
-                              value: InvoicePaymentType.credit,
-                              child: Text('آجل')),
+                            value: InvoicePaymentType.credit,
+                            child: Text('آجل'),
+                          ),
                           DropdownMenuItem(
-                              value: InvoicePaymentType.mixed,
-                              child: Text('مختلط (نقد + آجل)')),
+                            value: InvoicePaymentType.mixed,
+                            child: Text('مختلط (نقد + آجل)'),
+                          ),
                         ],
                         onChanged: _isNew
                             ? (v) => setState(() {
-                                  _inv.paymentType =
-                                      v ?? InvoicePaymentType.cash;
-                                })
+                                _inv.paymentType = v ?? InvoicePaymentType.cash;
+                              })
                             : null,
                       ),
                     if (_inv.paymentType == InvoicePaymentType.mixed) ...[
@@ -357,9 +378,10 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               child: Row(
                 children: [
-                  const Text('الأصناف',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 14)),
+                  const Text(
+                    'الأصناف',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                  ),
                   const Spacer(),
                   if (_isNew)
                     TextButton.icon(
@@ -376,9 +398,13 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
               return Card(
                 child: ListTile(
                   dense: true,
-                  title: Text(l.itemName,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 13)),
+                  title: Text(
+                    l.itemName,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
                   subtitle: Text(
                     '${Formatters.number(l.quantity, decimals: 0)} × ${Formatters.number(l.unitPrice, decimals: 0)}${l.discount > 0 ? " - خصم ${Formatters.number(l.discount, decimals: 0)}" : ""}',
                     style: const TextStyle(fontSize: 11.5),
@@ -386,15 +412,22 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(Formatters.currency(l.total, decimals: 0),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 12)),
+                      Text(
+                        Formatters.currency(l.total, decimals: 0),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12,
+                        ),
+                      ),
                       if (_isNew)
                         IconButton(
                           padding: EdgeInsets.zero,
                           constraints: const BoxConstraints(),
-                          icon: const Icon(Icons.close,
-                              color: AppColors.error, size: 18),
+                          icon: const Icon(
+                            Icons.close,
+                            color: AppColors.error,
+                            size: 18,
+                          ),
                           onPressed: () =>
                               setState(() => _inv.lines.removeAt(i)),
                         ),
@@ -410,16 +443,24 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                 padding: const EdgeInsets.all(12),
                 child: Column(
                   children: [
-                    _row('الإجمالي',
-                        Formatters.currency(_inv.total, decimals: 0),
-                        bold: true, color: _color, large: true),
+                    _row(
+                      'الإجمالي',
+                      Formatters.currency(_inv.total, decimals: 0),
+                      bold: true,
+                      color: _color,
+                      large: true,
+                    ),
                     if (_inv.paymentType == InvoicePaymentType.mixed) ...[
                       const Divider(),
-                      _row('المدفوع نقدًا',
-                          Formatters.currency(_inv.paidAmount, decimals: 0)),
-                      _row('الباقي (آجل)',
-                          Formatters.currency(_inv.remaining, decimals: 0),
-                          color: AppColors.warning),
+                      _row(
+                        'المدفوع نقدًا',
+                        Formatters.currency(_inv.paidAmount, decimals: 0),
+                      ),
+                      _row(
+                        'الباقي (آجل)',
+                        Formatters.currency(_inv.remaining, decimals: 0),
+                        color: AppColors.warning,
+                      ),
                     ],
                   ],
                 ),
@@ -460,10 +501,13 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
                   children: [
                     Icon(Icons.check_circle, color: AppColors.success),
                     SizedBox(width: 8),
-                    Text('الفاتورة مرحّلة',
-                        style: TextStyle(
-                            color: AppColors.success,
-                            fontWeight: FontWeight.bold)),
+                    Text(
+                      'الفاتورة مرحّلة',
+                      style: TextStyle(
+                        color: AppColors.success,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -473,8 +517,13 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
     );
   }
 
-  Widget _row(String label, String value,
-      {bool bold = false, Color? color, bool large = false}) {
+  Widget _row(
+    String label,
+    String value, {
+    bool bold = false,
+    Color? color,
+    bool large = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: Row(

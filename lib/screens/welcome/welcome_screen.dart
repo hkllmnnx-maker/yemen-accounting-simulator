@@ -87,9 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   height: 8,
                   width: i == _index ? 24 : 8,
                   decoration: BoxDecoration(
-                    color: i == _index
-                        ? AppColors.primary
-                        : AppColors.border,
+                    color: i == _index ? AppColors.primary : AppColors.border,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -124,11 +122,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 32, vertical: 12),
+                        horizontal: 32,
+                        vertical: 12,
+                      ),
                     ),
-                    child: Text(_index == _pages.length - 1
-                        ? 'ابدأ الآن'
-                        : AppStrings.next),
+                    child: Text(
+                      _index == _pages.length - 1
+                          ? 'ابدأ الآن'
+                          : AppStrings.next,
+                    ),
                   ),
                 ],
               ),
@@ -144,7 +146,11 @@ class _IntroPage extends StatelessWidget {
   final IconData icon;
   final String title;
   final String desc;
-  const _IntroPage({required this.icon, required this.title, required this.desc});
+  const _IntroPage({
+    required this.icon,
+    required this.title,
+    required this.desc,
+  });
 
   @override
   Widget build(BuildContext context) {

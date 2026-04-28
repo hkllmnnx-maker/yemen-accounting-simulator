@@ -74,10 +74,9 @@ class AccountingProvider extends ChangeNotifier {
   }
 
   // ============ Journals ============
-  List<JournalEntry> get journals => DatabaseService.journalsBoxRef.values
-      .cast<JournalEntry>()
-      .toList()
-    ..sort((a, b) => b.date.compareTo(a.date));
+  List<JournalEntry> get journals =>
+      DatabaseService.journalsBoxRef.values.cast<JournalEntry>().toList()
+        ..sort((a, b) => b.date.compareTo(a.date));
 
   JournalEntry? journalById(String id) =>
       DatabaseService.journalsBoxRef.get(id) as JournalEntry?;
@@ -105,10 +104,9 @@ class AccountingProvider extends ChangeNotifier {
   }
 
   // ============ Partners ============
-  List<Partner> get partners => DatabaseService.partnersBoxRef.values
-      .cast<Partner>()
-      .toList()
-    ..sort((a, b) => a.code.compareTo(b.code));
+  List<Partner> get partners =>
+      DatabaseService.partnersBoxRef.values.cast<Partner>().toList()
+        ..sort((a, b) => a.code.compareTo(b.code));
 
   List<Partner> get customers =>
       partners.where((p) => p.kind == PartnerKind.customer).toList();
@@ -167,13 +165,11 @@ class AccountingProvider extends ChangeNotifier {
   }
 
   // ============ Items ============
-  List<Item> get items => DatabaseService.itemsBoxRef.values
-      .cast<Item>()
-      .toList()
-    ..sort((a, b) => a.code.compareTo(b.code));
+  List<Item> get items =>
+      DatabaseService.itemsBoxRef.values.cast<Item>().toList()
+        ..sort((a, b) => a.code.compareTo(b.code));
 
-  Item? itemById(String id) =>
-      DatabaseService.itemsBoxRef.get(id) as Item?;
+  Item? itemById(String id) => DatabaseService.itemsBoxRef.get(id) as Item?;
 
   Future<void> addItem(Item it) async {
     await DatabaseService.itemsBoxRef.put(it.id, it);
@@ -191,20 +187,22 @@ class AccountingProvider extends ChangeNotifier {
   }
 
   // ============ Invoices ============
-  List<Invoice> get invoices => DatabaseService.invoicesBoxRef.values
-      .cast<Invoice>()
-      .toList()
-    ..sort((a, b) => b.date.compareTo(a.date));
+  List<Invoice> get invoices =>
+      DatabaseService.invoicesBoxRef.values.cast<Invoice>().toList()
+        ..sort((a, b) => b.date.compareTo(a.date));
 
   List<Invoice> get salesInvoices => invoices
-      .where((i) =>
-          i.kind == InvoiceKind.sale || i.kind == InvoiceKind.saleReturn)
+      .where(
+        (i) => i.kind == InvoiceKind.sale || i.kind == InvoiceKind.saleReturn,
+      )
       .toList();
 
   List<Invoice> get purchaseInvoices => invoices
-      .where((i) =>
-          i.kind == InvoiceKind.purchase ||
-          i.kind == InvoiceKind.purchaseReturn)
+      .where(
+        (i) =>
+            i.kind == InvoiceKind.purchase ||
+            i.kind == InvoiceKind.purchaseReturn,
+      )
       .toList();
 
   Future<Invoice> addInvoice(Invoice inv) async {
@@ -269,10 +267,9 @@ class AccountingProvider extends ChangeNotifier {
   }
 
   // ============ Vouchers ============
-  List<Voucher> get vouchers => DatabaseService.vouchersBoxRef.values
-      .cast<Voucher>()
-      .toList()
-    ..sort((a, b) => b.date.compareTo(a.date));
+  List<Voucher> get vouchers =>
+      DatabaseService.vouchersBoxRef.values.cast<Voucher>().toList()
+        ..sort((a, b) => b.date.compareTo(a.date));
 
   List<Voucher> get receiptVouchers =>
       vouchers.where((v) => v.kind == VoucherKind.receipt).toList();
@@ -312,12 +309,12 @@ class AccountingProvider extends ChangeNotifier {
   double get totalCogs => salesInvoices
       .where((i) => i.kind == InvoiceKind.sale)
       .fold(0.0, (s, inv) {
-    return s +
-        inv.lines.fold<double>(0, (ss, l) {
-          final it = itemById(l.itemId);
-          return ss + (it?.cost ?? 0) * l.quantity;
-        });
-  });
+        return s +
+            inv.lines.fold<double>(0, (ss, l) {
+              final it = itemById(l.itemId);
+              return ss + (it?.cost ?? 0) * l.quantity;
+            });
+      });
 
   /// أرصدة الحسابات (للتقارير)
   Map<String, double> allBalances() {

@@ -50,8 +50,7 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
       return;
     }
     final cleanedLines = _entry.lines
-        .where((l) =>
-            l.accountId.isNotEmpty && (l.debit > 0 || l.credit > 0))
+        .where((l) => l.accountId.isNotEmpty && (l.debit > 0 || l.credit > 0))
         .toList();
     if (cleanedLines.length < 2) {
       _err('يجب إدخال سطرين على الأقل');
@@ -60,24 +59,22 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
     _entry.lines = cleanedLines;
     if (!_entry.isBalanced) {
       _err(
-          'القيد غير متوازن! المدين: ${Formatters.currency(_entry.totalDebit, decimals: 0)} والدائن: ${Formatters.currency(_entry.totalCredit, decimals: 0)}');
+        'القيد غير متوازن! المدين: ${Formatters.currency(_entry.totalDebit, decimals: 0)} والدائن: ${Formatters.currency(_entry.totalCredit, decimals: 0)}',
+      );
       return;
     }
     if (post) _entry.posted = true;
     await acc.addJournal(_entry);
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(post ? 'تم الترحيل' : 'تم الحفظ')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(post ? 'تم الترحيل' : 'تم الحفظ')));
     Navigator.pop(context);
   }
 
   void _err(String s) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(s),
-        backgroundColor: AppColors.error,
-      ),
+      SnackBar(content: Text(s), backgroundColor: AppColors.error),
     );
   }
 
@@ -128,7 +125,10 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                             child: InputDecorator(
                               decoration: const InputDecoration(
                                 labelText: 'التاريخ',
-                                prefixIcon: Icon(Icons.calendar_today, size: 18),
+                                prefixIcon: Icon(
+                                  Icons.calendar_today,
+                                  size: 18,
+                                ),
                               ),
                               child: Text(Formatters.date(_entry.date)),
                             ),
@@ -137,7 +137,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                         const SizedBox(width: 8),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 8),
+                            horizontal: 10,
+                            vertical: 8,
+                          ),
                           decoration: BoxDecoration(
                             color: _entry.posted
                                 ? AppColors.successLight
@@ -159,7 +161,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                     ),
                     const SizedBox(height: 8),
                     TextField(
-                      controller: TextEditingController(text: _entry.description),
+                      controller: TextEditingController(
+                        text: _entry.description,
+                      ),
                       enabled: _isNew || !_entry.posted,
                       decoration: const InputDecoration(
                         labelText: 'بيان القيد',
@@ -197,8 +201,11 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
               TextButton.icon(
                 icon: const Icon(Icons.add),
                 label: const Text('إضافة سطر'),
-                onPressed: () => setState(() => _entry.lines.add(
-                    JournalLine(accountId: '', accountName: ''))),
+                onPressed: () => setState(
+                  () => _entry.lines.add(
+                    JournalLine(accountId: '', accountName: ''),
+                  ),
+                ),
               ),
             const SizedBox(height: 8),
             Card(
@@ -210,44 +217,51 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                     Expanded(
                       child: Column(
                         children: [
-                          const Text('إجمالي المدين',
-                              style: TextStyle(fontSize: 12)),
+                          const Text(
+                            'إجمالي المدين',
+                            style: TextStyle(fontSize: 12),
+                          ),
                           Text(
-                              Formatters.currency(_entry.totalDebit,
-                                  decimals: 0),
-                              style: const TextStyle(
-                                  color: AppColors.debit,
-                                  fontWeight: FontWeight.bold)),
+                            Formatters.currency(_entry.totalDebit, decimals: 0),
+                            style: const TextStyle(
+                              color: AppColors.debit,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ],
                       ),
                     ),
-                    Container(
-                        width: 1, height: 30, color: AppColors.border),
+                    Container(width: 1, height: 30, color: AppColors.border),
                     Expanded(
                       child: Column(
                         children: [
-                          const Text('إجمالي الدائن',
-                              style: TextStyle(fontSize: 12)),
-                          Text(
-                              Formatters.currency(_entry.totalCredit,
-                                  decimals: 0),
-                              style: const TextStyle(
-                                  color: AppColors.credit,
-                                  fontWeight: FontWeight.bold)),
-                        ],
-                      ),
-                    ),
-                    Container(
-                        width: 1, height: 30, color: AppColors.border),
-                    Expanded(
-                      child: Column(
-                        children: [
-                          const Text('الفرق',
-                              style: TextStyle(fontSize: 12)),
+                          const Text(
+                            'إجمالي الدائن',
+                            style: TextStyle(fontSize: 12),
+                          ),
                           Text(
                             Formatters.currency(
-                                (_entry.totalDebit - _entry.totalCredit).abs(),
-                                decimals: 0),
+                              _entry.totalCredit,
+                              decimals: 0,
+                            ),
+                            style: const TextStyle(
+                              color: AppColors.credit,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(width: 1, height: 30, color: AppColors.border),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Text('الفرق', style: TextStyle(fontSize: 12)),
+                          Text(
+                            Formatters.currency(
+                              (_entry.totalDebit - _entry.totalCredit).abs(),
+                              decimals: 0,
+                            ),
                             style: TextStyle(
                               color: _entry.isBalanced
                                   ? AppColors.success
@@ -279,7 +293,8 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
                       icon: const Icon(Icons.check),
                       label: const Text('ترحيل'),
                       style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.success),
+                        backgroundColor: AppColors.success,
+                      ),
                       onPressed: () => _save(post: true),
                     ),
                   ),
@@ -327,38 +342,45 @@ class _LineCard extends StatelessWidget {
                     color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Text('${index + 1}',
-                      style: const TextStyle(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12)),
+                  child: Text(
+                    '${index + 1}',
+                    style: const TextStyle(
+                      color: AppColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: DropdownButtonFormField<String>(
-                    initialValue: line.accountId.isEmpty ? null : line.accountId,
+                    initialValue: line.accountId.isEmpty
+                        ? null
+                        : line.accountId,
                     decoration: const InputDecoration(
                       labelText: 'الحساب',
                       isDense: true,
                     ),
                     isExpanded: true,
                     items: postable
-                        .map((a) => DropdownMenuItem(
-                              value: a.id,
-                              child: Text(
-                                '${a.code} • ${a.name}',
-                                overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(fontSize: 12),
-                              ),
-                            ))
+                        .map(
+                          (a) => DropdownMenuItem(
+                            value: a.id,
+                            child: Text(
+                              '${a.code} • ${a.name}',
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12),
+                            ),
+                          ),
+                        )
                         .toList(),
                     onChanged: enabled
                         ? (v) {
                             if (v != null) {
                               line.accountId = v;
                               line.accountName = postable
-                                      .firstWhere((a) => a.id == v)
-                                      .name;
+                                  .firstWhere((a) => a.id == v)
+                                  .name;
                               onChanged();
                             }
                           }
@@ -367,8 +389,10 @@ class _LineCard extends StatelessWidget {
                 ),
                 if (onRemove != null && enabled)
                   IconButton(
-                    icon: const Icon(Icons.remove_circle_outline,
-                        color: AppColors.error),
+                    icon: const Icon(
+                      Icons.remove_circle_outline,
+                      color: AppColors.error,
+                    ),
                     onPressed: onRemove,
                   ),
               ],
@@ -387,8 +411,11 @@ class _LineCard extends StatelessWidget {
                       labelText: 'مدين',
                       labelStyle: const TextStyle(color: AppColors.debit),
                       isDense: true,
-                      prefixIcon:
-                          const Icon(Icons.add_circle_outline, color: AppColors.debit, size: 18),
+                      prefixIcon: const Icon(
+                        Icons.add_circle_outline,
+                        color: AppColors.debit,
+                        size: 18,
+                      ),
                     ),
                     onChanged: (v) {
                       line.debit = double.tryParse(v) ?? 0;
@@ -410,9 +437,10 @@ class _LineCard extends StatelessWidget {
                       labelStyle: const TextStyle(color: AppColors.credit),
                       isDense: true,
                       prefixIcon: const Icon(
-                          Icons.remove_circle_outline,
-                          color: AppColors.credit,
-                          size: 18),
+                        Icons.remove_circle_outline,
+                        color: AppColors.credit,
+                        size: 18,
+                      ),
                     ),
                     onChanged: (v) {
                       line.credit = double.tryParse(v) ?? 0;

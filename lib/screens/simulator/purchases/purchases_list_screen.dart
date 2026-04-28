@@ -17,15 +17,19 @@ class PurchasesListScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('المشتريات'),
-          bottom: const TabBar(tabs: [
-            Tab(icon: Icon(Icons.shopping_cart), text: 'فواتير شراء'),
-            Tab(icon: Icon(Icons.assignment_return), text: 'مرتجعات شراء'),
-          ]),
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.shopping_cart), text: 'فواتير شراء'),
+              Tab(icon: Icon(Icons.assignment_return), text: 'مرتجعات شراء'),
+            ],
+          ),
         ),
-        body: const TabBarView(children: [
-          _List(kind: InvoiceKind.purchase),
-          _List(kind: InvoiceKind.purchaseReturn),
-        ]),
+        body: const TabBarView(
+          children: [
+            _List(kind: InvoiceKind.purchase),
+            _List(kind: InvoiceKind.purchaseReturn),
+          ],
+        ),
       ),
     );
   }
@@ -43,9 +47,12 @@ class _List extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.add),
         label: Text(
-            kind == InvoiceKind.purchase ? 'فاتورة شراء' : 'مرتجع شراء'),
-        onPressed: () => Navigator.push(context,
-            MaterialPageRoute(builder: (_) => InvoiceEditScreen(kind: kind))),
+          kind == InvoiceKind.purchase ? 'فاتورة شراء' : 'مرتجع شراء',
+        ),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => InvoiceEditScreen(kind: kind)),
+        ),
       ),
       body: SafeArea(
         child: list.isEmpty
@@ -68,11 +75,15 @@ class _List extends StatelessWidget {
                       leading: CircleAvatar(
                         backgroundColor: color.withValues(alpha: 0.15),
                         foregroundColor: color,
-                        child: Text('#${inv.number}',
-                            style: const TextStyle(fontSize: 11)),
+                        child: Text(
+                          '#${inv.number}',
+                          style: const TextStyle(fontSize: 11),
+                        ),
                       ),
-                      title: Text(inv.partnerName,
-                          style: const TextStyle(fontWeight: FontWeight.bold)),
+                      title: Text(
+                        inv.partnerName,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                       subtitle: Text(
                         '${Formatters.date(inv.date)} • ${inv.lines.length} أصناف',
                         style: const TextStyle(fontSize: 11.5),
@@ -88,8 +99,8 @@ class _List extends StatelessWidget {
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => InvoiceEditScreen(
-                              kind: kind, invoiceId: inv.id),
+                          builder: (_) =>
+                              InvoiceEditScreen(kind: kind, invoiceId: inv.id),
                         ),
                       ),
                     ),

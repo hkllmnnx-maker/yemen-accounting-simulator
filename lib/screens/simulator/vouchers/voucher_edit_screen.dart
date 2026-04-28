@@ -48,9 +48,7 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
   Future<void> _save() async {
     final acc = context.read<AccountingProvider>();
     if (_v.partnerId.isEmpty) {
-      _err(widget.kind == VoucherKind.receipt
-          ? 'اختر العميل'
-          : 'اختر المورد');
+      _err(widget.kind == VoucherKind.receipt ? 'اختر العميل' : 'اختر المورد');
       return;
     }
     final amt = double.tryParse(_amountCtrl.text) ?? 0;
@@ -69,9 +67,9 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
     await acc.addVoucher(_v);
 
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('تم حفظ السند وترحيل القيد')),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text('تم حفظ السند وترحيل القيد')));
     Navigator.pop(context);
   }
 
@@ -86,15 +84,16 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
     final acc = context.watch<AccountingProvider>();
     final isReceipt = widget.kind == VoucherKind.receipt;
     final color = isReceipt ? AppColors.success : AppColors.error;
-    final partners =
-        isReceipt ? acc.customers : acc.suppliers;
+    final partners = isReceipt ? acc.customers : acc.suppliers;
     final cashAccounts = CashAccountsHelper.cashAndBankAccounts(acc);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isReceipt
-            ? (_isNew ? 'سند قبض جديد' : 'سند قبض #${_v.number}')
-            : (_isNew ? 'سند صرف جديد' : 'سند صرف #${_v.number}')),
+        title: Text(
+          isReceipt
+              ? (_isNew ? 'سند قبض جديد' : 'سند قبض #${_v.number}')
+              : (_isNew ? 'سند صرف جديد' : 'سند صرف #${_v.number}'),
+        ),
         backgroundColor: color,
         actions: [
           if (!_isNew)
@@ -132,8 +131,7 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
                       isReceipt
                           ? 'استلام مبلغ من عميل (يزيد رصيد الصندوق وينقص مديونية العميل)'
                           : 'دفع مبلغ لمورد (ينقص رصيد الصندوق وينقص مديونية المورد علينا)',
-                      style: const TextStyle(
-                          fontSize: 12.5, height: 1.5),
+                      style: const TextStyle(fontSize: 12.5, height: 1.5),
                     ),
                   ),
                 ],
@@ -174,18 +172,23 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
                       ),
                       isExpanded: true,
                       items: partners
-                          .map((p) => DropdownMenuItem(
-                                value: p.id,
-                                child: Text('${p.name} (${p.city})',
-                                    overflow: TextOverflow.ellipsis),
-                              ))
+                          .map(
+                            (p) => DropdownMenuItem(
+                              value: p.id,
+                              child: Text(
+                                '${p.name} (${p.city})',
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
                           .toList(),
                       onChanged: _isNew
                           ? (v) {
                               if (v != null) {
                                 final p = partners.firstWhere(
-                                    (x) => x.id == v,
-                                    orElse: () => partners.first);
+                                  (x) => x.id == v,
+                                  orElse: () => partners.first,
+                                );
                                 setState(() {
                                   _v.partnerId = v;
                                   _v.partnerName = p.name;
@@ -199,22 +202,29 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
                       initialValue: _v.cashAccountId,
                       decoration: const InputDecoration(
                         labelText: 'الصندوق / البنك',
-                        prefixIcon:
-                            Icon(Icons.account_balance_wallet, size: 18),
+                        prefixIcon: Icon(
+                          Icons.account_balance_wallet,
+                          size: 18,
+                        ),
                       ),
                       isExpanded: true,
                       items: cashAccounts
-                          .map((a) => DropdownMenuItem(
-                                value: a.id,
-                                child: Text(a.name,
-                                    overflow: TextOverflow.ellipsis),
-                              ))
+                          .map(
+                            (a) => DropdownMenuItem(
+                              value: a.id,
+                              child: Text(
+                                a.name,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          )
                           .toList(),
                       onChanged: _isNew
                           ? (v) {
                               if (v != null) {
-                                final a = cashAccounts
-                                    .firstWhere((x) => x.id == v);
+                                final a = cashAccounts.firstWhere(
+                                  (x) => x.id == v,
+                                );
                                 setState(() {
                                   _v.cashAccountId = v;
                                   _v.cashAccountName = a.name;
@@ -273,10 +283,13 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
                   children: [
                     Icon(Icons.check_circle, color: AppColors.success),
                     SizedBox(width: 8),
-                    Text('السند مرحّل ومعتمد',
-                        style: TextStyle(
-                            color: AppColors.success,
-                            fontWeight: FontWeight.bold)),
+                    Text(
+                      'السند مرحّل ومعتمد',
+                      style: TextStyle(
+                        color: AppColors.success,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -286,5 +299,3 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
     );
   }
 }
-
-

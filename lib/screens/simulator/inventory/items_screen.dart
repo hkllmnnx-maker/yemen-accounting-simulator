@@ -19,11 +19,14 @@ class _ItemsScreenState extends State<ItemsScreen> {
   Widget build(BuildContext context) {
     final acc = context.watch<AccountingProvider>();
     final list = acc.items
-        .where((it) =>
-            _q.isEmpty || it.name.contains(_q) || it.code.contains(_q))
+        .where(
+          (it) => _q.isEmpty || it.name.contains(_q) || it.code.contains(_q),
+        )
         .toList();
-    final totalValue =
-        acc.items.fold<double>(0, (s, it) => s + (it.cost * it.quantity));
+    final totalValue = acc.items.fold<double>(
+      0,
+      (s, it) => s + (it.cost * it.quantity),
+    );
     return Scaffold(
       appBar: AppBar(title: const Text('الأصناف والمخزون')),
       floatingActionButton: FloatingActionButton.extended(
@@ -46,14 +49,19 @@ class _ItemsScreenState extends State<ItemsScreen> {
                   const Icon(Icons.inventory, color: AppColors.accent),
                   const SizedBox(width: 8),
                   const Expanded(
-                    child: Text('قيمة المخزون بالتكلفة',
-                        style: TextStyle(fontSize: 13)),
+                    child: Text(
+                      'قيمة المخزون بالتكلفة',
+                      style: TextStyle(fontSize: 13),
+                    ),
                   ),
-                  Text(Formatters.currency(totalValue, decimals: 0),
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.accent,
-                          fontSize: 14)),
+                  Text(
+                    Formatters.currency(totalValue, decimals: 0),
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.accent,
+                      fontSize: 14,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -97,10 +105,13 @@ class _ItemsScreenState extends State<ItemsScreen> {
                                 color: low ? AppColors.error : AppColors.accent,
                               ),
                             ),
-                            title: Text(it.name,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 13.5)),
+                            title: Text(
+                              it.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13.5,
+                              ),
+                            ),
                             subtitle: Text(
                               '${it.code} • ${it.unit} • تكلفة ${Formatters.number(it.cost, decimals: 0)} • سعر ${Formatters.number(it.price, decimals: 0)}',
                               style: const TextStyle(fontSize: 11),
@@ -120,10 +131,13 @@ class _ItemsScreenState extends State<ItemsScreen> {
                                   ),
                                 ),
                                 if (low)
-                                  const Text('مخزون منخفض',
-                                      style: TextStyle(
-                                          fontSize: 9,
-                                          color: AppColors.error)),
+                                  const Text(
+                                    'مخزون منخفض',
+                                    style: TextStyle(
+                                      fontSize: 9,
+                                      color: AppColors.error,
+                                    ),
+                                  ),
                               ],
                             ),
                             onLongPress: () =>
@@ -144,16 +158,21 @@ class _ItemsScreenState extends State<ItemsScreen> {
     final name = TextEditingController(text: existing?.name ?? '');
     final unit = TextEditingController(text: existing?.unit ?? 'حبة');
     final cost = TextEditingController(text: (existing?.cost ?? 0).toString());
-    final price = TextEditingController(text: (existing?.price ?? 0).toString());
+    final price = TextEditingController(
+      text: (existing?.price ?? 0).toString(),
+    );
     final qty = TextEditingController(
-        text: (existing?.quantity ?? 0).toString());
+      text: (existing?.quantity ?? 0).toString(),
+    );
 
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       builder: (ctx) => Padding(
         padding: EdgeInsets.only(
-          left: 16, right: 16, top: 16,
+          left: 16,
+          right: 16,
+          top: 16,
           bottom: MediaQuery.of(ctx).viewInsets.bottom + 16,
         ),
         child: SingleChildScrollView(
@@ -161,18 +180,25 @@ class _ItemsScreenState extends State<ItemsScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(existing == null ? 'صنف جديد' : 'تعديل الصنف',
-                  style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                existing == null ? 'صنف جديد' : 'تعديل الصنف',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const SizedBox(height: 12),
               TextField(
-                  controller: name,
-                  decoration: const InputDecoration(labelText: 'اسم الصنف')),
+                controller: name,
+                decoration: const InputDecoration(labelText: 'اسم الصنف'),
+              ),
               const SizedBox(height: 8),
               TextField(
-                  controller: unit,
-                  decoration: const InputDecoration(
-                      labelText: 'وحدة القياس (كرتون، كيس، حبة...)')),
+                controller: unit,
+                decoration: const InputDecoration(
+                  labelText: 'وحدة القياس (كرتون، كيس، حبة...)',
+                ),
+              ),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -180,8 +206,9 @@ class _ItemsScreenState extends State<ItemsScreen> {
                     child: TextField(
                       controller: cost,
                       keyboardType: TextInputType.number,
-                      decoration:
-                          const InputDecoration(labelText: 'سعر التكلفة'),
+                      decoration: const InputDecoration(
+                        labelText: 'سعر التكلفة',
+                      ),
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -196,18 +223,22 @@ class _ItemsScreenState extends State<ItemsScreen> {
               ),
               const SizedBox(height: 8),
               TextField(
-                  controller: qty,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                      labelText: 'الرصيد الافتتاحي / الكمية')),
+                controller: qty,
+                keyboardType: TextInputType.number,
+                decoration: const InputDecoration(
+                  labelText: 'الرصيد الافتتاحي / الكمية',
+                ),
+              ),
               const SizedBox(height: 16),
               Row(
                 children: [
                   if (existing != null)
                     TextButton.icon(
                       icon: const Icon(Icons.delete, color: AppColors.error),
-                      label: const Text('حذف',
-                          style: TextStyle(color: AppColors.error)),
+                      label: const Text(
+                        'حذف',
+                        style: TextStyle(color: AppColors.error),
+                      ),
                       onPressed: () async {
                         await acc.deleteItem(existing.id);
                         if (ctx.mounted) Navigator.pop(ctx);
@@ -220,17 +251,21 @@ class _ItemsScreenState extends State<ItemsScreen> {
                     onPressed: () async {
                       if (name.text.trim().isEmpty) return;
                       if (existing == null) {
-                        final id = 'item_${DateTime.now().millisecondsSinceEpoch}';
-                        final code = 'P${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
-                        await acc.addItem(Item(
-                          id: id,
-                          code: code,
-                          name: name.text.trim(),
-                          unit: unit.text.trim(),
-                          cost: double.tryParse(cost.text) ?? 0,
-                          price: double.tryParse(price.text) ?? 0,
-                          quantity: double.tryParse(qty.text) ?? 0,
-                        ));
+                        final id =
+                            'item_${DateTime.now().millisecondsSinceEpoch}';
+                        final code =
+                            'P${DateTime.now().millisecondsSinceEpoch.toString().substring(7)}';
+                        await acc.addItem(
+                          Item(
+                            id: id,
+                            code: code,
+                            name: name.text.trim(),
+                            unit: unit.text.trim(),
+                            cost: double.tryParse(cost.text) ?? 0,
+                            price: double.tryParse(price.text) ?? 0,
+                            quantity: double.tryParse(qty.text) ?? 0,
+                          ),
+                        );
                       } else {
                         existing.name = name.text.trim();
                         existing.unit = unit.text.trim();

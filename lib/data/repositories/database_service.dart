@@ -49,7 +49,8 @@ class DatabaseService {
 
     // تسجيل المحوّلات
     if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(AccountAdapter());
-    if (!Hive.isAdapterRegistered(2)) Hive.registerAdapter(JournalEntryAdapter());
+    if (!Hive.isAdapterRegistered(2))
+      Hive.registerAdapter(JournalEntryAdapter());
     if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(PartnerAdapter());
     if (!Hive.isAdapterRegistered(4)) Hive.registerAdapter(ItemAdapter());
     if (!Hive.isAdapterRegistered(5)) Hive.registerAdapter(InvoiceAdapter());
@@ -183,7 +184,8 @@ class DatabaseService {
     final raw = prefs.getString(_kCompany);
     if (raw == null) return CompanySettings();
     return CompanySettings.fromMap(
-        Map<String, dynamic>.from(jsonDecode(raw) as Map));
+      Map<String, dynamic>.from(jsonDecode(raw) as Map),
+    );
   }
 
   static Future<void> saveCompany(CompanySettings c) async {
@@ -195,7 +197,8 @@ class DatabaseService {
     final raw = prefs.getString(_kProgress);
     if (raw == null) return UserProgress();
     return UserProgress.fromMap(
-        Map<String, dynamic>.from(jsonDecode(raw) as Map));
+      Map<String, dynamic>.from(jsonDecode(raw) as Map),
+    );
   }
 
   static Future<void> saveProgress(UserProgress p) async {
@@ -204,8 +207,7 @@ class DatabaseService {
 
   // ============ Intro Seen ============
   static bool isIntroSeen() => prefs.getBool(_kIntroSeen) ?? false;
-  static Future<void> markIntroSeen() async =>
-      prefs.setBool(_kIntroSeen, true);
+  static Future<void> markIntroSeen() async => prefs.setBool(_kIntroSeen, true);
 
   // ============ Financial Accounting Section ============
   /// قائمة معرّفات التمارين المنجَزة في قسم المحاسبة المالية.
