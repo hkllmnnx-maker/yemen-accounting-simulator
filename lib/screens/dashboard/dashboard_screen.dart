@@ -8,6 +8,7 @@ import '../../providers/progress_provider.dart';
 import '../../providers/financial_accounting_provider.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/section_card.dart';
+import '../../widgets/thumbnails/section_thumbnails.dart';
 import '../lessons/lessons_screen.dart';
 import '../training/training_list_screen.dart';
 import '../quizzes/quizzes_list_screen.dart';
@@ -52,15 +53,18 @@ class DashboardScreen extends StatelessWidget {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            // عمود الأقسام: 2 على الشاشات الضيقة، 3 على المتوسطة، 4 على الواسعة
+            // عمود الأقسام: 2 على الشاشات الضيقة (للحفاظ على وضوح
+            // النص العربي)، 3 على المتوسطة، 4 على الواسعة، 5 على شاشات
+            // العمل الكبيرة. الحدّ الفاصل 420px اختير ليلائم الهواتف.
             final w = constraints.maxWidth;
-            final crossAxisCount = w < 360
+            final crossAxisCount = w < 420
                 ? 2
-                : w < 600
+                : w < 720
                 ? 3
-                : w < 900
+                : w < 1000
                 ? 4
                 : 5;
+            final dashCardRatio = w < 420 ? 0.86 : 0.92;
 
             return ListView(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
@@ -88,12 +92,12 @@ class DashboardScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: crossAxisCount,
-                  childAspectRatio: 0.95,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
+                  childAspectRatio: dashCardRatio,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
                   children: [
                     SectionCard(
-                      icon: Icons.menu_book_rounded,
+                      thumbnail: ThumbnailKind.lessons,
                       title: AppStrings.lessons,
                       subtitle: 'دروس مختصرة',
                       color: AppColors.primary,
@@ -104,7 +108,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     SectionCard(
-                      icon: Icons.account_balance_wallet_rounded,
+                      thumbnail: ThumbnailKind.financialAccounting,
                       title: AppStrings.faShortName,
                       subtitle: '14 مستوى متدرّج',
                       color: AppColors.equity,
@@ -115,7 +119,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     SectionCard(
-                      icon: Icons.fitness_center_rounded,
+                      thumbnail: ThumbnailKind.training,
                       title: AppStrings.training,
                       subtitle: 'سيناريوهات حقيقية',
                       color: AppColors.accent,
@@ -126,7 +130,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     SectionCard(
-                      icon: Icons.computer_rounded,
+                      thumbnail: ThumbnailKind.simulator,
                       title: AppStrings.simulator,
                       subtitle: 'نظام محاسبي حقيقي',
                       color: AppColors.success,
@@ -137,7 +141,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     SectionCard(
-                      icon: Icons.quiz_rounded,
+                      thumbnail: ThumbnailKind.quiz,
                       title: AppStrings.quizzes,
                       subtitle: 'اختبر معلوماتك',
                       color: AppColors.warning,
@@ -148,7 +152,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     SectionCard(
-                      icon: Icons.emoji_events_rounded,
+                      thumbnail: ThumbnailKind.progress,
                       title: AppStrings.progress,
                       subtitle: 'الشارات والإنجازات',
                       color: AppColors.gold,
@@ -159,7 +163,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                     ),
                     SectionCard(
-                      icon: Icons.library_books_rounded,
+                      thumbnail: ThumbnailKind.glossary,
                       title: AppStrings.glossary,
                       subtitle: 'مصطلحات محاسبية',
                       color: AppColors.info,
@@ -204,7 +208,7 @@ class DashboardScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _DashTile(
-                        icon: Icons.settings_outlined,
+                        thumbnail: ThumbnailKind.settings,
                         color: AppColors.primary,
                         title: AppStrings.settings,
                         subtitle: 'تخصيص اسم الشركة، السنة المالية وغيرها',
@@ -216,7 +220,7 @@ class DashboardScreen extends StatelessWidget {
                       ),
                       const Divider(height: 1),
                       _DashTile(
-                        icon: Icons.info_outline_rounded,
+                        thumbnail: ThumbnailKind.about,
                         color: AppColors.info,
                         title: 'عن التطبيق',
                         subtitle: AppStrings.appTagline,
@@ -261,6 +265,8 @@ class DashboardScreen extends StatelessWidget {
     );
   }
 }
+
+
 
 class _WelcomeBanner extends StatelessWidget {
   final String companyName;
@@ -429,12 +435,12 @@ class _QuickStats extends StatelessWidget {
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: crossAxisCount,
-          childAspectRatio: isWide ? 2.4 : 2.1,
-          mainAxisSpacing: 4,
-          crossAxisSpacing: 4,
+          childAspectRatio: isWide ? 2.4 : 2.05,
+          mainAxisSpacing: 8,
+          crossAxisSpacing: 8,
           children: [
             StatCard(
-              icon: Icons.school_rounded,
+              thumbnail: ThumbnailKind.lessons,
               label: 'الدروس',
               value: '${progress.completedLessons}/${progress.totalLessons}',
               color: AppColors.primary,
@@ -443,7 +449,7 @@ class _QuickStats extends StatelessWidget {
               ).push(MaterialPageRoute(builder: (_) => const LessonsScreen())),
             ),
             StatCard(
-              icon: Icons.fitness_center_rounded,
+              thumbnail: ThumbnailKind.training,
               label: 'تدريبات',
               value:
                   '${progress.completedTrainings}/${progress.totalTrainings}',
@@ -453,7 +459,7 @@ class _QuickStats extends StatelessWidget {
               ),
             ),
             StatCard(
-              icon: Icons.workspace_premium_rounded,
+              thumbnail: ThumbnailKind.progress,
               label: 'الشارات',
               value: '${progress.progress.earnedBadges.length}',
               color: AppColors.gold,
@@ -462,7 +468,7 @@ class _QuickStats extends StatelessWidget {
               ).push(MaterialPageRoute(builder: (_) => const ProgressScreen())),
             ),
             StatCard(
-              icon: Icons.account_balance_wallet_rounded,
+              thumbnail: ThumbnailKind.financialAccounting,
               label: 'المحاسبة المالية',
               value: Formatters.percent(faProgress),
               color: AppColors.equity,
@@ -516,17 +522,10 @@ class _SimulatorBigButton extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: AppColors.success.withValues(alpha: 0.15),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.computer_rounded,
-                      color: AppColors.success,
-                      size: 28,
-                    ),
+                  const SectionThumbnail(
+                    kind: ThumbnailKind.simulator,
+                    color: AppColors.success,
+                    size: 56,
                   ),
                   const SizedBox(width: 12),
                   const Expanded(
@@ -642,32 +641,48 @@ class _MiniInfo extends StatelessWidget {
 }
 
 class _DashTile extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final ThumbnailKind? thumbnail;
   final Color color;
   final String title;
   final String? subtitle;
   final VoidCallback onTap;
 
   const _DashTile({
-    required this.icon,
+    this.icon,
+    this.thumbnail,
     required this.color,
     required this.title,
     this.subtitle,
     required this.onTap,
-  });
+  }) : assert(icon != null || thumbnail != null);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Container(
-        width: 38,
-        height: 38,
-        decoration: BoxDecoration(
-          color: color.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Icon(icon, color: color, size: 20),
-      ),
+      leading: thumbnail != null
+          ? SectionThumbnail(
+              kind: thumbnail!,
+              color: color,
+              size: 42,
+            )
+          : Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    color.withValues(alpha: 0.18),
+                    color.withValues(alpha: 0.08),
+                  ],
+                ),
+                borderRadius: BorderRadius.circular(11),
+                border: Border.all(color: color.withValues(alpha: 0.22)),
+              ),
+              child: Icon(icon, color: color, size: 22),
+            ),
       title: Text(
         title,
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),

@@ -4,6 +4,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/utils/formatters.dart';
 import '../../../providers/accounting_provider.dart';
 import '../../../widgets/section_card.dart';
+import '../../../widgets/thumbnails/section_thumbnails.dart';
 import 'trial_balance_screen.dart';
 import 'income_statement_screen.dart';
 import 'balance_sheet_screen.dart';
@@ -48,12 +49,12 @@ class ReportsHomeScreen extends StatelessWidget {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   crossAxisCount: isWide ? 3 : 2,
-                  childAspectRatio: isWide ? 2.4 : 2.0,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
+                  childAspectRatio: isWide ? 2.4 : 2.05,
+                  mainAxisSpacing: 8,
+                  crossAxisSpacing: 8,
                   children: [
                     StatCard(
-                      icon: Icons.account_balance_wallet_rounded,
+                      thumbnail: ThumbnailKind.cashBox,
                       label: 'رصيد الصندوق',
                       value: Formatters.currency(cashBalance, decimals: 0),
                       color: AppColors.success,
@@ -65,7 +66,7 @@ class ReportsHomeScreen extends StatelessWidget {
                       ),
                     ),
                     StatCard(
-                      icon: Icons.point_of_sale_rounded,
+                      thumbnail: ThumbnailKind.sales,
                       label: 'إجمالي المبيعات',
                       value: Formatters.currency(salesTotal, decimals: 0),
                       color: AppColors.primary,
@@ -77,7 +78,7 @@ class ReportsHomeScreen extends StatelessWidget {
                       ),
                     ),
                     StatCard(
-                      icon: Icons.inventory_2_rounded,
+                      thumbnail: ThumbnailKind.inventoryValue,
                       label: 'قيمة المخزون',
                       value: Formatters.currency(inventoryValue, decimals: 0),
                       color: AppColors.accent,
@@ -101,7 +102,7 @@ class ReportsHomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             _ReportTile(
-              icon: Icons.balance_rounded,
+              thumbnail: ThumbnailKind.trialBalance,
               title: 'ميزان المراجعة',
               desc: 'كل الحسابات وأرصدتها مع تأكيد توازن المدين والدائن',
               color: AppColors.primary,
@@ -111,9 +112,9 @@ class ReportsHomeScreen extends StatelessWidget {
               ),
             ),
             _ReportTile(
-              icon: Icons.trending_up_rounded,
+              thumbnail: ThumbnailKind.incomeStatement,
               title: 'قائمة الدخل',
-              desc: 'الإيرادات - المصروفات = صافي الربح/الخسارة',
+              desc: 'الإيرادات ناقص المصروفات = صافي الربح أو الخسارة',
               color: AppColors.success,
               onTap: () => Navigator.push(
                 context,
@@ -123,7 +124,7 @@ class ReportsHomeScreen extends StatelessWidget {
               ),
             ),
             _ReportTile(
-              icon: Icons.account_balance_rounded,
+              thumbnail: ThumbnailKind.balanceSheet,
               title: 'قائمة المركز المالي (الميزانية)',
               desc: 'الأصول = الالتزامات + حقوق الملكية',
               color: AppColors.equity,
@@ -142,7 +143,7 @@ class ReportsHomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             _ReportTile(
-              icon: Icons.point_of_sale_rounded,
+              thumbnail: ThumbnailKind.salesReport,
               title: 'تقرير المبيعات',
               desc: 'إجمالي المبيعات والأرباح والفواتير المسجلة',
               color: AppColors.success,
@@ -152,7 +153,7 @@ class ReportsHomeScreen extends StatelessWidget {
               ),
             ),
             _ReportTile(
-              icon: Icons.account_balance_wallet_rounded,
+              thumbnail: ThumbnailKind.cashReport,
               title: 'تقرير الصندوق',
               desc: 'حركات الصندوق المُرحَّلة (قبض، صرف، فواتير نقدية)',
               color: AppColors.warning,
@@ -162,7 +163,7 @@ class ReportsHomeScreen extends StatelessWidget {
               ),
             ),
             _ReportTile(
-              icon: Icons.inventory_rounded,
+              thumbnail: ThumbnailKind.inventoryReport,
               title: 'تقرير المخزون',
               desc: 'الأصناف والكميات الحالية وقيمة المخزون بالتكلفة',
               color: AppColors.info,
@@ -182,14 +183,14 @@ class ReportsHomeScreen extends StatelessWidget {
 }
 
 class _ReportTile extends StatelessWidget {
-  final IconData icon;
+  final ThumbnailKind thumbnail;
   final String title;
   final String desc;
   final Color color;
   final VoidCallback onTap;
 
   const _ReportTile({
-    required this.icon,
+    required this.thumbnail,
     required this.title,
     required this.desc,
     required this.color,
@@ -201,7 +202,7 @@ class _ReportTile extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        side: BorderSide(color: color.withValues(alpha: 0.15), width: 1),
+        side: BorderSide(color: color.withValues(alpha: 0.18), width: 1),
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
@@ -210,21 +211,10 @@ class _ReportTile extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      color.withValues(alpha: 0.18),
-                      color.withValues(alpha: 0.08),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: color, size: 26),
+              SectionThumbnail(
+                kind: thumbnail,
+                color: color,
+                size: 52,
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -234,12 +224,15 @@ class _ReportTile extends StatelessWidget {
                   children: [
                     Text(
                       title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
+                        height: 1.25,
                       ),
                     ),
-                    const SizedBox(height: 2),
+                    const SizedBox(height: 4),
                     Text(
                       desc,
                       maxLines: 2,

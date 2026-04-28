@@ -8,6 +8,7 @@ import '../../data/models/financial_accounting/financial_lesson.dart';
 import '../../data/seed/financial_accounting_content.dart';
 import '../../data/seed/financial_exercises_content.dart';
 import '../../providers/financial_accounting_provider.dart';
+import '../../widgets/thumbnails/section_thumbnails.dart';
 import 'financial_level_screen.dart';
 import 'simulator/financial_simulator_screen.dart';
 
@@ -130,24 +131,32 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
 
   Widget _buildSimulatorButton(BuildContext context) {
     return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+        side: BorderSide(
+            color: AppColors.success.withValues(alpha: 0.18), width: 1),
+      ),
       child: ListTile(
-        leading: Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            color: AppColors.success.withValues(alpha: 0.12),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: const Icon(Icons.computer, color: AppColors.success),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        leading: const SectionThumbnail(
+          kind: ThumbnailKind.simulator,
+          color: AppColors.success,
+          size: 52,
         ),
         title: const Text(
           'شاشة المحاكاة العملية',
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         subtitle: const Text(
           'أدخل قيود يومية، شاهد دفتر الأستاذ، ميزان المراجعة، '
           'القوائم المالية، والتحليل المالي تلقائيًا.',
-          style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              fontSize: 12, color: AppColors.textSecondary, height: 1.4),
         ),
         trailing: const Icon(Icons.chevron_left, color: AppColors.textLight),
         onTap: () => Navigator.of(context).push(

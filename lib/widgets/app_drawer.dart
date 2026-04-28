@@ -13,8 +13,9 @@ import '../screens/glossary/glossary_screen.dart';
 import '../screens/settings/settings_screen.dart';
 import '../screens/simulator/simulator_home_screen.dart';
 import '../screens/financial_accounting/financial_accounting_home_screen.dart';
+import 'thumbnails/section_thumbnails.dart';
 
-/// قائمة جانبية شبيهة بالأنظمة المحاسبية اليمنية
+/// قائمة جانبية شبيهة بالأنظمة المحاسبية اليمنية - مع صور مصغّرة احترافية.
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
@@ -43,26 +44,22 @@ class AppDrawer extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: const Icon(
-                          Icons.account_balance,
-                          color: Colors.white,
-                          size: 28,
-                        ),
+                      const SectionThumbnail(
+                        kind: ThumbnailKind.financialAccounting,
+                        color: Colors.white,
+                        size: 48,
                       ),
                       const SizedBox(width: 12),
                       const Expanded(
                         child: Text(
                           AppStrings.appName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 15,
+                            height: 1.25,
                           ),
                         ),
                       ),
@@ -73,12 +70,12 @@ class AppDrawer extends StatelessWidget {
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
                       children: [
                         const Icon(
-                          Icons.business,
+                          Icons.business_rounded,
                           color: Colors.white70,
                           size: 18,
                         ),
@@ -108,62 +105,73 @@ class AppDrawer extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(height: 6),
             _drawerItem(
               context,
-              Icons.dashboard,
+              ThumbnailKind.simulator,
+              AppColors.primary,
               AppStrings.dashboard,
               const DashboardScreen(),
               replaceRoot: true,
             ),
             _drawerItem(
               context,
-              Icons.school,
+              ThumbnailKind.lessons,
+              AppColors.primary,
               AppStrings.lessons,
               const LessonsScreen(),
             ),
             _drawerItem(
               context,
-              Icons.account_balance_wallet,
+              ThumbnailKind.financialAccounting,
+              AppColors.equity,
               AppStrings.faShortName,
               const FinancialAccountingHomeScreen(),
             ),
             _drawerItem(
               context,
-              Icons.fitness_center,
+              ThumbnailKind.training,
+              AppColors.accent,
               AppStrings.training,
               const TrainingListScreen(),
             ),
             _drawerItem(
               context,
-              Icons.computer,
+              ThumbnailKind.simulator,
+              AppColors.success,
               AppStrings.simulator,
               const SimulatorHomeScreen(),
             ),
             _drawerItem(
               context,
-              Icons.quiz,
+              ThumbnailKind.quiz,
+              AppColors.warning,
               AppStrings.quizzes,
               const QuizzesListScreen(),
             ),
             _drawerItem(
               context,
-              Icons.emoji_events,
+              ThumbnailKind.progress,
+              AppColors.gold,
               AppStrings.progress,
               const ProgressScreen(),
             ),
             _drawerItem(
               context,
-              Icons.menu_book,
+              ThumbnailKind.glossary,
+              AppColors.info,
               AppStrings.glossary,
               const GlossaryScreen(),
             ),
             const Divider(color: Colors.white24, height: 24),
             _drawerItem(
               context,
-              Icons.settings,
+              ThumbnailKind.settings,
+              AppColors.silver,
               AppStrings.settings,
               const SettingsScreen(),
             ),
+            const SizedBox(height: 16),
           ],
         ),
       ),
@@ -172,15 +180,22 @@ class AppDrawer extends StatelessWidget {
 
   Widget _drawerItem(
     BuildContext context,
-    IconData icon,
+    ThumbnailKind kind,
+    Color color,
     String title,
     Widget page, {
     bool replaceRoot = false,
   }) {
     return ListTile(
-      leading: Icon(icon, color: Colors.white70),
+      leading: SectionThumbnail(
+        kind: kind,
+        color: color,
+        size: 38,
+      ),
       title: Text(
         title,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
         style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.w500,
