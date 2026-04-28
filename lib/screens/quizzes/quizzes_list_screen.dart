@@ -14,8 +14,9 @@ class QuizzesListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final progress = context.watch<ProgressProvider>();
-    final passedCount =
-        appLessons.where((l) => progress.isQuizPassed(l.id)).length;
+    final passedCount = appLessons
+        .where((l) => progress.isQuizPassed(l.id))
+        .length;
 
     return Scaffold(
       appBar: AppBar(title: const Text(AppStrings.quizzes)),
@@ -67,10 +68,7 @@ class QuizzesListScreen extends StatelessWidget {
                         SizedBox(height: 2),
                         Text(
                           'أسئلة قصيرة بعد كل درس - النجاح من 70% فأكثر',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
                         ),
                       ],
                     ),
@@ -98,10 +96,7 @@ class QuizzesListScreen extends StatelessWidget {
                       const SizedBox(height: 2),
                       const Text(
                         'مجتاز',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 10,
-                        ),
+                        style: TextStyle(color: Colors.white70, fontSize: 10),
                       ),
                     ],
                   ),
@@ -193,11 +188,7 @@ class _QuizCard extends StatelessWidget {
                         color: AppColors.success,
                         size: 26,
                       )
-                    : Icon(
-                        Icons.quiz_rounded,
-                        color: color,
-                        size: 22,
-                      ),
+                    : Icon(Icons.quiz_rounded, color: color, size: 22),
               ),
               const SizedBox(width: 12),
               Expanded(

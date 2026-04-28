@@ -46,10 +46,10 @@ class SimulatorHomeScreen extends StatelessWidget {
             final cols = w < 360
                 ? 2
                 : w < 600
-                    ? 3
-                    : w < 900
-                        ? 4
-                        : 6;
+                ? 3
+                : w < 900
+                ? 4
+                : 6;
             return ListView(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 24),
               children: [
@@ -75,10 +75,7 @@ class SimulatorHomeScreen extends StatelessWidget {
                         StatCard(
                           icon: Icons.account_balance_wallet_rounded,
                           label: 'الصندوق',
-                          value: Formatters.currency(
-                            cashBalance,
-                            decimals: 0,
-                          ),
+                          value: Formatters.currency(cashBalance, decimals: 0),
                           color: AppColors.success,
                         ),
                         StatCard(
@@ -93,10 +90,7 @@ class SimulatorHomeScreen extends StatelessWidget {
                         StatCard(
                           icon: Icons.people_rounded,
                           label: 'مديونية العملاء',
-                          value: Formatters.currency(
-                            receivables,
-                            decimals: 0,
-                          ),
+                          value: Formatters.currency(receivables, decimals: 0),
                           color: AppColors.primary,
                         ),
                         StatCard(
@@ -211,9 +205,7 @@ class SimulatorHomeScreen extends StatelessWidget {
                       color: AppColors.accent,
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (_) => const ItemsScreen(),
-                        ),
+                        MaterialPageRoute(builder: (_) => const ItemsScreen()),
                       ),
                     ),
                   ],

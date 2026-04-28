@@ -166,8 +166,7 @@ class ProgressScreen extends StatelessWidget {
                     StatCard(
                       icon: Icons.fitness_center_rounded,
                       label: 'التدريبات',
-                      value:
-                          '${p.completedTrainings}/${p.totalTrainings}',
+                      value: '${p.completedTrainings}/${p.totalTrainings}',
                       color: AppColors.accent,
                     ),
                     StatCard(
@@ -266,10 +265,10 @@ class ProgressScreen extends StatelessWidget {
                 final cols = w < 360
                     ? 2
                     : w < 600
-                        ? 3
-                        : w < 900
-                            ? 4
-                            : 5;
+                    ? 3
+                    : w < 900
+                    ? 4
+                    : 5;
                 return GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
@@ -335,10 +334,7 @@ class _BadgeCard extends StatelessWidget {
                 shape: BoxShape.circle,
                 gradient: earned
                     ? const LinearGradient(
-                        colors: [
-                          AppColors.gold,
-                          Color(0xFFFB8C00),
-                        ],
+                        colors: [AppColors.gold, Color(0xFFFB8C00)],
                       )
                     : null,
                 color: earned ? null : AppColors.divider,

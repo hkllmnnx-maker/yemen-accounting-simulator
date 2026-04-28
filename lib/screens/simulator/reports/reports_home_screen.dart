@@ -107,9 +107,7 @@ class ReportsHomeScreen extends StatelessWidget {
               color: AppColors.primary,
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const TrialBalanceScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const TrialBalanceScreen()),
               ),
             ),
             _ReportTile(
@@ -131,9 +129,7 @@ class ReportsHomeScreen extends StatelessWidget {
               color: AppColors.equity,
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const BalanceSheetScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const BalanceSheetScreen()),
               ),
             ),
 
@@ -152,9 +148,7 @@ class ReportsHomeScreen extends StatelessWidget {
               color: AppColors.success,
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const SalesReportScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const SalesReportScreen()),
               ),
             ),
             _ReportTile(
@@ -164,9 +158,7 @@ class ReportsHomeScreen extends StatelessWidget {
               color: AppColors.warning,
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => const CashReportScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const CashReportScreen()),
               ),
             ),
             _ReportTile(

@@ -71,9 +71,7 @@ class TrialBalanceScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    balanced
-                        ? Icons.check_circle_rounded
-                        : Icons.error_rounded,
+                    balanced ? Icons.check_circle_rounded : Icons.error_rounded,
                     color: balanced ? AppColors.success : AppColors.error,
                     size: 28,
                   ),
@@ -83,9 +81,7 @@ class TrialBalanceScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          balanced
-                              ? 'الميزان متوازن'
-                              : 'الميزان غير متوازن',
+                          balanced ? 'الميزان متوازن' : 'الميزان غير متوازن',
                           style: TextStyle(
                             color: balanced
                                 ? AppColors.success
@@ -202,8 +198,7 @@ class TrialBalanceScreen extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child: ConstrainedBox(
                     constraints: BoxConstraints(
-                      minWidth:
-                          MediaQuery.of(context).size.width - 24,
+                      minWidth: MediaQuery.of(context).size.width - 24,
                     ),
                     child: SizedBox(
                       width: 540,
@@ -222,13 +217,9 @@ class TrialBalanceScreen extends StatelessWidget {
                           SizedBox(
                             width: 110,
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 6,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 6),
                               decoration: BoxDecoration(
-                                color: AppColors.debit.withValues(
-                                  alpha: 0.10,
-                                ),
+                                color: AppColors.debit.withValues(alpha: 0.10),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
@@ -246,13 +237,9 @@ class TrialBalanceScreen extends StatelessWidget {
                           SizedBox(
                             width: 110,
                             child: Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 6,
-                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 6),
                               decoration: BoxDecoration(
-                                color: AppColors.credit.withValues(
-                                  alpha: 0.10,
-                                ),
+                                color: AppColors.credit.withValues(alpha: 0.10),
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Text(
@@ -375,15 +362,11 @@ class _TableRow extends StatelessWidget {
           SizedBox(
             width: 110,
             child: Text(
-              row.debit == 0
-                  ? '-'
-                  : Formatters.number(row.debit, decimals: 0),
+              row.debit == 0 ? '-' : Formatters.number(row.debit, decimals: 0),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,
-                color: row.debit == 0
-                    ? AppColors.textLight
-                    : AppColors.debit,
+                color: row.debit == 0 ? AppColors.textLight : AppColors.debit,
                 fontWeight: row.debit == 0
                     ? FontWeight.normal
                     : FontWeight.w600,
@@ -400,9 +383,7 @@ class _TableRow extends StatelessWidget {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 12,
-                color: row.credit == 0
-                    ? AppColors.textLight
-                    : AppColors.credit,
+                color: row.credit == 0 ? AppColors.textLight : AppColors.credit,
                 fontWeight: row.credit == 0
                     ? FontWeight.normal
                     : FontWeight.w600,

@@ -219,9 +219,7 @@ class _LessonTile extends StatelessWidget {
                     ],
                   ),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                    color: mainColor.withValues(alpha: 0.3),
-                  ),
+                  border: Border.all(color: mainColor.withValues(alpha: 0.3)),
                 ),
                 alignment: Alignment.center,
                 child: done

@@ -67,10 +67,7 @@ class TrainingListScreen extends StatelessWidget {
                         SizedBox(height: 2),
                         Text(
                           'سيناريوهات من الشركات اليمنية لتطبيق ما تعلمته',
-                          style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 12,
-                          ),
+                          style: TextStyle(color: Colors.white70, fontSize: 12),
                         ),
                       ],
                     ),
@@ -98,10 +95,7 @@ class TrainingListScreen extends StatelessWidget {
                       const SizedBox(height: 2),
                       const Text(
                         'مكتملة',
-                        style: TextStyle(
-                          color: Colors.white70,
-                          fontSize: 10,
-                        ),
+                        style: TextStyle(color: Colors.white70, fontSize: 10),
                       ),
                     ],
                   ),

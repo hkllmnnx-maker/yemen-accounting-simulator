@@ -49,8 +49,7 @@ class BalanceSheetScreen extends StatelessWidget {
       totalEquity += retainedEarnings;
     }
 
-    final balanced =
-        (totalAssets - (totalLiabs + totalEquity)).abs() < 0.5;
+    final balanced = (totalAssets - (totalLiabs + totalEquity)).abs() < 0.5;
 
     return Scaffold(
       appBar: AppBar(title: const Text('المركز المالي')),
@@ -128,18 +127,14 @@ class _BalanceBanner extends StatelessWidget {
           Row(
             children: [
               Icon(
-                balanced
-                    ? Icons.check_circle_rounded
-                    : Icons.error_rounded,
+                balanced ? Icons.check_circle_rounded : Icons.error_rounded,
                 color: color,
                 size: 24,
               ),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  balanced
-                      ? 'الميزانية متوازنة'
-                      : 'الميزانية غير متوازنة',
+                  balanced ? 'الميزانية متوازنة' : 'الميزانية غير متوازنة',
                   style: TextStyle(
                     color: color,
                     fontWeight: FontWeight.bold,
@@ -161,11 +156,7 @@ class _BalanceBanner extends StatelessWidget {
                     const SizedBox(height: 4),
                     const Text('=', style: TextStyle(fontSize: 18)),
                     const SizedBox(height: 4),
-                    _eqBox(
-                      'الالتزامات',
-                      totalLiabs,
-                      AppColors.liabilities,
-                    ),
+                    _eqBox('الالتزامات', totalLiabs, AppColors.liabilities),
                     const SizedBox(height: 4),
                     const Text('+', style: TextStyle(fontSize: 18)),
                     const SizedBox(height: 4),
@@ -176,11 +167,7 @@ class _BalanceBanner extends StatelessWidget {
               return Row(
                 children: [
                   Expanded(
-                    child: _eqBox(
-                      'الأصول',
-                      totalAssets,
-                      AppColors.assets,
-                    ),
+                    child: _eqBox('الأصول', totalAssets, AppColors.assets),
                   ),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 4),
@@ -223,10 +210,7 @@ class _BalanceBanner extends StatelessWidget {
           if (!balanced) ...[
             const SizedBox(height: 8),
             Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 10,
-                vertical: 6,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
               decoration: BoxDecoration(
                 color: AppColors.error.withValues(alpha: 0.10),
                 borderRadius: BorderRadius.circular(6),

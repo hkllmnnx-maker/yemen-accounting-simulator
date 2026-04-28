@@ -98,9 +98,7 @@ class _GlossaryScreenState extends State<GlossaryScreen> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                             side: BorderSide(
-                              color: AppColors.primary.withValues(
-                                alpha: 0.10,
-                              ),
+                              color: AppColors.primary.withValues(alpha: 0.10),
                             ),
                           ),
                           clipBehavior: Clip.antiAlias,
@@ -115,12 +113,8 @@ class _GlossaryScreenState extends State<GlossaryScreen> {
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
-                                    AppColors.primary.withValues(
-                                      alpha: 0.18,
-                                    ),
-                                    AppColors.primary.withValues(
-                                      alpha: 0.08,
-                                    ),
+                                    AppColors.primary.withValues(alpha: 0.18),
+                                    AppColors.primary.withValues(alpha: 0.08),
                                   ],
                                 ),
                                 borderRadius: BorderRadius.circular(10),

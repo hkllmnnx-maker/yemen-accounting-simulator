@@ -36,16 +36,16 @@ class DashboardScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.search_rounded),
             tooltip: 'بحث في القاموس',
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const GlossaryScreen()),
-            ),
+            onPressed: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => const GlossaryScreen())),
           ),
           IconButton(
             icon: const Icon(Icons.settings_outlined),
             tooltip: AppStrings.settings,
-            onPressed: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const SettingsScreen()),
-            ),
+            onPressed: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => const SettingsScreen())),
           ),
         ],
       ),
@@ -57,10 +57,10 @@ class DashboardScreen extends StatelessWidget {
             final crossAxisCount = w < 360
                 ? 2
                 : w < 600
-                    ? 3
-                    : w < 900
-                        ? 4
-                        : 5;
+                ? 3
+                : w < 900
+                ? 4
+                : 5;
 
             return ListView(
               padding: const EdgeInsets.fromLTRB(12, 12, 12, 24),
@@ -75,10 +75,7 @@ class DashboardScreen extends StatelessWidget {
                 const SizedBox(height: 14),
 
                 // إحصائيات سريعة - في صف يلتف عند الحاجة
-                _QuickStats(
-                  progress: progress,
-                  faProgress: fa.sectionProgress,
-                ),
+                _QuickStats(progress: progress, faProgress: fa.sectionProgress),
 
                 const SizedBox(height: 16),
                 const SectionHeader(
@@ -113,8 +110,7 @@ class DashboardScreen extends StatelessWidget {
                       color: AppColors.equity,
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) =>
-                              const FinancialAccountingHomeScreen(),
+                          builder: (_) => const FinancialAccountingHomeScreen(),
                         ),
                       ),
                     ),
@@ -257,14 +253,10 @@ class DashboardScreen extends StatelessWidget {
           size: 32,
         ),
       ),
-      applicationLegalese:
-          'تطبيق تعليمي مجاني للمحاسبين المبتدئين في اليمن.',
+      applicationLegalese: 'تطبيق تعليمي مجاني للمحاسبين المبتدئين في اليمن.',
       children: [
         const SizedBox(height: 12),
-        const Text(
-          AppStrings.appDescription,
-          style: TextStyle(height: 1.6),
-        ),
+        const Text(AppStrings.appDescription, style: TextStyle(height: 1.6)),
       ],
     );
   }
@@ -333,10 +325,7 @@ class _WelcomeBanner extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 4,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
                   color: AppColors.gold.withValues(alpha: 0.25),
                   borderRadius: BorderRadius.circular(20),
@@ -449,9 +438,9 @@ class _QuickStats extends StatelessWidget {
               label: 'الدروس',
               value: '${progress.completedLessons}/${progress.totalLessons}',
               color: AppColors.primary,
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const LessonsScreen()),
-              ),
+              onTap: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const LessonsScreen())),
             ),
             StatCard(
               icon: Icons.fitness_center_rounded,
@@ -460,9 +449,7 @@ class _QuickStats extends StatelessWidget {
                   '${progress.completedTrainings}/${progress.totalTrainings}',
               color: AppColors.accent,
               onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (_) => const TrainingListScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => const TrainingListScreen()),
               ),
             ),
             StatCard(
@@ -470,9 +457,9 @@ class _QuickStats extends StatelessWidget {
               label: 'الشارات',
               value: '${progress.progress.earnedBadges.length}',
               color: AppColors.gold,
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const ProgressScreen()),
-              ),
+              onTap: () => Navigator.of(
+                context,
+              ).push(MaterialPageRoute(builder: (_) => const ProgressScreen())),
             ),
             StatCard(
               icon: Icons.account_balance_wallet_rounded,
@@ -509,9 +496,7 @@ class _SimulatorBigButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
       child: InkWell(
         onTap: onTap,
         child: Container(
