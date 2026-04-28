@@ -211,11 +211,7 @@ class _ReportTile extends StatelessWidget {
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
-              SectionThumbnail(
-                kind: thumbnail,
-                color: color,
-                size: 52,
-              ),
+              SectionThumbnail(kind: thumbnail, color: color, size: 52),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(

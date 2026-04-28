@@ -134,11 +134,12 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
         side: BorderSide(
-            color: AppColors.success.withValues(alpha: 0.18), width: 1),
+          color: AppColors.success.withValues(alpha: 0.18),
+          width: 1,
+        ),
       ),
       child: ListTile(
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         leading: const SectionThumbnail(
           kind: ThumbnailKind.simulator,
           color: AppColors.success,
@@ -156,7 +157,10 @@ class FinancialAccountingHomeScreen extends StatelessWidget {
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-              fontSize: 12, color: AppColors.textSecondary, height: 1.4),
+            fontSize: 12,
+            color: AppColors.textSecondary,
+            height: 1.4,
+          ),
         ),
         trailing: const Icon(Icons.chevron_left, color: AppColors.textLight),
         onTap: () => Navigator.of(context).push(

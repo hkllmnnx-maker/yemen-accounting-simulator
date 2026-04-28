@@ -266,8 +266,6 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-
-
 class _WelcomeBanner extends StatelessWidget {
   final String companyName;
   final String city;
@@ -606,35 +604,51 @@ class _MiniInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: 14),
-          const SizedBox(width: 4),
-          Text(
-            label,
-            style: const TextStyle(
-              fontSize: 11,
-              color: AppColors.textSecondary,
+    return ConstrainedBox(
+      // الحد الأقصى لعرض الشريحة يضمن أن الأرقام الطويلة لا تَكْسر تخطيط
+      // Wrap الأبوي ولا تتسبب في تجاوز أفقي على الشاشات الصغيرة.
+      constraints: const BoxConstraints(maxWidth: 220),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: color.withValues(alpha: 0.25)),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, color: color, size: 14),
+            const SizedBox(width: 4),
+            Flexible(
+              child: Text(
+                label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 11,
+                  color: AppColors.textSecondary,
+                ),
+              ),
             ),
-          ),
-          const SizedBox(width: 4),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 11.5,
-              fontWeight: FontWeight.bold,
-              color: color,
+            const SizedBox(width: 4),
+            Flexible(
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  value,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -661,11 +675,7 @@ class _DashTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: thumbnail != null
-          ? SectionThumbnail(
-              kind: thumbnail!,
-              color: color,
-              size: 42,
-            )
+          ? SectionThumbnail(kind: thumbnail!, color: color, size: 42)
           : Container(
               width: 42,
               height: 42,

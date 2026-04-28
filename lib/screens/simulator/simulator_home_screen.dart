@@ -53,10 +53,10 @@ class SimulatorHomeScreen extends StatelessWidget {
             final cols = w < 420
                 ? 2
                 : w < 720
-                    ? 3
-                    : w < 1000
-                        ? 4
-                        : 6;
+                ? 3
+                : w < 1000
+                ? 4
+                : 6;
             // نسبة العرض إلى الارتفاع: قيم أصغر = بطاقات أطول → نص عربي مريح.
             final cardRatio = w < 420 ? 0.86 : 0.92;
 
@@ -85,8 +85,7 @@ class SimulatorHomeScreen extends StatelessWidget {
                         StatCard(
                           thumbnail: ThumbnailKind.cashBox,
                           label: 'الصندوق',
-                          value:
-                              Formatters.currency(cashBalance, decimals: 0),
+                          value: Formatters.currency(cashBalance, decimals: 0),
                           color: AppColors.success,
                         ),
                         StatCard(
@@ -101,8 +100,7 @@ class SimulatorHomeScreen extends StatelessWidget {
                         StatCard(
                           thumbnail: ThumbnailKind.receivables,
                           label: 'مديونية العملاء',
-                          value:
-                              Formatters.currency(receivables, decimals: 0),
+                          value: Formatters.currency(receivables, decimals: 0),
                           color: AppColors.primary,
                         ),
                         StatCard(

@@ -46,6 +46,7 @@ import 'package:yemen_accounting_simulator/screens/simulator/reports/cash_report
 import 'package:yemen_accounting_simulator/screens/simulator/reports/sales_report_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/reports/inventory_report_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/customers/partner_statement_screen.dart';
+import 'package:yemen_accounting_simulator/widgets/thumbnails/section_thumbnails.dart';
 
 Widget _wrap(Widget child) {
   return MultiProvider(
@@ -488,6 +489,119 @@ void main() {
       for (final v in balances.values) {
         expect(v, isA<double>());
       }
+    });
+  });
+
+  // ===================================================================
+  // Visual responsive tests - verify NO RenderFlex overflow at any of the
+  // standard mobile widths users typically run the app on. These are the
+  // sizes mentioned in the visual audit brief: 360x640, 390x844, 430x932,
+  // 1280x800. If any of the screens triggers an overflow, FlutterError
+  // would record it and the test fails.
+  // ===================================================================
+  group('Visual / responsive - no overflow at multiple device sizes', () {
+    final sizes = <Size>[
+      const Size(360, 640), // small Android
+      const Size(390, 844), // iPhone 14
+      const Size(430, 932), // iPhone Pro Max
+      const Size(1280, 800), // tablet / desktop
+    ];
+
+    Future<void> verifyAtSizes(
+      WidgetTester tester,
+      Widget screen,
+      String label,
+    ) async {
+      // Capture detailed Flutter errors so we know exactly which Row/Column
+      // overflowed instead of a generic "47 pixels".
+      final caught = <String>[];
+      final originalOnError = FlutterError.onError;
+      FlutterError.onError = (FlutterErrorDetails details) {
+        caught.add(
+          '${details.exceptionAsString()}\n${details.context?.toDescription() ?? ''}',
+        );
+      };
+
+      try {
+        for (final s in sizes) {
+          await tester.binding.setSurfaceSize(s);
+          tester.view.physicalSize = s;
+          tester.view.devicePixelRatio = 1.0;
+          await tester.pumpWidget(_wrap(screen));
+          await tester.pumpAndSettle(const Duration(seconds: 1));
+
+          // Scroll through the page to surface any deferred-render issues.
+          final scrollables = find.byType(Scrollable);
+          if (scrollables.evaluate().isNotEmpty) {
+            final list = scrollables.first;
+            for (var i = 0; i < 3; i++) {
+              await tester.drag(list, const Offset(0, -200));
+              await tester.pump(const Duration(milliseconds: 200));
+            }
+          }
+
+          if (caught.isNotEmpty) {
+            fail('[$label] @ $s caught:\n${caught.join("\n---\n")}');
+          }
+        }
+      } finally {
+        FlutterError.onError = originalOnError;
+        tester.view.resetPhysicalSize();
+        await tester.binding.setSurfaceSize(const Size(800, 600));
+      }
+    }
+
+    testWidgets('Dashboard - no overflow at 360/390/430/1280', (tester) async {
+      await verifyAtSizes(tester, const DashboardScreen(), 'Dashboard');
+    });
+
+    testWidgets('SimulatorHome - no overflow at 360/390/430/1280', (
+      tester,
+    ) async {
+      await verifyAtSizes(tester, const SimulatorHomeScreen(), 'SimulatorHome');
+    });
+
+    testWidgets('ReportsHome - no overflow at 360/390/430/1280', (
+      tester,
+    ) async {
+      await verifyAtSizes(tester, const ReportsHomeScreen(), 'ReportsHome');
+    });
+
+    testWidgets('Customers/Suppliers/Items - no overflow', (tester) async {
+      await verifyAtSizes(tester, const CustomersScreen(), 'Customers');
+      await verifyAtSizes(tester, const SuppliersScreen(), 'Suppliers');
+      await verifyAtSizes(tester, const ItemsScreen(), 'Items');
+    });
+
+    testWidgets('Sales/Purchases/Vouchers - no overflow', (tester) async {
+      await verifyAtSizes(tester, const SalesListScreen(), 'Sales');
+      await verifyAtSizes(tester, const PurchasesListScreen(), 'Purchases');
+      await verifyAtSizes(tester, const VouchersListScreen(), 'Vouchers');
+    });
+
+    testWidgets('All thumbnail kinds paint without crash', (tester) async {
+      // Render a grid of every thumbnail kind to confirm CustomPaint is
+      // safe across the full enum.
+      const allKinds = [...ThumbnailKind.values];
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: GridView.count(
+              crossAxisCount: 4,
+              children: [
+                for (final k in allKinds)
+                  SectionThumbnail(
+                    kind: k,
+                    color: const Color(0xFF1565C0),
+                    size: 56,
+                  ),
+              ],
+            ),
+          ),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
     });
   });
 }

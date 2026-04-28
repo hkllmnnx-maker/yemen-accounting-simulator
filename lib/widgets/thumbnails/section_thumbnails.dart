@@ -95,10 +95,7 @@ class SectionThumbnail extends StatelessWidget {
           ],
         ),
         borderRadius: BorderRadius.circular(14),
-        border: Border.all(
-          color: color.withValues(alpha: 0.22),
-          width: 1,
-        ),
+        border: Border.all(color: color.withValues(alpha: 0.22), width: 1),
         boxShadow: [
           BoxShadow(
             color: color.withValues(alpha: 0.10),
@@ -107,10 +104,7 @@ class SectionThumbnail extends StatelessWidget {
           ),
         ],
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: inner,
-      ),
+      child: Padding(padding: const EdgeInsets.all(8), child: inner),
     );
   }
 }
@@ -248,14 +242,26 @@ class _ThumbnailPainter extends CustomPainter {
     for (final x in [s * 0.1, s * 0.26, s * 0.74, s * 0.9]) {
       canvas.drawCircle(Offset(x, leafY), s * 0.05, _fill(0.4));
     }
-    canvas.drawLine(Offset(xs[0], branchY + s * 0.065),
-        Offset(s * 0.1, leafY - s * 0.05), _stroke(s * 0.022));
-    canvas.drawLine(Offset(xs[0], branchY + s * 0.065),
-        Offset(s * 0.26, leafY - s * 0.05), _stroke(s * 0.022));
-    canvas.drawLine(Offset(xs[2], branchY + s * 0.065),
-        Offset(s * 0.74, leafY - s * 0.05), _stroke(s * 0.022));
-    canvas.drawLine(Offset(xs[2], branchY + s * 0.065),
-        Offset(s * 0.9, leafY - s * 0.05), _stroke(s * 0.022));
+    canvas.drawLine(
+      Offset(xs[0], branchY + s * 0.065),
+      Offset(s * 0.1, leafY - s * 0.05),
+      _stroke(s * 0.022),
+    );
+    canvas.drawLine(
+      Offset(xs[0], branchY + s * 0.065),
+      Offset(s * 0.26, leafY - s * 0.05),
+      _stroke(s * 0.022),
+    );
+    canvas.drawLine(
+      Offset(xs[2], branchY + s * 0.065),
+      Offset(s * 0.74, leafY - s * 0.05),
+      _stroke(s * 0.022),
+    );
+    canvas.drawLine(
+      Offset(xs[2], branchY + s * 0.065),
+      Offset(s * 0.9, leafY - s * 0.05),
+      _stroke(s * 0.022),
+    );
   }
 
   // ========== القيود اليومية ==========
@@ -270,14 +276,23 @@ class _ThumbnailPainter extends CustomPainter {
       RRect.fromRectAndRadius(book, Radius.circular(s * 0.04)),
       _stroke(s * 0.025),
     );
-    canvas.drawLine(Offset(s * 0.5, s * 0.18), Offset(s * 0.5, s * 0.84),
-        _stroke(s * 0.02));
+    canvas.drawLine(
+      Offset(s * 0.5, s * 0.18),
+      Offset(s * 0.5, s * 0.84),
+      _stroke(s * 0.02),
+    );
     for (int i = 0; i < 4; i++) {
       final y = s * 0.3 + i * s * 0.13;
       canvas.drawLine(
-          Offset(s * 0.13, y), Offset(s * 0.46, y), _stroke(s * 0.018));
+        Offset(s * 0.13, y),
+        Offset(s * 0.46, y),
+        _stroke(s * 0.018),
+      );
       canvas.drawLine(
-          Offset(s * 0.54, y), Offset(s * 0.87, y), _stroke(s * 0.018));
+        Offset(s * 0.54, y),
+        Offset(s * 0.87, y),
+        _stroke(s * 0.018),
+      );
     }
     final pen = Path()
       ..moveTo(s * 0.78, s * 0.06)
@@ -294,7 +309,11 @@ class _ThumbnailPainter extends CustomPainter {
     for (int i = 2; i >= 0; i--) {
       final off = i * s * 0.05;
       final book = Rect.fromLTWH(
-          s * 0.12 + off, s * 0.18 + off, s * 0.7, s * 0.62);
+        s * 0.12 + off,
+        s * 0.18 + off,
+        s * 0.7,
+        s * 0.62,
+      );
       canvas.drawRRect(
         RRect.fromRectAndRadius(book, Radius.circular(s * 0.03)),
         _fill(0.25 + i * 0.15),
@@ -323,7 +342,9 @@ class _ThumbnailPainter extends CustomPainter {
   void _trialBalance(Canvas canvas, Size size) {
     final s = size.width;
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.48, s * 0.25, s * 0.04, s * 0.5), _fill(0.85));
+      Rect.fromLTWH(s * 0.48, s * 0.25, s * 0.04, s * 0.5),
+      _fill(0.85),
+    );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(s * 0.3, s * 0.78, s * 0.4, s * 0.06),
@@ -332,7 +353,9 @@ class _ThumbnailPainter extends CustomPainter {
       _fill(0.85),
     );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.1, s * 0.23, s * 0.8, s * 0.04), _fill(0.85));
+      Rect.fromLTWH(s * 0.1, s * 0.23, s * 0.8, s * 0.04),
+      _fill(0.85),
+    );
     final lp = Path()
       ..moveTo(s * 0.05, s * 0.28)
       ..quadraticBezierTo(s * 0.2, s * 0.5, s * 0.35, s * 0.28)
@@ -345,10 +368,16 @@ class _ThumbnailPainter extends CustomPainter {
       ..close();
     canvas.drawPath(rp, _fill(0.5));
     canvas.drawPath(rp, _stroke(s * 0.022));
-    canvas.drawLine(Offset(s * 0.2, s * 0.27), Offset(s * 0.2, s * 0.32),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.8, s * 0.27), Offset(s * 0.8, s * 0.32),
-        _stroke(s * 0.018));
+    canvas.drawLine(
+      Offset(s * 0.2, s * 0.27),
+      Offset(s * 0.2, s * 0.32),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.8, s * 0.27),
+      Offset(s * 0.8, s * 0.32),
+      _stroke(s * 0.018),
+    );
   }
 
   // ========== العملاء ==========
@@ -356,13 +385,24 @@ class _ThumbnailPainter extends CustomPainter {
     final s = size.width;
     void person(double cx, double cy, double scale, double a) {
       canvas.drawCircle(
-          Offset(cx, cy - s * 0.1 * scale), s * 0.09 * scale, _fill(a));
+        Offset(cx, cy - s * 0.1 * scale),
+        s * 0.09 * scale,
+        _fill(a),
+      );
       final body = Path()
         ..moveTo(cx - s * 0.16 * scale, cy + s * 0.18 * scale)
-        ..quadraticBezierTo(cx - s * 0.16 * scale, cy - s * 0.02 * scale, cx,
-            cy - s * 0.02 * scale)
-        ..quadraticBezierTo(cx + s * 0.16 * scale, cy - s * 0.02 * scale,
-            cx + s * 0.16 * scale, cy + s * 0.18 * scale)
+        ..quadraticBezierTo(
+          cx - s * 0.16 * scale,
+          cy - s * 0.02 * scale,
+          cx,
+          cy - s * 0.02 * scale,
+        )
+        ..quadraticBezierTo(
+          cx + s * 0.16 * scale,
+          cy - s * 0.02 * scale,
+          cx + s * 0.16 * scale,
+          cy + s * 0.18 * scale,
+        )
         ..close();
       canvas.drawPath(body, _fill(a));
     }
@@ -396,18 +436,36 @@ class _ThumbnailPainter extends CustomPainter {
       ),
       _fillColor(Colors.white, 0.9),
     );
-    canvas.drawCircle(Offset(s * 0.22, s * 0.72), s * 0.075,
-        _fillColor(AppColors.textPrimary, 0.85));
     canvas.drawCircle(
-        Offset(s * 0.22, s * 0.72), s * 0.035, _fillColor(Colors.white, 1));
-    canvas.drawCircle(Offset(s * 0.7, s * 0.72), s * 0.075,
-        _fillColor(AppColors.textPrimary, 0.85));
+      Offset(s * 0.22, s * 0.72),
+      s * 0.075,
+      _fillColor(AppColors.textPrimary, 0.85),
+    );
     canvas.drawCircle(
-        Offset(s * 0.7, s * 0.72), s * 0.035, _fillColor(Colors.white, 1));
-    canvas.drawLine(Offset(s * 0.16, s * 0.4), Offset(s * 0.46, s * 0.4),
-        _stroke(s * 0.015));
-    canvas.drawLine(Offset(s * 0.16, s * 0.5), Offset(s * 0.46, s * 0.5),
-        _stroke(s * 0.015));
+      Offset(s * 0.22, s * 0.72),
+      s * 0.035,
+      _fillColor(Colors.white, 1),
+    );
+    canvas.drawCircle(
+      Offset(s * 0.7, s * 0.72),
+      s * 0.075,
+      _fillColor(AppColors.textPrimary, 0.85),
+    );
+    canvas.drawCircle(
+      Offset(s * 0.7, s * 0.72),
+      s * 0.035,
+      _fillColor(Colors.white, 1),
+    );
+    canvas.drawLine(
+      Offset(s * 0.16, s * 0.4),
+      Offset(s * 0.46, s * 0.4),
+      _stroke(s * 0.015),
+    );
+    canvas.drawLine(
+      Offset(s * 0.16, s * 0.5),
+      Offset(s * 0.46, s * 0.5),
+      _stroke(s * 0.015),
+    );
   }
 
   // ========== المخزون / الأصناف ==========
@@ -416,13 +474,23 @@ class _ThumbnailPainter extends CustomPainter {
     void box(double x, double y, double w, double a) {
       final r = Rect.fromLTWH(x, y, w, w * 0.85);
       canvas.drawRRect(
-          RRect.fromRectAndRadius(r, Radius.circular(s * 0.02)), _fill(a));
-      canvas.drawRRect(RRect.fromRectAndRadius(r, Radius.circular(s * 0.02)),
-          _stroke(s * 0.018));
-      canvas.drawLine(Offset(x, y + w * 0.15), Offset(x + w, y + w * 0.15),
-          _stroke(s * 0.018));
-      canvas.drawLine(Offset(x + w / 2, y), Offset(x + w / 2, y + w * 0.3),
-          _stroke(s * 0.018));
+        RRect.fromRectAndRadius(r, Radius.circular(s * 0.02)),
+        _fill(a),
+      );
+      canvas.drawRRect(
+        RRect.fromRectAndRadius(r, Radius.circular(s * 0.02)),
+        _stroke(s * 0.018),
+      );
+      canvas.drawLine(
+        Offset(x, y + w * 0.15),
+        Offset(x + w, y + w * 0.15),
+        _stroke(s * 0.018),
+      );
+      canvas.drawLine(
+        Offset(x + w / 2, y),
+        Offset(x + w / 2, y + w * 0.3),
+        _stroke(s * 0.018),
+      );
     }
 
     box(s * 0.08, s * 0.5, s * 0.36, 0.7);
@@ -443,10 +511,16 @@ class _ThumbnailPainter extends CustomPainter {
       RRect.fromRectAndRadius(screen, Radius.circular(s * 0.02)),
       _fillColor(Colors.white, 1),
     );
-    canvas.drawLine(Offset(s * 0.32, s * 0.46), Offset(s * 0.45, s * 0.46),
-        _stroke(s * 0.02));
-    canvas.drawLine(Offset(s * 0.32, s * 0.52), Offset(s * 0.45, s * 0.52),
-        _stroke(s * 0.02));
+    canvas.drawLine(
+      Offset(s * 0.32, s * 0.46),
+      Offset(s * 0.45, s * 0.46),
+      _stroke(s * 0.02),
+    );
+    canvas.drawLine(
+      Offset(s * 0.32, s * 0.52),
+      Offset(s * 0.45, s * 0.52),
+      _stroke(s * 0.02),
+    );
     for (int r = 0; r < 2; r++) {
       for (int c = 0; c < 4; c++) {
         canvas.drawCircle(
@@ -463,12 +537,21 @@ class _ThumbnailPainter extends CustomPainter {
       ..lineTo(s * 0.68, s * 0.36);
     canvas.drawPath(receipt, _fillColor(Colors.white, 0.95));
     canvas.drawPath(receipt, _stroke(s * 0.02));
-    canvas.drawLine(Offset(s * 0.36, s * 0.16), Offset(s * 0.64, s * 0.16),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.36, s * 0.22), Offset(s * 0.6, s * 0.22),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.36, s * 0.28), Offset(s * 0.58, s * 0.28),
-        _stroke(s * 0.018));
+    canvas.drawLine(
+      Offset(s * 0.36, s * 0.16),
+      Offset(s * 0.64, s * 0.16),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.36, s * 0.22),
+      Offset(s * 0.6, s * 0.22),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.36, s * 0.28),
+      Offset(s * 0.58, s * 0.28),
+      _stroke(s * 0.018),
+    );
   }
 
   // ========== المشتريات (سلة) ==========
@@ -488,20 +571,41 @@ class _ThumbnailPainter extends CustomPainter {
       ..close();
     canvas.drawPath(basket, _fill(0.75));
     canvas.drawPath(basket, _stroke(s * 0.025));
-    canvas.drawLine(Offset(s * 0.45, s * 0.4), Offset(s * 0.43, s * 0.66),
-        _stroke(s * 0.02));
-    canvas.drawLine(Offset(s * 0.6, s * 0.4), Offset(s * 0.6, s * 0.66),
-        _stroke(s * 0.02));
-    canvas.drawLine(Offset(s * 0.75, s * 0.4), Offset(s * 0.77, s * 0.66),
-        _stroke(s * 0.02));
-    canvas.drawCircle(Offset(s * 0.42, s * 0.82), s * 0.055,
-        _fillColor(AppColors.textPrimary, 0.9));
+    canvas.drawLine(
+      Offset(s * 0.45, s * 0.4),
+      Offset(s * 0.43, s * 0.66),
+      _stroke(s * 0.02),
+    );
+    canvas.drawLine(
+      Offset(s * 0.6, s * 0.4),
+      Offset(s * 0.6, s * 0.66),
+      _stroke(s * 0.02),
+    );
+    canvas.drawLine(
+      Offset(s * 0.75, s * 0.4),
+      Offset(s * 0.77, s * 0.66),
+      _stroke(s * 0.02),
+    );
     canvas.drawCircle(
-        Offset(s * 0.42, s * 0.82), s * 0.022, _fillColor(Colors.white, 1));
-    canvas.drawCircle(Offset(s * 0.74, s * 0.82), s * 0.055,
-        _fillColor(AppColors.textPrimary, 0.9));
+      Offset(s * 0.42, s * 0.82),
+      s * 0.055,
+      _fillColor(AppColors.textPrimary, 0.9),
+    );
     canvas.drawCircle(
-        Offset(s * 0.74, s * 0.82), s * 0.022, _fillColor(Colors.white, 1));
+      Offset(s * 0.42, s * 0.82),
+      s * 0.022,
+      _fillColor(Colors.white, 1),
+    );
+    canvas.drawCircle(
+      Offset(s * 0.74, s * 0.82),
+      s * 0.055,
+      _fillColor(AppColors.textPrimary, 0.9),
+    );
+    canvas.drawCircle(
+      Offset(s * 0.74, s * 0.82),
+      s * 0.022,
+      _fillColor(Colors.white, 1),
+    );
   }
 
   // ========== فاتورة ==========
@@ -524,16 +628,27 @@ class _ThumbnailPainter extends CustomPainter {
     canvas.drawPath(paper, _fillColor(Colors.white, 0.97));
     canvas.drawPath(paper, _stroke(s * 0.022));
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.26, s * 0.18, s * 0.48, s * 0.06), _fill(0.7));
+      Rect.fromLTWH(s * 0.26, s * 0.18, s * 0.48, s * 0.06),
+      _fill(0.7),
+    );
     for (int i = 0; i < 3; i++) {
       final y = s * 0.32 + i * s * 0.1;
-      canvas.drawLine(Offset(s * 0.26, y), Offset(s * 0.62, y),
-          _stroke(s * 0.018));
-      canvas.drawLine(Offset(s * 0.66, y), Offset(s * 0.74, y),
-          _stroke(s * 0.025));
+      canvas.drawLine(
+        Offset(s * 0.26, y),
+        Offset(s * 0.62, y),
+        _stroke(s * 0.018),
+      );
+      canvas.drawLine(
+        Offset(s * 0.66, y),
+        Offset(s * 0.74, y),
+        _stroke(s * 0.025),
+      );
     }
-    canvas.drawLine(Offset(s * 0.26, s * 0.66), Offset(s * 0.74, s * 0.66),
-        _stroke(s * 0.022));
+    canvas.drawLine(
+      Offset(s * 0.26, s * 0.66),
+      Offset(s * 0.74, s * 0.66),
+      _stroke(s * 0.022),
+    );
     canvas.drawRect(
       Rect.fromLTWH(s * 0.5, s * 0.7, s * 0.24, s * 0.08),
       _fillColor(AppColors.gold, 0.9),
@@ -552,14 +667,26 @@ class _ThumbnailPainter extends CustomPainter {
       RRect.fromRectAndRadius(paper, Radius.circular(s * 0.04)),
       _stroke(s * 0.022),
     );
-    canvas.drawLine(Offset(s * 0.22, s * 0.24), Offset(s * 0.78, s * 0.24),
-        _stroke(s * 0.022));
-    canvas.drawLine(Offset(s * 0.22, s * 0.34), Offset(s * 0.66, s * 0.34),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.22, s * 0.42), Offset(s * 0.7, s * 0.42),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.22, s * 0.54), Offset(s * 0.78, s * 0.54),
-        _stroke(s * 0.018));
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.24),
+      Offset(s * 0.78, s * 0.24),
+      _stroke(s * 0.022),
+    );
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.34),
+      Offset(s * 0.66, s * 0.34),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.42),
+      Offset(s * 0.7, s * 0.42),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.54),
+      Offset(s * 0.78, s * 0.54),
+      _stroke(s * 0.018),
+    );
     canvas.drawCircle(Offset(s * 0.74, s * 0.78), s * 0.16, _fill(0.95));
     final arrowPaint = Paint()
       ..color = Colors.white
@@ -588,14 +715,26 @@ class _ThumbnailPainter extends CustomPainter {
       RRect.fromRectAndRadius(paper, Radius.circular(s * 0.04)),
       _stroke(s * 0.022),
     );
-    canvas.drawLine(Offset(s * 0.22, s * 0.24), Offset(s * 0.78, s * 0.24),
-        _stroke(s * 0.022));
-    canvas.drawLine(Offset(s * 0.22, s * 0.34), Offset(s * 0.66, s * 0.34),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.22, s * 0.42), Offset(s * 0.7, s * 0.42),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.22, s * 0.54), Offset(s * 0.78, s * 0.54),
-        _stroke(s * 0.018));
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.24),
+      Offset(s * 0.78, s * 0.24),
+      _stroke(s * 0.022),
+    );
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.34),
+      Offset(s * 0.66, s * 0.34),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.42),
+      Offset(s * 0.7, s * 0.42),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.22, s * 0.54),
+      Offset(s * 0.78, s * 0.54),
+      _stroke(s * 0.018),
+    );
     canvas.drawCircle(Offset(s * 0.74, s * 0.78), s * 0.16, _fill(0.95));
     final arrowPaint = Paint()
       ..color = Colors.white
@@ -630,28 +769,54 @@ class _ThumbnailPainter extends CustomPainter {
       _stroke(s * 0.022),
     );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.2, s * 0.32, s * 0.34, s * 0.06), _fill(0.7));
-    canvas.drawLine(Offset(s * 0.2, s * 0.46), Offset(s * 0.6, s * 0.46),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.2, s * 0.54), Offset(s * 0.5, s * 0.54),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.2, s * 0.62), Offset(s * 0.55, s * 0.62),
-        _stroke(s * 0.018));
+      Rect.fromLTWH(s * 0.2, s * 0.32, s * 0.34, s * 0.06),
+      _fill(0.7),
+    );
+    canvas.drawLine(
+      Offset(s * 0.2, s * 0.46),
+      Offset(s * 0.6, s * 0.46),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.2, s * 0.54),
+      Offset(s * 0.5, s * 0.54),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.2, s * 0.62),
+      Offset(s * 0.55, s * 0.62),
+      _stroke(s * 0.018),
+    );
     canvas.drawCircle(
-        Offset(s * 0.32, s * 0.78), s * 0.07, _fillColor(AppColors.success, 1));
+      Offset(s * 0.32, s * 0.78),
+      s * 0.07,
+      _fillColor(AppColors.success, 1),
+    );
     final iconPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = s * 0.022
       ..strokeCap = StrokeCap.round;
-    canvas.drawLine(Offset(s * 0.28, s * 0.78), Offset(s * 0.36, s * 0.78),
-        iconPaint);
-    canvas.drawLine(Offset(s * 0.32, s * 0.74), Offset(s * 0.32, s * 0.82),
-        iconPaint);
+    canvas.drawLine(
+      Offset(s * 0.28, s * 0.78),
+      Offset(s * 0.36, s * 0.78),
+      iconPaint,
+    );
+    canvas.drawLine(
+      Offset(s * 0.32, s * 0.74),
+      Offset(s * 0.32, s * 0.82),
+      iconPaint,
+    );
     canvas.drawCircle(
-        Offset(s * 0.5, s * 0.78), s * 0.07, _fillColor(AppColors.error, 1));
-    canvas.drawLine(Offset(s * 0.46, s * 0.78), Offset(s * 0.54, s * 0.78),
-        iconPaint);
+      Offset(s * 0.5, s * 0.78),
+      s * 0.07,
+      _fillColor(AppColors.error, 1),
+    );
+    canvas.drawLine(
+      Offset(s * 0.46, s * 0.78),
+      Offset(s * 0.54, s * 0.78),
+      iconPaint,
+    );
   }
 
   // ========== التقارير (لوحة بيانية) ==========
@@ -678,12 +843,19 @@ class _ThumbnailPainter extends CustomPainter {
         _fill(0.85),
       );
     }
-    canvas.drawLine(Offset(s * 0.14, s * 0.7), Offset(s * 0.86, s * 0.7),
-        _stroke(s * 0.022));
+    canvas.drawLine(
+      Offset(s * 0.14, s * 0.7),
+      Offset(s * 0.86, s * 0.7),
+      _stroke(s * 0.022),
+    );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.42, s * 0.8, s * 0.16, s * 0.06), _fill(0.85));
+      Rect.fromLTWH(s * 0.42, s * 0.8, s * 0.16, s * 0.06),
+      _fill(0.85),
+    );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.34, s * 0.86, s * 0.32, s * 0.04), _fill(0.85));
+      Rect.fromLTWH(s * 0.34, s * 0.86, s * 0.32, s * 0.04),
+      _fill(0.85),
+    );
   }
 
   // ========== قائمة الدخل ==========
@@ -699,13 +871,21 @@ class _ThumbnailPainter extends CustomPainter {
       _stroke(s * 0.02),
     );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.18, s * 0.18, s * 0.42, s * 0.05), _fill(0.7));
+      Rect.fromLTWH(s * 0.18, s * 0.18, s * 0.42, s * 0.05),
+      _fill(0.7),
+    );
     for (int i = 0; i < 4; i++) {
       final y = s * 0.3 + i * s * 0.1;
-      canvas.drawLine(Offset(s * 0.18, y), Offset(s * 0.48, y),
-          _stroke(s * 0.016));
-      canvas.drawLine(Offset(s * 0.5, y), Offset(s * 0.6, y),
-          _stroke(s * 0.022));
+      canvas.drawLine(
+        Offset(s * 0.18, y),
+        Offset(s * 0.48, y),
+        _stroke(s * 0.016),
+      );
+      canvas.drawLine(
+        Offset(s * 0.5, y),
+        Offset(s * 0.6, y),
+        _stroke(s * 0.022),
+      );
     }
     final growth = Path()
       ..moveTo(s * 0.7, s * 0.7)
@@ -748,7 +928,10 @@ class _ThumbnailPainter extends CustomPainter {
       _fillColor(AppColors.gold, 0.95),
     );
     canvas.drawCircle(
-        Offset(s * 0.78, s * 0.54), s * 0.025, _fillColor(Colors.white, 1));
+      Offset(s * 0.78, s * 0.54),
+      s * 0.025,
+      _fillColor(Colors.white, 1),
+    );
     final bill1 = Rect.fromLTWH(s * 0.2, s * 0.16, s * 0.4, s * 0.1);
     canvas.drawRRect(
       RRect.fromRectAndRadius(bill1, Radius.circular(s * 0.015)),
@@ -792,9 +975,15 @@ class _ThumbnailPainter extends CustomPainter {
       _fillColor(AppColors.success, 0.92),
     );
     canvas.drawCircle(
-        Offset(s * 0.71, s * 0.32), s * 0.05, _fillColor(Colors.white, 0.45));
+      Offset(s * 0.71, s * 0.32),
+      s * 0.05,
+      _fillColor(Colors.white, 0.45),
+    );
     canvas.drawCircle(
-        Offset(s * 0.71, s * 0.32), s * 0.025, _fillColor(Colors.white, 1));
+      Offset(s * 0.71, s * 0.32),
+      s * 0.025,
+      _fillColor(Colors.white, 1),
+    );
   }
 
   // ========== تقرير المبيعات (مخطط دائري) ==========
@@ -854,8 +1043,11 @@ class _ThumbnailPainter extends CustomPainter {
         Rect.fromLTWH(s * 0.27, y - s * 0.025, s * 0.05, s * 0.05),
         _fill(0.85),
       );
-      canvas.drawLine(Offset(s * 0.36, y), Offset(s * 0.74, y),
-          _stroke(s * 0.018));
+      canvas.drawLine(
+        Offset(s * 0.36, y),
+        Offset(s * 0.74, y),
+        _stroke(s * 0.018),
+      );
     }
   }
 
@@ -893,9 +1085,13 @@ class _ThumbnailPainter extends CustomPainter {
       canvas.drawCircle(p, s * 0.025, _fillColor(AppColors.success, 1));
     }
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.3, s * 0.7, s * 0.4, s * 0.04), _fill(0.85));
+      Rect.fromLTWH(s * 0.3, s * 0.7, s * 0.4, s * 0.04),
+      _fill(0.85),
+    );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.4, s * 0.74, s * 0.2, s * 0.06), _fill(0.85));
+      Rect.fromLTWH(s * 0.4, s * 0.74, s * 0.2, s * 0.06),
+      _fill(0.85),
+    );
   }
 
   // ========== الصندوق (نقد) ==========
@@ -921,14 +1117,20 @@ class _ThumbnailPainter extends CustomPainter {
       _fillColor(Colors.black, 0.5),
     );
     canvas.drawCircle(
-        Offset(s * 0.5, s * 0.6), s * 0.1, _fillColor(AppColors.gold, 1));
+      Offset(s * 0.5, s * 0.6),
+      s * 0.1,
+      _fillColor(AppColors.gold, 1),
+    );
     final dollarPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = s * 0.025
       ..strokeCap = StrokeCap.round;
-    canvas.drawLine(Offset(s * 0.5, s * 0.51), Offset(s * 0.5, s * 0.69),
-        dollarPaint);
+    canvas.drawLine(
+      Offset(s * 0.5, s * 0.51),
+      Offset(s * 0.5, s * 0.69),
+      dollarPaint,
+    );
     canvas.drawArc(
       Rect.fromCircle(center: Offset(s * 0.5, s * 0.56), radius: s * 0.04),
       0.5,
@@ -969,12 +1171,21 @@ class _ThumbnailPainter extends CustomPainter {
       RRect.fromRectAndRadius(paper, Radius.circular(s * 0.02)),
       _stroke(s * 0.02),
     );
-    canvas.drawLine(Offset(s * 0.54, s * 0.4), Offset(s * 0.82, s * 0.4),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.54, s * 0.5), Offset(s * 0.78, s * 0.5),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.54, s * 0.6), Offset(s * 0.74, s * 0.6),
-        _stroke(s * 0.018));
+    canvas.drawLine(
+      Offset(s * 0.54, s * 0.4),
+      Offset(s * 0.82, s * 0.4),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.54, s * 0.5),
+      Offset(s * 0.78, s * 0.5),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.54, s * 0.6),
+      Offset(s * 0.74, s * 0.6),
+      _stroke(s * 0.018),
+    );
     canvas.drawRect(
       Rect.fromLTWH(s * 0.6, s * 0.66, s * 0.22, s * 0.08),
       _fillColor(AppColors.warning, 0.9),
@@ -994,13 +1205,21 @@ class _ThumbnailPainter extends CustomPainter {
       _stroke(s * 0.022),
     );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.18, s * 0.2, s * 0.3, s * 0.05), _fill(0.85));
+      Rect.fromLTWH(s * 0.18, s * 0.2, s * 0.3, s * 0.05),
+      _fill(0.85),
+    );
     for (int i = 0; i < 3; i++) {
       final y = s * 0.34 + i * s * 0.1;
       canvas.drawLine(
-          Offset(s * 0.18, y), Offset(s * 0.42, y), _stroke(s * 0.018));
+        Offset(s * 0.18, y),
+        Offset(s * 0.42, y),
+        _stroke(s * 0.018),
+      );
       canvas.drawLine(
-          Offset(s * 0.46, y), Offset(s * 0.58, y), _stroke(s * 0.022));
+        Offset(s * 0.46, y),
+        Offset(s * 0.58, y),
+        _stroke(s * 0.022),
+      );
     }
     final alert = Path()
       ..moveTo(s * 0.74, s * 0.5)
@@ -1013,10 +1232,16 @@ class _ThumbnailPainter extends CustomPainter {
       ..color = Colors.white
       ..strokeWidth = s * 0.03
       ..strokeCap = StrokeCap.round;
-    canvas.drawLine(Offset(s * 0.74, s * 0.66), Offset(s * 0.74, s * 0.76),
-        excl);
+    canvas.drawLine(
+      Offset(s * 0.74, s * 0.66),
+      Offset(s * 0.74, s * 0.76),
+      excl,
+    );
     canvas.drawCircle(
-        Offset(s * 0.74, s * 0.8), s * 0.018, _fillColor(Colors.white, 1));
+      Offset(s * 0.74, s * 0.8),
+      s * 0.018,
+      _fillColor(Colors.white, 1),
+    );
   }
 
   // ========== قيمة المخزون ==========
@@ -1027,10 +1252,16 @@ class _ThumbnailPainter extends CustomPainter {
       RRect.fromRectAndRadius(box, Radius.circular(s * 0.03)),
       _fill(0.85),
     );
-    canvas.drawLine(Offset(s * 0.16, s * 0.42), Offset(s * 0.66, s * 0.42),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.41, s * 0.32), Offset(s * 0.41, s * 0.42),
-        _stroke(s * 0.018));
+    canvas.drawLine(
+      Offset(s * 0.16, s * 0.42),
+      Offset(s * 0.66, s * 0.42),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.41, s * 0.32),
+      Offset(s * 0.41, s * 0.42),
+      _stroke(s * 0.018),
+    );
     final tag = Path()
       ..moveTo(s * 0.58, s * 0.16)
       ..lineTo(s * 0.92, s * 0.16)
@@ -1040,7 +1271,10 @@ class _ThumbnailPainter extends CustomPainter {
       ..close();
     canvas.drawPath(tag, _fillColor(AppColors.gold, 1));
     canvas.drawCircle(
-        Offset(s * 0.84, s * 0.24), s * 0.03, _fillColor(Colors.white, 1));
+      Offset(s * 0.84, s * 0.24),
+      s * 0.03,
+      _fillColor(Colors.white, 1),
+    );
   }
 
   // ========== الدروس (كتاب + علامة) ==========
@@ -1060,8 +1294,11 @@ class _ThumbnailPainter extends CustomPainter {
     );
     for (int i = 0; i < 5; i++) {
       final y = s * 0.3 + i * s * 0.1;
-      canvas.drawLine(Offset(s * 0.28, y), Offset(s * 0.72, y),
-          _stroke(s * 0.018));
+      canvas.drawLine(
+        Offset(s * 0.28, y),
+        Offset(s * 0.72, y),
+        _stroke(s * 0.018),
+      );
     }
     final ribbon = Path()
       ..moveTo(s * 0.62, s * 0.1)
@@ -1077,7 +1314,9 @@ class _ThumbnailPainter extends CustomPainter {
   void _training(Canvas canvas, Size size) {
     final s = size.width;
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.22, s * 0.46, s * 0.56, s * 0.08), _fill(0.85));
+      Rect.fromLTWH(s * 0.22, s * 0.46, s * 0.56, s * 0.08),
+      _fill(0.85),
+    );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(s * 0.06, s * 0.32, s * 0.16, s * 0.36),
@@ -1111,10 +1350,16 @@ class _ThumbnailPainter extends CustomPainter {
       ..strokeWidth = s * 0.025
       ..strokeCap = StrokeCap.round;
     canvas.drawLine(Offset(s * 0.5, s * 0.18), Offset(s * 0.5, s * 0.3), star);
-    canvas.drawLine(Offset(s * 0.36, s * 0.22), Offset(s * 0.42, s * 0.28),
-        star);
-    canvas.drawLine(Offset(s * 0.64, s * 0.22), Offset(s * 0.58, s * 0.28),
-        star);
+    canvas.drawLine(
+      Offset(s * 0.36, s * 0.22),
+      Offset(s * 0.42, s * 0.28),
+      star,
+    );
+    canvas.drawLine(
+      Offset(s * 0.64, s * 0.22),
+      Offset(s * 0.58, s * 0.28),
+      star,
+    );
   }
 
   // ========== الاختبارات (فقاعة سؤال) ==========
@@ -1145,9 +1390,16 @@ class _ThumbnailPainter extends CustomPainter {
       false,
       qPaint,
     );
-    canvas.drawLine(Offset(s * 0.5, s * 0.44), Offset(s * 0.5, s * 0.5), qPaint);
+    canvas.drawLine(
+      Offset(s * 0.5, s * 0.44),
+      Offset(s * 0.5, s * 0.5),
+      qPaint,
+    );
     canvas.drawCircle(
-        Offset(s * 0.5, s * 0.58), s * 0.04, _fillColor(Colors.white, 1));
+      Offset(s * 0.5, s * 0.58),
+      s * 0.04,
+      _fillColor(Colors.white, 1),
+    );
   }
 
   // ========== التقدم (كأس + قاعدة) ==========
@@ -1181,7 +1433,10 @@ class _ThumbnailPainter extends CustomPainter {
       _fillColor(AppColors.gold, 0.85),
     );
     canvas.drawCircle(
-        Offset(s * 0.5, s * 0.34), s * 0.07, _fillColor(Colors.white, 0.85));
+      Offset(s * 0.5, s * 0.34),
+      s * 0.07,
+      _fillColor(Colors.white, 0.85),
+    );
   }
 
   // ========== المعجم (كتب) ==========
@@ -1229,12 +1484,21 @@ class _ThumbnailPainter extends CustomPainter {
       RRect.fromRectAndRadius(screen, Radius.circular(s * 0.02)),
       _fillColor(Colors.white, 1),
     );
-    canvas.drawLine(Offset(s * 0.18, s * 0.28), Offset(s * 0.4, s * 0.28),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.18, s * 0.34), Offset(s * 0.34, s * 0.34),
-        _stroke(s * 0.018));
-    canvas.drawLine(Offset(s * 0.18, s * 0.4), Offset(s * 0.36, s * 0.4),
-        _stroke(s * 0.018));
+    canvas.drawLine(
+      Offset(s * 0.18, s * 0.28),
+      Offset(s * 0.4, s * 0.28),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.18, s * 0.34),
+      Offset(s * 0.34, s * 0.34),
+      _stroke(s * 0.018),
+    );
+    canvas.drawLine(
+      Offset(s * 0.18, s * 0.4),
+      Offset(s * 0.36, s * 0.4),
+      _stroke(s * 0.018),
+    );
     for (int i = 0; i < 3; i++) {
       final h = (i + 1) * s * 0.06;
       canvas.drawRect(
@@ -1243,25 +1507,34 @@ class _ThumbnailPainter extends CustomPainter {
       );
     }
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.42, s * 0.66, s * 0.16, s * 0.12), _fill(0.85));
+      Rect.fromLTWH(s * 0.42, s * 0.66, s * 0.16, s * 0.12),
+      _fill(0.85),
+    );
     canvas.drawRect(
-        Rect.fromLTWH(s * 0.3, s * 0.78, s * 0.4, s * 0.04), _fill(0.85));
+      Rect.fromLTWH(s * 0.3, s * 0.78, s * 0.4, s * 0.04),
+      _fill(0.85),
+    );
   }
 
   // ========== المحاسبة المالية (عملة + نمو) ==========
   void _financialAccounting(Canvas canvas, Size size) {
     final s = size.width;
     canvas.drawCircle(
-        Offset(s * 0.34, s * 0.5), s * 0.24, _fillColor(AppColors.gold, 1));
-    canvas.drawCircle(
-        Offset(s * 0.34, s * 0.5), s * 0.24, _stroke(s * 0.022));
+      Offset(s * 0.34, s * 0.5),
+      s * 0.24,
+      _fillColor(AppColors.gold, 1),
+    );
+    canvas.drawCircle(Offset(s * 0.34, s * 0.5), s * 0.24, _stroke(s * 0.022));
     final dollarPaint = Paint()
       ..color = Colors.white
       ..style = PaintingStyle.stroke
       ..strokeWidth = s * 0.03
       ..strokeCap = StrokeCap.round;
     canvas.drawLine(
-        Offset(s * 0.34, s * 0.36), Offset(s * 0.34, s * 0.64), dollarPaint);
+      Offset(s * 0.34, s * 0.36),
+      Offset(s * 0.34, s * 0.64),
+      dollarPaint,
+    );
     canvas.drawArc(
       Rect.fromCircle(center: Offset(s * 0.34, s * 0.46), radius: s * 0.06),
       0.5,
@@ -1289,7 +1562,10 @@ class _ThumbnailPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.round;
     canvas.drawPath(line, gp);
     canvas.drawCircle(
-        Offset(s * 0.92, s * 0.4), s * 0.025, _fillColor(AppColors.success, 1));
+      Offset(s * 0.92, s * 0.4),
+      s * 0.025,
+      _fillColor(AppColors.success, 1),
+    );
   }
 
   // ========== الإعدادات (ترس) ==========
@@ -1324,10 +1600,12 @@ class _ThumbnailPainter extends CustomPainter {
   void _about(Canvas canvas, Size size) {
     final s = size.width;
     canvas.drawCircle(Offset(s * 0.5, s * 0.5), s * 0.36, _fill(0.85));
+    canvas.drawCircle(Offset(s * 0.5, s * 0.5), s * 0.36, _stroke(s * 0.022));
     canvas.drawCircle(
-        Offset(s * 0.5, s * 0.5), s * 0.36, _stroke(s * 0.022));
-    canvas.drawCircle(
-        Offset(s * 0.5, s * 0.34), s * 0.04, _fillColor(Colors.white, 1));
+      Offset(s * 0.5, s * 0.34),
+      s * 0.04,
+      _fillColor(Colors.white, 1),
+    );
     canvas.drawRRect(
       RRect.fromRectAndRadius(
         Rect.fromLTWH(s * 0.46, s * 0.42, s * 0.08, s * 0.24),
@@ -1393,8 +1671,11 @@ class _ThumbnailPainter extends CustomPainter {
     canvas.drawPath(fold, _stroke(s * 0.018));
     for (int i = 0; i < 4; i++) {
       final y = s * 0.4 + i * s * 0.1;
-      canvas.drawLine(Offset(s * 0.28, y), Offset(s * 0.74, y),
-          _stroke(s * 0.018));
+      canvas.drawLine(
+        Offset(s * 0.28, y),
+        Offset(s * 0.74, y),
+        _stroke(s * 0.018),
+      );
     }
   }
 

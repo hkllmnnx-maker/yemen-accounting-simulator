@@ -187,11 +187,7 @@ class AppDrawer extends StatelessWidget {
     bool replaceRoot = false,
   }) {
     return ListTile(
-      leading: SectionThumbnail(
-        kind: kind,
-        color: color,
-        size: 38,
-      ),
+      leading: SectionThumbnail(kind: kind, color: color, size: 38),
       title: Text(
         title,
         maxLines: 1,

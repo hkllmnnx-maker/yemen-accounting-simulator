@@ -29,8 +29,10 @@ class SectionCard extends StatelessWidget {
     this.subtitle,
     this.color = AppColors.primary,
     required this.onTap,
-  }) : assert(icon != null || thumbnail != null,
-            'يجب تمرير icon أو thumbnail على الأقل');
+  }) : assert(
+         icon != null || thumbnail != null,
+         'يجب تمرير icon أو thumbnail على الأقل',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +57,10 @@ class SectionCard extends StatelessWidget {
             final padding = h < 130 ? 8.0 : 10.0;
 
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding, vertical: padding),
+              padding: EdgeInsets.symmetric(
+                horizontal: padding,
+                vertical: padding,
+              ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -85,8 +90,7 @@ class SectionCard extends StatelessWidget {
                           width: 1,
                         ),
                       ),
-                      child:
-                          Icon(icon, color: color, size: thumbSize * 0.55),
+                      child: Icon(icon, color: color, size: thumbSize * 0.55),
                     ),
                   SizedBox(height: h < 130 ? 6 : 8),
                   Flexible(
@@ -147,8 +151,10 @@ class StatCard extends StatelessWidget {
     required this.value,
     required this.color,
     this.onTap,
-  }) : assert(icon != null || thumbnail != null,
-            'يجب تمرير icon أو thumbnail على الأقل');
+  }) : assert(
+         icon != null || thumbnail != null,
+         'يجب تمرير icon أو thumbnail على الأقل',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -166,11 +172,7 @@ class StatCard extends StatelessWidget {
           child: Row(
             children: [
               if (thumbnail != null)
-                SectionThumbnail(
-                  kind: thumbnail!,
-                  color: color,
-                  size: 42,
-                )
+                SectionThumbnail(kind: thumbnail!, color: color, size: 42)
               else
                 Container(
                   width: 42,
