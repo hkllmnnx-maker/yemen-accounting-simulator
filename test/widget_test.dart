@@ -35,10 +35,8 @@ import 'package:yemen_accounting_simulator/screens/simulator/customers/customers
 import 'package:yemen_accounting_simulator/screens/simulator/suppliers/suppliers_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/inventory/items_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/sales/sales_list_screen.dart';
-import 'package:yemen_accounting_simulator/screens/simulator/sales/invoice_edit_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/purchases/purchases_list_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/vouchers/vouchers_list_screen.dart';
-import 'package:yemen_accounting_simulator/screens/simulator/vouchers/voucher_edit_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/reports/reports_home_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/reports/trial_balance_screen.dart';
 import 'package:yemen_accounting_simulator/screens/simulator/reports/income_statement_screen.dart';

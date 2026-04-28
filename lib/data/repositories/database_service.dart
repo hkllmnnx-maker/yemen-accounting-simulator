@@ -49,8 +49,9 @@ class DatabaseService {
 
     // تسجيل المحوّلات
     if (!Hive.isAdapterRegistered(1)) Hive.registerAdapter(AccountAdapter());
-    if (!Hive.isAdapterRegistered(2))
+    if (!Hive.isAdapterRegistered(2)) {
       Hive.registerAdapter(JournalEntryAdapter());
+    }
     if (!Hive.isAdapterRegistered(3)) Hive.registerAdapter(PartnerAdapter());
     if (!Hive.isAdapterRegistered(4)) Hive.registerAdapter(ItemAdapter());
     if (!Hive.isAdapterRegistered(5)) Hive.registerAdapter(InvoiceAdapter());

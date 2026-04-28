@@ -100,8 +100,9 @@ class _VoucherEditScreenState extends State<VoucherEditScreen> {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 await acc.deleteVoucher(_v.id);
-                if (mounted) Navigator.pop(context);
+                if (mounted) navigator.pop();
               },
             ),
         ],

@@ -208,13 +208,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
     if (ok != true) return;
-    if (!mounted) return;
-    await context.read<AccountingProvider>().resetAll();
-    await context.read<ProgressProvider>().resetProgress();
-    if (!mounted) return;
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(const SnackBar(content: Text('تمت إعادة الضبط')));
+    if (!context.mounted) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final acc = context.read<AccountingProvider>();
+    final prog = context.read<ProgressProvider>();
+    await acc.resetAll();
+    await prog.resetProgress();
+    messenger.showSnackBar(
+      const SnackBar(content: Text('تمت إعادة الضبط بنجاح')),
+    );
   }
 }
 

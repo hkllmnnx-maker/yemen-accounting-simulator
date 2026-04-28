@@ -1,4 +1,4 @@
-/// سيناريوهات التدريب العملي
+// سيناريوهات التدريب العملي
 
 class TrainingStep {
   final String instruction;

@@ -90,8 +90,9 @@ class _JournalEditScreenState extends State<JournalEditScreen> {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 await acc.deleteJournal(_entry.id);
-                if (mounted) Navigator.pop(context);
+                if (mounted) navigator.pop();
               },
             ),
         ],

@@ -258,8 +258,9 @@ class _InvoiceEditScreenState extends State<InvoiceEditScreen> {
             IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () async {
+                final navigator = Navigator.of(context);
                 await acc.deleteInvoice(_inv.id);
-                if (mounted) Navigator.pop(context);
+                if (mounted) navigator.pop();
               },
             ),
         ],
